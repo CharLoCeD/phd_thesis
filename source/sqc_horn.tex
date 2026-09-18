@@ -1,0 +1,326 @@
+\chapter{The internal logic of classifying topoi for Horn theories with higher arity}
+
+\section{Horn theories with higher arity}\label{sec:higherhorntheory}
+
+In this section we recall some basic facts about infinitary Horn theories from~\citet[\S3.C]{adamek1994locally} and from~\citet{ADAMEK1998379}. Through this section, fix some regular cardinal $\kappa$.
+
+\begin{remark}[Constructive notion of regular cardinal]
+  For the constructively minded reader, we note that there is nothing special about the classical notion of a regular cardinal that we use. To interpret such a $\kappa$ in a constructive context, it suffices to assume it is a universe of sets closed under \emph{finite sets} and \emph{dependent sums}.
+\end{remark}
+
+\begin{definition}[Sorted signatures]
+  Let $S$ be a set. An \emph{$S$-sorted signature} is a set $\Sigma$ with an arity function $a$ assigning each $\sigma\in\Sigma$ a collection of sorts $(s_i)_{i<\lambda}$ with some cardinal $\lambda$, and a sort $s$. In notation, we write 
+  \[ \sigma \colon \prod_{i<\lambda}s_i \to s. \]
+  $\Sigma$ is \emph{$\kappa$-ary} if the associated cardinality $\lambda$ for each $\sigma\in\Sigma$ is strictly smaller than $\kappa$.
+\end{definition}
+
+\begin{definition}[Structures for a signature]
+  Let $\Sigma$ be an $S$-sorted signature. A \emph{$\Sigma$-structure} $A$ is a collection of sets $(A_s)_{s\in S}$ indexed by sorts in $S$, together with an operation $\ass\sigma_A$ for every $\sigma \colon \prod_{i<\lambda}s_i \to s$ in $\Sigma$, of type
+  \[ \ass\sigma_A \colon \prod_{i<\lambda}A_{s_i} \to A_s. \]
+  A \emph{homomorphism} of $\Sigma$-structures $f \colon A \to B$ is an $S$-indexed family of functions $f_s \colon A_s \to B_s$, making the following diagram commute for any $\sigma \colon \prod_{i<\lambda}s_i \to s$ in $\Sigma$,
+  \[
+  \begin{tikzcd}
+    \prod_{i<\lambda}A_{s_i} \ar[d, "\prod_{i<\lambda}f_{s_i}"'] \ar[r, "\ass\sigma_A"] & A_s \ar[d, "f_s"] \\
+    \prod_{i<\lambda}B_{s_i} \ar[r, "\ass\sigma_B"'] & B_s
+  \end{tikzcd}
+  \]
+  The category of $\Sigma$-structures will be denoted as $\mmod{\Sigma}$.
+\end{definition}
+
+\begin{definition}[Terms of a signature]
+  Let $\Sigma$ be an $S$-sorted signature. For any $S$-indexed family of sets $X = (X_s)_{s\in S}$, the $S$-indexed set of \emph{$\Sigma$-terms with variables in $X$} is defined as usual: it is the smallest $S$-indexed set such that (1) every $x\in X_s$ is a term of sort $s$; and (2) for any $\sigma \colon \prod_{i<\lambda}s_i \to s$ in $\Sigma$ and any terms $t_i$ of sort $s_i$, $\sigma((t_i)_{i<\lambda})$ is a term of sort $s$. This set will be denoted as $\tm{\Sigma}(X) = (\tm{\Sigma}(X)_{s})_{s\in S}$.
+\end{definition}
+
+\begin{remark}[Interpretation of terms in a structure]
+  Let $A$ be a $\Sigma$-structure, and let $t$ be a $\Sigma$-term with free variables $\ov x$ of some sorts, given a list of elements $\ov a$ with the corresponding sorts, it is straight forward to define the interpretation of $t(\ov a)$ in $A$, written as
+  \[ \ass{t(\ov a)}_A \coloneq \ass{t}_A(\ov a). \]
+\end{remark}
+
+\begin{definition}[$\kappa$-Horn and $\kappa$-algebra theory]
+  Let $\Sigma$ be an $S$-sorted signature of arity $\kappa$. A \emph{$\kappa$-Horn clause} in signature $\Sigma$ is a sequent of the form 
+  \[ \bigwedge_{i\in I}t_i = t_i' \vdash_{\ov x} t = t', \]
+  where $t_i,t_i'$ and $t,t'$ are $\Sigma$-terms of the same sorts respectively, whose variables are among $\ov x$. We require $\geo{\ov x},\geo{I} < \kappa$. A \emph{$\kappa$-Horn theory} is simply a family of $\kappa$-Horn clauses. If all the Horn clauses in a theory have trivial antecedents, then we say such a theory is \emph{$\kappa$-algebraic}.
+\end{definition}
+
+\begin{definition}[Algebras for a $\kappa$-Horn theory]
+  Let $\T$ be a $\kappa$-Horn theory over an $S$-sorted signature $\Sigma$. A $\Sigma$-structure $A$ is a \emph{$\T$-algebra}, if for any $\kappa$-Horn clause $\bigwedge_{i\in I}t_i = t_i' \vdash_{\ov x} t = t'$ in $\T$, and any lists of elements $\ov a$ with the corresponding sorts of $\ov x$,
+  \[ \prth{\fa iI \ass{t_i(\ov a)} = \ass{t_i'(\ov a)}} \nt \ass{t(\ov a)} = \ass{t'(\ov a)}. \]
+  The full subcategory of $\T$-algebras in $\mmod{\Sigma}$ will be denoted as $\mmod{\T}$.
+\end{definition}
+
+\begin{remark}[Variety and quasi-variety]
+  The category of algebras for a ($\kappa$-ary) algebraic theory or Horn theory is often called a ($\kappa$-ary) \emph{variety} or \emph{quasi-variety} in the literature on universal algebra.
+\end{remark}
+
+\begin{example}[Finitary algebraic and Horn theories]\label{exa:finitealgebratheories}
+  All the usual finitary algebraic and Horn theories will be $\aleph_0$-Horn theories. These include the theory of objects $\mbb O$, of meet-semi-lattices $\mbb M$, of distributive lattices $\mbb D$, of de Morgan algebras $d\mbb{M}$, of Heyting algebras $\mbb H$, of Boolean algebras $\mbb B$, etc. They are all 1-sorted algebra theories.
+\end{example}
+
+\begin{example}[The $\aleph_1$-Horn theory of posets with countable joins]\label{exa:theoryofcountablejoins}
+  The theory $\omega\mbb J$ of posets with countable joins is described in~\citet[Exm. 3.26]{adamek1994locally}. The theory $\omega\mbb J$ is 1-sorted, with a constant 0 and an $\omega$-ary operator $\bigvee_{i<\omega}$, together with the following axioms:
+  \begin{itemize}
+    \item $\bigvee_{i<\omega}(x,x,\cdots) = x$;
+    \item $\bigvee_{i<\omega}x_i = \bigvee_{j<\omega}y_j$ whenever $\set{x_i}_{i<\omega}\backslash\set{0} = \set{y_j}_{j<\omega}\backslash\set{0}$;
+  \end{itemize}
+  One may also define a binary join operator from this
+  \[ x \vee y \coloneq \bigvee_{i<\omega}(x,y,y,\cdots), \]
+  and under the usual definition of the order $a \le b \coloneq a \vee b = b$, each $\omega\mbb J$-algebra will be a poset with countable joins defined by the interpretation of $\bigvee_{i<\omega}$.
+\end{example}
+
+\begin{example}[The $\aleph_1$-Horn theory of $\sigma$-frames]\label{exa:theoryofsigmaframe}
+  The $\aleph_1$-algebraic theory $\omega\mbb F$ of \emph{$\sigma$-frames} is of vital importance to later applications in synthetic domain theory (cf.~\zcref{ch:domain}). It is an $\aleph_1$-algebraic theory extending $\omega\mbb J$, with an additional constant $1$, a binary operator $\wedge$, and the following additional axioms:
+  \begin{itemize}
+    \item $(1,\wedge)$ forms an idempotent commutative monoid;
+    \item The absorption laws hold, making $(1,\wedge,0,\vee)$ into a lattice,
+    \begin{align*}
+      &1 \vee x = 1, \quad x \vee (x \wedge y) = x, \\
+      &0 \wedge x = 0, \quad x \wedge (x \vee y) = x.
+    \end{align*}
+    \item The countable distributivity law holds,
+    \[ x \wedge \bigvee_{i<\omega}y_i = \bigvee_{i<\omega}x \wedge y_i. \]
+    
+  \end{itemize}
+  Algebras for $\omega\mbb F$ are posets with countable joins and finite meets, where finite meets distributes over countable joins. Homomorphisms between them are functions preserving finite meets and countable joins. The category of $\sigma$-frames will be denoted as $\sFrm$.
+\end{example}
+
+\begin{example}[Coslices of $\kappa$-Horn theories]\label{exm:coslicehorn}
+  $\kappa$-Horn theories are closed under coslices in the following sense. Let $\T$ be a $\kappa$-Horn theory with an $S$-sorted signature $\Sigma$. Let $A$ be a $\Sigma$-structure. One may construct a new $\kappa$-Horn theory $A \ltimes \T$ under a new $S$-sorted signature $A+\Sigma$, where for each sort $s\in S$ and each element $a\in A_s$, a new constant $c_a$ will be added for the sort $s$. The axioms of $A \ltimes \T$ is the union of $\T$ with the closed equations that are valid in $A$. This way, an $A \ltimes \T$-algebra is a pair $(B,f)$, with $B$ a $\T$-algebra together with a homomorphism $f : A \to B$. Hence, the natural functor $\mmod{A\ltimes\mbb T} \to A/\mmod{\T}$ will be an equivalence.
+\end{example}
+
+Finally, we record the following general results for $\kappa$-Horn theories. Let $\mmod{\T}_\kappa$ be the full subcategory of $\kappa$-presentable objects in $\mmod{\T}$. Recall we also write $\kappa\hp\Lex$ as the 2-category of categories with $\kappa$-small limits.
+
+\begin{theorem}\label{thm:factsaboutkappahorntheory}
+  Let $\T$ be an $\kappa$-Horn theory in an $S$-sorted signature $\Sigma$. The following holds:
+  \begin{enumerate}
+    \item $\mmod{\T}$ is locally $\kappa$-presentable: $\mmod{\T}_\kappa$ has $\kappa$-small colimits and there is a canonical equivalence 
+    \[ \mmod{\T} \simeq \kappa\hp\Lex(\mmod{\T}_\kappa\op,\Set). \]
+    \item $\mmod{\T}$ has free algebras, in the sense that the forgetful functor to $\Set^S$ has a left adjoint,
+    \[\begin{tikzcd}
+      {\mmod{\T}} & {\Set^S}
+      \arrow[""{name=0, anchor=center, inner sep=0}, "U"', curve={height=18pt}, from=1-1, to=1-2]
+      \arrow[""{name=1, anchor=center, inner sep=0}, "T"', curve={height=18pt}, from=1-2, to=1-1]
+      \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
+    \end{tikzcd}\]
+    \item $\mmod{\T}$ is closed under $\kappa$-filtered limits in $\mmod{\Sigma}$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  See~\citet[Rem. 3.32]{adamek1994locally}. 
+\end{proof}
+
+
+\section{Classifying topoi for Horn theories with higher arity}
+
+
+Let $\kappa$ be a regular cardinal and $\T$ a $\kappa$-Horn theory. $\T$ is not a geometric theory in the usual sense, since it contains operations with possibly higher arity and axioms possibly using infinitary conjunctions. However, it is a \emph{$\kappa$-geometric theory} in the sense of~\citet[\S8.3]{makkai1977first}. In fact, via functorial semantics, we can define its models in an arbitrary topos $\mc E$ as follows; cf.\ \emph{loc.\ cit.}:
+
+\begin{definition}[Models of a $\kappa$-Horn theory in topoi]
+  The category of $\T$-models in a topos $\mc E$ is defined as follows,
+  \[ \mmod{\T}(\mc E) \coloneq \kappa\hp\Lex(\mmod{\T}_\kappa\op,\mc E). \]
+\end{definition}
+
+However, the 2-functor $\mc E \mapsto \mmod{\T}(\mc E)$ is \emph{not} necessarily representable in the 2-category $\Top$ of topoi. In other words, $\T$ may fail to have a classifying topos in the usual sense, since it may contain operations of higher arity, and the usual inverse images of geometric morphisms only preserve finite, instead of \emph{$\kappa$-small}, limits. However, it has a \emph{classifying $\kappa$-topos} following~\citet{espindola_every_nodate}:
+
+\begin{definition}[$\kappa$-topos]
+  A topos $\mc E$ is a \emph{$\kappa$-topos} if it is an $(\infty,\kappa)$-coherent category in the sense of~\citet[Def.\ 2.7]{espindola_every_nodate}. A \emph{$\kappa$-geometric morphism} between $\kappa$-topoi is a geometric morphism whose inverse image preserves $\kappa$-small limits. The 2-category of $\kappa$-topoi will be denoted as $\kappa\hp\Top$.
+\end{definition}
+
+For us, the precise definition of $\kappa$-topos does not matter that much -- we need them simply to state the universal property of the classifying $\kappa$-topos of $\T$ we are going to introduce shortly. What matters more is the following family of examples:
+
+\begin{example}[Presheaf topoi are $\kappa$-topoi]\label{exm:presheafiskappatopos}
+  Every presheaf topos is a $\kappa$-topos for any $\kappa$; see~\citet[Exm.\ 3.3]{espindola_every_nodate}.
+\end{example}
+
+\begin{definition}[The classifying $\kappa$-topos for a $\kappa$-Horn theory]\label{def:kappaclassifying}
+  We define the classifying $\kappa$-topos for $\T$ to be the following presheaf topos,
+  \[ \Set[\T_\kappa] \coloneq [\mmod{\T}_\kappa,\Set]. \]
+  By~\zcref{exm:presheafiskappatopos}, $\Set[\T_\kappa]$ is indeed a $\kappa$-topos.
+\end{definition}
+
+\begin{remark}[The notion for the classifying $\kappa$-topos]
+  Note here we have chosen to denote the classifying $\kappa$-topos as $\Set[\T_\kappa]$. This choice reflects the fact that it is the classifying gadget when we view $\T$ as a \emph{$\kappa$-geometric theory}, thus the subscript $\kappa$ is on $\T$. Of course, by definition for any regular cardinal $\lambda > \kappa$, $\T$ is also $\lambda$-ary, and its classifying topos as a \emph{$\lambda$-Horn theory} will be different, and enjoys a universal property in a different 2-category, viz.\ $\lambda\hp\Top$.
+\end{remark}
+
+The classifying $\kappa$-topos of $\T$ then enjoys the following universal property:
+
+\begin{theorem}[Representability of the 2-functor of models for a $\kappa$-Horn theory]\label{thm:classtoposofkappahorn}
+  There is a natural equivalence for any $\kappa$-topos $\mc E$, 
+  \[ \mmod{\T}(\mc E) \simeq \kappa\hp\Top(\mc E,\Set[\T_\kappa]). \]
+\end{theorem}
+\begin{proof}
+  This is~\citet[Thm.\ 3.15]{espindola_every_nodate}.
+\end{proof}
+
+\begin{remark}[The need for $\kappa$-topos]
+  One may wonder whether the universal property stated in~\zcref{thm:classtoposofkappahorn} may hold for a larger 2-category $\kappa\hp\Top$, viz.\ the 2-category of \emph{all} topoi with geometric morphisms whose inverse images preserve $\kappa$-small limits. However, in essence~\zcref{thm:classtoposofkappahorn} requires the following equivalence: a functor $F \colon \mmod{\T}_\kappa\op \to \mc E$ preserves $\kappa$-small limits iff its left Kan extension $\lan_\yon F \colon \Set[\T_\kappa] \to \mc E$ does so. This does \emph{not} hold for all topoi, hence restricting to $\kappa$-topoi is necessary for~\zcref{thm:classtoposofkappahorn} to hold.
+\end{remark}
+
+At the end of this section we note that the classifying $\kappa$-topos $\Set[\T_\kappa]$ of $\T$ has many nice properties. Recall from~\citet{johnstone_remarks_2011} the notion of a \emph{totally connected geometric morphism}, which is a geometric morphism whose inverse image has a further left exact left adjoint, hence in effect having a \emph{right adjoint} in the 2-category of topoi. $\Set[\T_\kappa]$ in fact satisfies the following stronger condition:
+
+\begin{proposition}
+  $\Set[\T_\kappa]$ is \emph{$\kappa$-totally connected}, in the sense that the constant sheaf functor $\Delta \colon \Set \to \Set[\T_\kappa]$ has a left adjoint $\Pi \colon \Set[\T_\kappa] \to \Set$ that preserves $\kappa$-small limits. In other words, the $\kappa$-geometric morphism $\Gamma \colon \Set[\T_\kappa] \to \Set$ has a right adjoint in $\kappa\hp\Top$.
+\end{proposition}
+\begin{proof}
+  Since $\Set[\T_\kappa]$ is a presheaf category, the constant sheaf functor $\Delta$ is simply the constant functor, thus having a left adjoint $\Pi$ by computing the colimit as follows,
+  \[ \Pi X \cong \ct_{A\in\mmod{\T}_\kappa}X(A). \]
+  The indexing category $\mmod{\T}_\kappa$ has $\kappa$-small colimits, thus in particular is $\kappa$-filtered. It follows that $\Pi$ preserves $\kappa$-small limits.
+\end{proof}
+
+\section{Lifting of universes in presheaf categories}\label{sec:HSlifting}
+
+Working towards the synthetic quasi-coherence principle in the classifying $\kappa$-topos $\Set[\T_\kappa]$, we need to make sense of Horn theories with higher arity \emph{internally} to the presheaf topos $\Set[\T_\kappa]$. For this, we need a working notion of \emph{universe of size} in $\Set[\T_\kappa]$, to replace the role played by $\kappa$ in $\Set$.
+
+A convenient technical tool is the \emph{universe lifting construction} specified by~\citet{10.1093/oso/9780198501275.003.0008}; for a more categorical understanding of this construction, see~\citet{Awodey_2024} and~\citet{lmcs:17229}. This construction describes how to lift a universe within the base category $\Set$, to any presheaf topos.
+
+For simplicity, by a \emph{universe} in $\Set$, we simply mean a small full subcategory $\mc U$ of $\Set$.\footnote{For us we do not need our universe $\mc U$ to be closed under dependent function types, thus we can work fully with \emph{small} categories, instead of assuming a Grothendieck universe or an inaccessible cardinal.} It comes equipped with the structure of the classifier of $\mc U$-small presheaves, as specified by the fibration 
+\[ \pi_{\mc U} \colon \mc U_* \to \mc U, \]
+where $\mc U_*$ is the category of \emph{pointed} $\mc U$-small sets.
+
+Let $\mc C$ be a small category. The lifted universe $\pf{\mc U}$ in the presheaf category $\psh(\mc C)$ is defined as the following presheaf,
+\[ \pf{\mc U}(c) \coloneq \Cat((\mc C/c)\op,\mc U), \]
+together with the discrete fibration $\pf{\mc U_*}$ above it as 
+\[ \pf{\mc U_*}(c,X) \coloneq A(\id_c). \]
+Here we have viewed the map $\pf{\mc U_*} \to \pf{\mc U}$ in $\psh(\mc C)$ as a presheaf over the category of elements $\elem_{\mc C}\mc U$ of the presheaf $\mc U$.
+
+The important fact about the universe lifting construction is that it preserves the relevant logical properties of the universe; for us, the most important structure is dependent sums:
+
+\begin{proposition}\label{prop:HSpreservesigma}
+  The Hofmann-Streicher universe lifting construction preserves universes closed under dependent sum types.
+\end{proposition}
+\begin{proof}
+  See~\citet[\S4.9]{10.1093/oso/9780198501275.003.0008}; though the proof there is written for the groupoid model, the strategy clearly works for any presheaf category.
+\end{proof}
+
+\section{Synthetic quasi-coherence for Horn theories with higher arity}
+
+In this section we prove the main theorem of this chapter, viz.\ the synthetic quasi-coherence principle in the classifying $\kappa$-topos $\Set[\T_\kappa]$ for a $\kappa$-Horn theory $\T$. Our proof strategy here will essentially follow that of finitary Horn theories stated in~\citet{blechschmidt_general_2020}, though with appropriate generalisations towards higher arity.
+
+Let $\pf{\kappa}$ be the lifted universe of $\kappa$-small sets in the presheaf category $\Set[\T_\kappa]$. This way, internally in $\Set[\T_\kappa]$ we can speak of a \emph{$\pf{\kappa}$-Horn theory}, by interpreting the specifications in~\zcref{sec:higherhorntheory} internally in $\Set[\T_\kappa]$, with $\kappa$ replaced by $\pf{\kappa}$ as the chosen universe. In particular, the external theory $\T$ can be pulled back, via the constant sheaf functor $\Delta$, to an internal $\pf\kappa$-Horn theory in $\Set[\T_\kappa]$. 
+
+Also recall that there is a generic $\T$-model in the classifying $\kappa$-topos $\Set[\T_\kappa]$, which we denote as $V_\T$. As a model, its interpretation of the sort $s\in S$ in the signature is simply the evaluation functor at $s$: for any $A\in\mmod\T_\kappa$, 
+\[ (V_\T)_s(A) \coloneq A_s. \]
+In other words, $V_\T$ is the corepresentable functor on the free $\T$-algebra generated by a single element in sort $s\in S$; in accordance with the notation of the left adjoint in~\zcref{thm:factsaboutkappahorntheory}, we write this free algebra as $T[\ms x_s]$, for any $A\in\mmod{\T}$,
+\[ \mmod{\T}(T[\ms x_s],A) \cong A_s \cong (V_\T)_s(A). \]
+$V_\T$ being an internal $\T$-algebra follows from the fact that each $V_\T(A) = A$ is a $\T$-algebra.
+
+The next step is to realise that there is an internal $\pf\kappa$-Horn theory in $\Set[\T_\kappa]$ of \emph{$V_\T$-algebras}, obtained by applying the construction in~\zcref{exm:coslicehorn} to the $\T$-model $V_\T$. We will denote this internal theory as $\VT$. We will use $\mmod\VT$ to denote the locally small internal category of $\VT$-models in $\Set[\T_\kappa]$. In particular, for any $\VT$-models $M,N$ in $\Set[\T_\kappa]$, there is an object of homomorphisms between them
+\[ {\mmod\VT}(M,N) \coloneq \scomp{f \colon M \to N}{f \text{ is a $\T$-homomorphism over $V_\T$}}, \]
+which is an internal object in $\Set[\T_\kappa]$. We also use $\geo{\mmod\VT}$ to denote the \emph{externalised} category over $\Set$, which is the image along the global section functor $\Gamma \colon \Set[\T_\kappa] \to \Set$. 
+
+It is easy to observe that there exists a canonical functor internalising an external $\T$-model to an internal model of $\VT$,
+\[ \uv - : \mmod\T \to \geo{\mmod\VT}. \]
+Given any $\T$-algebra $X$, the interpretation of $\uv{X}$ at sort $s\in S$ is given by the following presheaf: for any $A\in\mmod{\T}_\kappa$,
+\[ \uv X_s(A) \coloneq (X \otimes A)_s, \]
+where $\otimes$ is the \emph{coproduct} in $\mmod\T$. This admits an evident homomorphism $V_\T \to \uv X$, where levelwise is given by the canonical coproduct inclusion $A \to X \otimes A$.
+
+\begin{proposition}\label{prop:internalrep}
+  $\uv- \colon \mmod\T \to \geo{\mmod\VT}$ makes $\mmod\T$ a coreflexive subcategory of $\geo{\mmod\VT}$, with the right adjoint retraction given by the global section functor
+  \[ \Gamma \colon \geo{\mmod\VT} \to \mmod\T, \]
+  which takes a $\VT$-model $M$ in $\Set[\T_\kappa]$ to its global point.
+\end{proposition}
+\begin{proof}
+  We first observe that $\Gamma$ is equivalent to evaluating at $T[\emp]$, the \emph{initial} $T$-model. Hence, given any $f : \geo{\mmod\VT}(\uv X,M)$, by applying $\Gamma$ we get
+  \[
+  \begin{tikzcd}
+    {\uv X} && M && X && {\Gamma M} \\
+    & {V_\T} &&& {} & T
+    \arrow["f", from=1-1, to=1-3]
+    \arrow["\mapsto"{description}, draw=none, from=1-3, to=2-5]
+    \arrow["{\Gamma f}", from=1-5, to=1-7]
+    \arrow[from=2-2, to=1-1]
+    \arrow[from=2-2, to=1-3]
+    \arrow[from=2-6, to=1-5]
+    \arrow[from=2-6, to=1-7]
+  \end{tikzcd}
+  \]
+  Since $\Gamma$ preserves limits, $\Gamma f$ is again a homomorphism between $\T$-models. On the other hand, given $g : X \to \Gamma M$, we first obtain a $\T$-homomorphism for any $A : \mmod\T\fp$,
+  \[ M? \circ g : \mmod\T(X,M(A)), \]
+  where $? : \mmod\T(T,A)$ is the unique map from the initial object. This way, we obtain a map
+  \[ [M?\circ g,M_A] : \uv X(A) = X \otimes A \to M(A), \]
+  where $M_A : A \to M(A)$ is given by the map $V_\T \to M$. Verifying these are inverses to each other is routine. 
+\end{proof}
+
+\begin{corollary}\label{cor:cpalgebraabsolute}
+  $\uv-$ restricts to an equivalence
+  \[ \uv - : \mmod\T\cp = \geo{\mmod\VT\cp}. \]
+\end{corollary}
+\begin{proof}
+  Since $\uv -$ is a coreflexive embedding, it is automatically fully faithful. Thus, it suffices to show it is essentially surjective, which holds by absoluteness of countable sets in $\Set[\T]$.
+\end{proof}
+
+For any $\VT$-model $M$, we define its internal spectrum as follows,
+\[ \spec M \coloneq \mmod\VT(M,V_\T). \]
+
+\begin{lemma}\label{lem:represpecrepre}
+  For any $A : \mmod\T\fp$, we have
+  \[ \spec \uv A = \yon^A. \]
+\end{lemma}
+\begin{proof}
+  By construction, for any $B:\mmod\T\fp$,
+  \begin{align*}
+    \spec \uv A(B) 
+    &= \Set[\T](\yon^B,\mmod\VT(\uv A,V_\T)) \\
+    &= \geo{\mmod\VT}(\uv A,V_\T^{\yon^B}) \\
+    &= \mmod\T(A,B) = \yon^A(B)
+  \end{align*}
+  The last steps is due to \zcref{prop:internalrep}, and that $\Gamma V_\T^{\yon^B} = V_\T(B) = B$. It follows that $\spec A = \yon^A$.
+\end{proof}
+
+\begin{lemma}\label{lem:externalqc}
+  For any $A : \mmod\T\fp$, the transpose of the evaluation map
+  \[ \uv A \to V_T^{\spec \uv A} \]
+  is an equivalence between $\VT$-models.
+\end{lemma}
+\begin{proof}
+  For any $B:\mmod\T\fp$, we have
+  \[ V_\T^{\spec\uv A}(B) = \Set[\T](\yon^A \times \yon^B,V_\T) = A \otimes B = \uv A(B). \]
+  This holds since $\yon^A \times \yon^B = \yon^{A \otimes B}$.
+\end{proof}
+
+\begin{theorem}[Quasi-Coherence]\label{thm:qc}
+  For any $X : \mmod\VT\fp$, the transpose of the evaluation map
+  \[ X \to V_\T^{\spec X} \]
+  is an equivalence between $\VT$-models.
+\end{theorem}
+\begin{proof}
+  We apply \zcref{lem:externalqc} to the internal theory $\VT$ in $\Set[\T]$. Let $\Set[\T][\VT]$ be the classifying topos of $\VT$ over $\Set[\T]$, and let $V_{V_\T}$ be the generic $\VT$-model in $\Set[\T][\VT]$. By \zcref{lem:externalqc}, we have an equivalence in $\Set[\T][\VT]$
+  \[ \uv X = V_{\VT}^{\spec \uv X}, \]
+  and by \zcref{lem:represpecrepre}, $\spec\uv X = \yon^{X}$. Now if we apply the global section $\Gamma : \Set[\T][\VT] \to \Set[\T]$, on one hand we get
+  \[ \Gamma\uv X = \uv X(V_\T) = X \otimes V_\T = X, \]
+  and on the other hand, by the computation in \zcref{lem:externalqc},
+  \[ \Gamma V_{\VT}^{\spec\uv X} = V_{\VT}^{\spec\uv X}(V_\T) = X \otimes V_\T = X. \]
+  This completes the proof.
+\end{proof}
+
+\begin{example}\label{exm:pshdlqc}
+  Let $\mbb D$ be the theory of distributive lattices, and let $\DL$ be the category of distributive lattices. By \zcref{thm:finitedualityfordl}, we have a duality $\DL\fp\op \simeq \Pos\fp$, which implies
+  \[ \Set[\mbb D] \simeq \psh(\Pos\fp). \]
+  Thus internally in $\Set[\mbb D]$, we have quasi-coherence for finitely presentable distributive lattices.
+\end{example}
+
+\begin{example}\label{exm:pshdmqc}
+  Let $d\mbb{M}$ be the theory of de Morgan lattice, and let $d\mb{M}$ be the category of de Morgan lattices. This theory is still locally finite, thus all finitely presented de Morgan lattices are again finite.
+\end{example}
+
+\begin{example}\label{exm:pshhaqc}
+  Let $\mbb H$ be the theory of Heyting algebras, and let $\HA$ be the category of Heyting algebras. The difference in this case is that finitely presented Heyting algebras are no longer finite.
+\end{example}
+
+\begin{example}\label{exm:pshbaqc}
+  Let $\mbb B$ be the theory of Boolean algebras, and let $\BA$ be the category of Boolean algebras. Similarly, we have
+  \[ \Set[\mbb B] \simeq \func(\BA\fp,\Set) \simeq \psh(\Fin). \]
+\end{example}
+
+\begin{example}\label{exm:pshmlqc}
+  Let $\mbb J$ be the theory of join-semi-lattices, and let $\JL$ be the category of join-semi-lattices. The category $\JL\fp$ is in fact self-dual,
+  \[ \Set[\mbb J] \simeq \func(\JL\fp,\Set) \simeq \psh(\JL\fp). \]
+  Completely similarly we can define the theory $\mbb M$ of meet-semi-lattices. The theory $\mbb M$ and $\mbb J$ are isomorphic, hence they generates equivalent models and classifying topoi.
+\end{example}
+
+\begin{example}\label{exm:pshcnqc}
+  Let $\mbb C$ be the theory of \emph{connection algebra}. A model of $\mbb C$ is a set equipped with two monoid structure $(0,\sqcup)$ and $(1,\sqcap)$, such that $0 \sqcap x = 0 = 0 \sqcap x$ and $1 \sqcup x = 1 = x \sqcup 1$. In particular, this is not necessarily a lattice.
+\end{example}
+
+
+\section{Transferring to local subuniverses}
+

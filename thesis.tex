@@ -1,94 +1,247 @@
-%%%%%
-%%
-%% Sample document ``thesis.tex''
-%%
-%% Version: v0.2
-%% Authors: Jean Martina, Rok Strnisa, Matej Urbas
-%% Date: 30/07/2008
-%%
-%% Copyright (c) 2008-2011, Rok Strniša, Jean Martina, Matej Urbas
-%% License: Simplified BSD License
-%% License file: ./License
-%% Original License URL: http://www.freebsd.org/copyright/freebsd-license.html
-%%%%%
-
-% Available documentclass options:
-%
-%   <all `report` document class options, e.g.: `a5paper`>
-%   withindex   - enables the index. New index entries can be added through `\index{my entry}`
-%   glossary    - enables the glossary.
-%   techreport  - typesets the thesis in the technical report format.
-%   firstyr     - formats the document as a first-year report.
-%   times       - uses the `Times` font.
-%   backrefs    - add back references in the Bibliography section
-%
-% For more info see `README.md`
-\documentclass[withindex,glossary]{cam-thesis}
+\documentclass[withindex,glossary,times]{cam-thesis}
 
 % Citations using numbers
 \usepackage[numbers]{natbib}
+\usepackage{amsmath,amssymb,amsthm,amsfonts}
+\usepackage{zref-clever}
+\zcsetup{cap=true}
+\usepackage{stmaryrd}
+\usepackage{tikz-cd}
+\usepackage{quiver}
+\usepackage{CJKutf8}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{stix2}
+\usepackage{anyfontsize}
+
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+\newcommand{\mbb}[1]{\mathbb{#1}}
+\newcommand{\gn}[1]{\ulcorner\! #1 \!\urcorner}
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\mf}[1]{\mathfrak{#1}}
+\newcommand{\ms}[1]{\mathsf{#1}}
+\newcommand{\Ind}{\mathbf{Ind}}
+\newcommand{\Pro}{\mathbf{Pro}}
+\newcommand{\Top}{\mf{Top}}
+\newcommand{\Set}{\mb{Set}}
+\newcommand{\Prop}{\mb{Prop}}
+\newcommand{\sSet}{\mb{sSet}}
+\newcommand{\sSeto}{\mb{sSet}_{\le 1}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Fin}{\mb{Fin}}
+\newcommand{\Cnt}{\mb{Cnt}}
+\newcommand{\Enm}{\mb{Enm}}
+\newcommand{\Grp}{\mb{Grp}}
+\newcommand{\sub}{\mr{Sub}}
+\newcommand{\Lex}{\mf{Lex}}
+\newcommand{\Pos}{\mb{Pos}}
+\newcommand{\alg}{\text{-}\mb{Alg}}
+\newcommand{\Var}{\mb{Var}}
+\newcommand{\Aff}{\mb{Aff}}
+\newcommand{\Vect}{\mb{Vect}}
+\newcommand{\CRing}{\mb{CRing}}
+\newcommand{\DL}{\mb{DL}}
+\newcommand{\BA}{\mb{BA}}
+\newcommand{\HA}{\mb{HA}}
+\newcommand{\JL}{\mb{JL}}
+\newcommand{\ML}{\mb{ML}}
+\newcommand{\ProMon}{\mb{ProMod}}
+\newcommand{\CTopoi}{\mb{CTopoi}}
+\newcommand{\PTc}{\mb{PT}_c}
+\newcommand{\Topoi}{\mb{Topoi}}
+\newcommand{\sh}{\mb{Sh}}
+\newcommand{\psh}{\mb{Psh}}
+\newcommand{\Cont}{\mb{Cont}}
+\newcommand{\op}{^{\mathrm{op}}}
+\newcommand{\inv}{^{\mathrm{-1}}}
+\newcommand{\pf}[1]{\widehat{#1}}
+\newcommand{\qsi}[1]{\tilde{#1}}
+\newcommand{\cob}{\vartriangleleft}
+\newcommand{\other}{\mathrm{otherwise}}
+\newcommand{\geo}[1]{|#1|}
+\newcommand{\ov}[1]{\overline{#1}}
+\newcommand{\set}[1]{\{\,#1\,\}}
+\newcommand{\eff}{\Leftrightarrow}
+\newcommand{\conjt}{\;\&\;}
+\newcommand{\pair}[1]{\left\langle#1\right\rangle}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\ev}{\mathrm{ev}}
+\newcommand{\elem}{\int\!\!}
+\newcommand{\nt}{\Rightarrow}
+\newcommand{\scomp}[2]{\{\,#1\mid#2\,\}}
+\newcommand{\surj}{\twoheadrightarrow}
+\newcommand{\inj}{\rightarrowtail}
+\newcommand{\hook}{\hookrightarrow}
+\newcommand{\prth}[1]{\left(#1\right)}
+\newcommand{\fn}{_{\mr{f.}}}
+\newcommand{\fp}{_{\mr{f.p.}}}
+\newcommand{\fpp}{_{\mr{f.p.,+}}}
+\newcommand{\cp}{_{\mr{c.p.}}}
+\newcommand{\cpp}{_{\mr{c.p.,+}}}
+\newcommand{\dv}{\operatorname{\uparrow}}
+\newcommand{\cv}{\operatorname{\downarrow}}
+\newcommand{\et}{_{\text{\'et}}}
+\newcommand{\N}{\mbb N}
+\newcommand{\Q}{\mbb Q}
+\newcommand{\Z}{\mbb Z}
+\newcommand{\T}{\mbb T}
+\newcommand{\gr}[2]{[#1|#2]}
+\newcommand{\fa}[2]{\forall #1\!\colon\!\!#2.\ }
+\newcommand{\ex}[2]{\exists #1\!\colon\!\!#2.\ }
+\newcommand{\exu}[2]{\exists_! #1\!\colon\!\!#2.\ }
+\newcommand{\ld}[2]{\lambda #1\!\colon\!\!#2.\ }
+\newcommand{\emp}{\emptyset}
+\newcommand{\eq}{\leftrightarrow}
+\newcommand{\ass}[1]{\llbracket#1\rrbracket} 
+\newcommand{\pss}[1]{|\!|#1|\!|}
+\newcommand{\mmod}[1]{#1\text{-}\mathbf{Mod}}
+\newcommand{\tm}[1]{#1\text{-}\mathrm{Term}}
+\newcommand{\eqn}[1]{#1\text{-}\mathrm{Eqn}}
+\newcommand{\horn}[1]{#1\text{-}\mathrm{Horn}}
+\newcommand{\upp}{_{\ms U}}
+\newcommand{\func}{\mb{Func}}
+\newcommand{\spec}{\operatorname{Spec}}
+\newcommand{\El}{\mr{El}}
+\newcommand{\lan}{\ms{lan}}
+\newcommand{\ran}{\ms{ran}}
+\newcommand{\VT}{V_\T\!\ltimes\!\T}
+\newcommand{\uv}[1]{\underline{#1}}
+\newcommand{\gp}{\ms{Grpd}}
+\newcommand{\hp}{\text{-}}
+\newcommand{\st}{\ms{Set}}
+
+\newcommand\istsym{\ms{t}}
+\newcommand\isfsym{\ms{f}}
+\newcommand\ist[1]{\istsym(#1)}
+\newcommand\isf[1]{\isfsym(#1)}
+\newcommand{\pt}{\ms{pt}}
+\newcommand{\tp}{\ms{Type}}
+\newcommand{\pp}{\ms{Prop}}
+\newcommand{\stt}{\ms{Set}}
+\newcommand{\cnt}{\ms{Cnt}}
+\newcommand{\pcat}{\ms{PCat}}
+\newcommand{\cat}{\ms{Cat}}
+\newcommand{\pcatt}{\ms{PCAT}}
+\newcommand{\catt}{\ms{CAT}}
+\newcommand{\PCat}{\mb{PCat}}
+\newcommand{\Cat}{\mb{Cat}}
+\newcommand{\sFrm}{\sigma\mb{Frm}}
+\newcommand{\Frm}{\mb{Frm}}
+\newcommand{\Loc}{\mb{Loc}}
+\newcommand{\PCAT}{\mb{PCAT}}
+\newcommand{\CAT}{\mb{CAT}}
+\newcommand{\Catt}{\mf{Cat}}
+\newcommand{\CATT}{\mf{CAT}}
+\newcommand{\Topp}{\mb{Esp}}
+\newcommand{\Tp}{\ms{TYPE}}
+\newcommand{\Pp}{\ms{PROP}}
+\newcommand{\St}{\ms{SET}}
+\newcommand{\Gp}{\ms{GRPD}}
+\newcommand{\fst}{\ms{Fin}}
+\newcommand{\Mod}{\mb{Mod}}
+\newcommand{\Spec}{\mb{Spec}}
+\newcommand{\dneg}{\neg\neg}
+\newcommand{\wTop}{\omega\mb{Esp}}
+\newcommand{\wCPO}{\omega\mb{CPO}}
+
+\NewDocumentCommand\obsle{o}{\sqsubseteq_{\ms{obs}}\IfValueT{#1}{^{#1}}}
+\NewDocumentCommand\satle{o}{\le_{\ms{sat}}\IfValueT{#1}{^{#1}}}
+\NewDocumentCommand\behle{o}{\sqsubseteq_{\ms{beh}}\IfValueT{#1}{^{#1}}}
+\NewDocumentCommand\opens{}{\mc{O}}
+
+
+\DeclareFontFamily{U}{dmjhira}{}
+\DeclareFontShape{U}{dmjhira}{m}{n}{ <-> dmjhira }{}
+\DeclareRobustCommand{\yon}{\text{\usefont{U}{dmjhira}{m}{n}\symbol{"48}}}
+\DeclareRobustCommand{\noy}{\text{\reflectbox{\yon}}\!}
+
+\makeatletter
+\newcommand{\ct@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\ct}{%
+  \mathop{\mathpalette\ct@{\rightarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+\makeatletter
+\newcommand{\lt@}[2]{%
+  \vtop{\m@th\ialign{##\cr
+    \hfil$#1\operator@font lim$\hfil\cr
+    \noalign{\nointerlineskip\kern1.5\ex@}#2\cr
+    \noalign{\nointerlineskip\kern-\ex@}\cr}}%
+}
+\newcommand{\lt}{%
+  \mathop{\mathpalette\lt@{\leftarrowfill@\textstyle}}\nmlimits@
+}
+\makeatother
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{construction}[theorem]{Construction}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{convention}[theorem]{Convention}
+\newtheorem*{axiom}{Axiom}
+
+\zcLanguageSetup{english}{
+  type = observation,
+    Name-sg = Observation,
+    name-sg = observation,
+    Name-pl = Observations,
+    name-pl = observations,
+}
+
+\AddToHook{env/lemma/begin}{\zcsetup{countertype={theorem=lemma}}}
+\AddToHook{env/corollary/begin}{\zcsetup{countertype={theorem=corollary}}}
+\AddToHook{env/proposition/begin}{\zcsetup{countertype={theorem=proposition}}}
+\AddToHook{env/definition/begin}{\zcsetup{countertype={theorem=definition}}}
+\AddToHook{env/example/begin}{\zcsetup{countertype={theorem=example}}}
+\AddToHook{env/remark/begin}{\zcsetup{countertype={theorem=remark}}}
+\AddToHook{env/notation/begin}{\zcsetup{countertype={theorem=notation}}}
+\AddToHook{env/axiom/begin}{\zcsetup{countertype={theorem=axiom}}}
+\AddToHook{env/construction/begin}{\zcsetup{countertype={theorem=construction}}}
+\AddToHook{env/observation/begin}{\zcsetup{countertype={theorem=observation}}}
+\AddToHook{env/convention/begin}{\zcsetup{countertype={theorem=convention}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Thesis meta-information
 %%
 
 %% The title of the thesis:
-\title{My dissertation title\\
-spanning two lines}
+\title{The internal language of classifying topoi and applications in synthetic mathematics}
 
 %% The full name of the author (e.g.: James Smith):
-\author{My Full Name}
+\author{Lingyuan Ye}
 
 %% College affiliation:
-\college{My College}
+\college{Lucy Cavendish College}
 
-%% College shield [optional]:
-% \collegeshield{CollegeShields/Christs}
-% \collegeshield{CollegeShields/Churchill}
-% \collegeshield{CollegeShields/Clare}
-% \collegeshield{CollegeShields/ClareHall}
-% \collegeshield{CollegeShields/CorpusChristi}
-% \collegeshield{CollegeShields/Darwin}
-% \collegeshield{CollegeShields/Downing}
-% \collegeshield{CollegeShields/Emmanuel}
-% \collegeshield{CollegeShields/Fitzwilliam}
-% \collegeshield{CollegeShields/Girton}
-% \collegeshield{CollegeShields/GonCaius}
-% \collegeshield{CollegeShields/Homerton}
-% \collegeshield{CollegeShields/HughesHall}
-% \collegeshield{CollegeShields/Jesus}
-% \collegeshield{CollegeShields/Kings}
-% \collegeshield{CollegeShields/LucyCavendish}
-% \collegeshield{CollegeShields/Magdalene}
-% \collegeshield{CollegeShields/MurrayEdwards}
-% \collegeshield{CollegeShields/Newnham}
-% \collegeshield{CollegeShields/Pembroke}
-% \collegeshield{CollegeShields/Peterhouse}
-% \collegeshield{CollegeShields/Queens}
-% \collegeshield{CollegeShields/Robinson}
-% \collegeshield{CollegeShields/Selwyn}
-% \collegeshield{CollegeShields/SidneySussex}
-% \collegeshield{CollegeShields/StCatharines}
-% \collegeshield{CollegeShields/StEdmunds}
-% \collegeshield{CollegeShields/StJohns}
-% \collegeshield{CollegeShields/Trinity}
-% \collegeshield{CollegeShields/TrinityHall}
-% \collegeshield{CollegeShields/Wolfson}
-% \collegeshield{CollegeShields/CUniNoText}
-\collegeshield{CollegeShields/FitzwilliamRed}
+\collegeshield{CollegeShields/LucyCavendish}
 
 %% Submission date [optional]:
-% \submissiondate{November, 2042}
+\submissiondate{June, 2027}
 
 %% You can redefine the submission notice [optional]:
 % \submissionnotice{A badass thesis submitted on time for the Degree of PhD}
 
 %% Declaration date:
-\date{My Month, My Year}
+\date{06, 2027}
 
 %% PDF meta-info:
 \subjectline{Computer Science}
-\keywords{one two three}
+\keywords{topoi, internal language, synthetic mathematics}
 
 
 
@@ -96,7 +249,15 @@ spanning two lines}
 %% Abstract:
 %%
 \abstract{%
-  My abstract ...
+  This thesis contributes to the understanding of the internal language of topoi, through the \emph{first-order theory it classifies}. The PhD thesis of~\citet{blechschmidt:2017} with the unpublished but wildly circulated note~\cite{blechschmidt_general_2020} has introduced a \emph{synthetic quasi-coherence principle (\gls{SQC})} for classifying topoi of Horn theories, connecting the higher-order internal logic of the classifying topos with the first-order Horn theory it classifies. We have generalised this principle to the case of \emph{$\kappa$-Horn theories}, which allows for operations with \emph{higher arity}, and also to the case of \emph{coherent theories}, which allows for theories with coherent axioms. 
+
+  These generalisations greatly improve the applicability of the quasi-coherence principle, and the second part of this thesis showcases this in various contexts, drawing new connections between different \emph{first-order theories} and branches of \emph{synthetic mathematics}: 
+  \begin{itemize}
+    \item The classifying topoi for \emph{distributive lattices} and \emph{$\sigma$-frames}: the \gls{SQC} for which provides a full account for the axioms of \emph{synthetic domain theory (\gls{SDT})} as specified by~\citet{hyland_first_2006}. These techniques also draw new connections between the properties of an \emph{interval object} and that of the theory of distributive lattices, with further applications in synthetic higher category theory.
+    \item The classifying topos for \emph{coherent arithmetic} as in~\citet{ye_categorical_2026}: the \gls{SQC} for which induces the structure of \emph{synthetic computability} in the sense of~\citet{bauer_first_2006}. This provides the first known example of a \emph{sheaf topos} validating \emph{Church's thesis}, and unveils a striking parallelism between the structure of arithmetic and computability.
+    \item The classifying topos for \emph{Heyting algebras}: the \gls{SQC} for which provides a new environment for doing \emph{synthetic topology}. In particular, there is a striking new connection between \emph{uniform interpolation} for intuitionistic propositional logic established in~\citet{pitts_interpretation_1992}, and the topological structures of open subspaces.
+    \item The classifying topos for \emph{decidable atomless Boolean algebras}: the \gls{SQC} for which provides a striking connection with \emph{synthetic probability theory} in the style of~\citet{SimpsonAlex2024EaCI}, and the structure of \emph{partitions} of a Boolean algebra. The \emph{quantifier elimination} for this coherent theory also provides new proof strategies for establishing properties of independence relations of relative probability distribution in a synthetic way.
+  \end{itemize}
 }
 
 
@@ -105,20 +266,25 @@ spanning two lines}
 %% Acknowledgements:
 %%
 \acknowledgements{%
-  My acknowledgements ...
+
+% First and foremost, I would like to thank my supervisor, Jon Sterling.
+
+% At last, I want to thank \begin{CJK}{UTF8}{gbsn}越\end{CJK}. In the current time, both of us seeking a career in academia while at the same time being in love and staying as a couple seems like impossible. Maybe the love we share is both a gift and a curse in this respect. However, you stood by me no matter how difficult the situation was -- for this I'm eternally grateful. I will always love you.
 }
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Glossary [optional]:
-%%
-\newglossaryentry{HOL}{
-    name=HOL,
-    description={Higher-order logic}
+% %%
+\newglossaryentry{SDT}{
+    name=SDT,
+    description={synthetic domain theory}
 }
-
-
+\newglossaryentry{SQC}{
+    name=SQC,
+    description={synthetic quasi-coherence}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Contents:
@@ -137,55 +303,13 @@ spanning two lines}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Thesis body:
 %%
-\chapter{Introduction}
-This document was created with the help of a custom class file~\cite{example}. A
-{\em \LaTeX{} class file}\index{\LaTeX{} class file@LaTeX class file} is a file,
-which holds style information for a particular \LaTeX{} class\footnote{You can
-find more about classes at \url{http://www.ctan.org/pkg/clsguide}.}.
-
-There are some handy options for citing publications. It is possible to print just the year of some publication:~\citeyear{example}. It is also possible to print the name of the author(s) in the form ``Author et al.'': \citeauthor{example}. Finally, there is also a command to print the full list of authors of a publication: \citet*{example}.
-
-This is an example glossary reference: \GLS{HOL}. \\
- 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\marginpar[Margin note.]{Margin par.}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-\section{My Section}
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
+\include{source/intro}
+\part{The theories of quasi-coherence}
+\include{source/sqc_horn}
+\include{source/sqc_coh}
+\part{The applications of quasi-coherence}
+\include{source/app_domain}
+\include{source/app_arith}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% References:
@@ -200,19 +324,6 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 \addcontentsline{toc}{chapter}{References}
 \bibliographystyle{plainnat}
 \bibliography{thesis}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Appendix:
-%%
-
-\appendix
-
-\chapter{Extra Information}
-Some more text ...
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Index:
