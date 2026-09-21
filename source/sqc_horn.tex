@@ -84,7 +84,7 @@ In this section we recall some basic facts about infinitary Horn theories from~\
 \end{example}
 
 \begin{example}[Coslices of $\kappa$-Horn theories]\label{exm:coslicehorn}
-  $\kappa$-Horn theories are closed under coslices in the following sense. Let $\T$ be a $\kappa$-Horn theory with an $S$-sorted signature $\Sigma$. Let $A$ be a $\Sigma$-structure. One may construct a new $\kappa$-Horn theory $A \ltimes \T$ under a new $S$-sorted signature $A+\Sigma$, where for each sort $s\in S$ and each element $a\in A_s$, a new constant $c_a$ will be added for the sort $s$. The axioms of $A \ltimes \T$ is the union of $\T$ with the closed equations that are valid in $A$. This way, an $A \ltimes \T$-algebra is a pair $(B,f)$, with $B$ a $\T$-algebra together with a homomorphism $f : A \to B$. Hence, the natural functor $\mmod{A\ltimes\mbb T} \to A/\mmod{\T}$ will be an equivalence.
+  $\kappa$-Horn theories are closed under coslices in the following sense. Let $\T$ be a $\kappa$-Horn theory with an $S$-sorted signature $\Sigma$. Let $A$ be a $\Sigma$-structure. One may construct a new $\kappa$-Horn theory $A \ltimes \T$ under a new $S$-sorted signature $A+\Sigma$, where for each sort $s\in S$ and each element $a\in A_s$, a new constant $c_a$ will be added for the sort $s$. The axioms of $A \ltimes \T$ is the union of $\T$ with the closed equations that are valid in $A$. This way, an $A \ltimes \T$-algebra is a pair $(B,f)$, with $B$ a $\T$-algebra together with a homomorphism $f \colon A \to B$. Hence, the natural functor $\mmod{A\ltimes\mbb T} \to A/\mmod{\T}$ will be an equivalence.
 \end{example}
 
 Finally, we record the following general results for $\kappa$-Horn theories. Let $\mmod{\T}_\kappa$ be the full subcategory of $\kappa$-presentable objects in $\mmod{\T}$. Recall we also write $\kappa\hp\Lex$ as the 2-category of categories with $\kappa$-small limits.
@@ -107,6 +107,89 @@ Finally, we record the following general results for $\kappa$-Horn theories. Let
 \begin{proof}
   See~\citet[Rem. 3.32]{adamek1994locally}. 
 \end{proof}
+
+The most important fact about Horn theories is that it admits the construction of \emph{free} algebras:
+
+\begin{lemma}\label{lem:freealgebraexist}
+  For any type $X$ and any family $\varphi : R \to \eqn{\Sigma}(X)$ of equations, we can construct a $\T$-model $T\gr XR$, which has the following universal property,
+  \[ \mmod\T(T\gr XR,A) = \scomp{f : X \to A}{\fa rR A,f \models \varphi_r}. \]
+\end{lemma}
+\begin{proof}
+  We define the algebra $T\gr XR$ as a set-quotient of $\tm{\Sigma}(X)$. We consider the smallest relation $\sim$ on $\tm{\Sigma}(X)$ satisfying
+  \begin{itemize}
+    \item For any $r:R$, $\sim$ contains $\varphi_r$;
+    \item For all operation $\sigma : \Sigma$ and any $f,g : a\sigma \to \tm{\Sigma}(X)$, 
+    \[ \fa{x}{a\sigma} fx \sim gx \nt \sigma f \sim \sigma g, \]
+    or in other words $\sim$ is a congruence;
+    \item For all $\Phi := (U,V,\set{\varphi_u:=\pair{s_u,t_u}}_{u:U},\varphi:=\pair{s,t})$ in $\T$ and all $f : V \to \tm{\Sigma}(X)$,
+    \[ \fa uU \ass{s_u}_f \sim \ass{t_u}_f \nt \ass{s}_f\sim\ass{t}_f. \]
+  \end{itemize}
+  $T\gr XR$ is then the set-quotient $\tm{\Sigma}(X)/\sim$. The fact that $T\gr XR$ is a $\T$-model and it satisfies the universal property directly follows from the construction.
+\end{proof}
+
+In fact, the above free construction also indicates how to construct general colimits by taking the congruence. The argument is standard, and we record that
+
+\begin{proposition}\label{prop:hornmodelaccessunderset}
+  For any $\ms U$-Horn theory $\T$, $\mmod\T$ is complete and cocomplete. The forgetful functor creates limits and $\ms U$-filtered colimits.
+\end{proposition}
+\begin{proof}
+  We verify that $U : \mmod\T \to \Set$ preserves $\ms U$-filtered colimits. Suppose we have a diagram $F : \mc I \to \mmod\T$ with $\mc I$ $\ms U$-filtered. We can define a $\Sigma$-structure on the colimit $A := \ct_{i:\mc I}UF$. For $\sigma : \Sigma$, since $a\sigma : \ms U$ is 1-projective, there merely exists $f : a\sigma \to \sum_{i:\mc I_1}Fi$. This gives us a $\ms U$-small diagram in $\mc I$ indexed by $a\sigma : \ms U$, thus there merely exist a cocone $(k,\alpha)$. This way, we can define $\ass{\sigma}([f])$ to be $[(k,\ass{\sigma}_k(\ld x{a\sigma}F\alpha_x(fx)))]$. The point here is that the element $\ass\sigma([f])$ is \emph{uniquely} defined, thus does not depend on the choice of $(k,\alpha)$, which justifies turning mere existence into an actual existence. 
+
+  To see the above $\Sigma$-structure is a $\T$-model, consider any Horn clause $\Phi := (U,V,\set{\varphi_u}_{u:U},\varphi)$ in $\T$. Suppose we have a family $f : V \to A$ with $A,f \models \varphi_u$ for all $u : U$. Completely similarly, since both $U$ and $V$ are $\ms U$-small, there merely exists a cocone $(k,\alpha)$ where the terms $\ass{s_u}_f$ and $\ass{t_u}_f$ are identified. Since $F_k$ is a $\T$-model, it follows that $A,f \models \varphi$ as well. The universal property can be verified directly.
+\end{proof}
+
+We want to furthermore show that $\mmod\T$ is locally $\ms U$-presentable. For this we study $\ms U$-presentable $\T$-models.
+
+
+\section{Presentable Algebras}\label{sec:presentable_algebras}
+
+Let $\T$ be a $\ms U$-Horn theory for some notion of size $\ms U$. In this section we will characterise $\ms U$-presentable objects in $\mmod\T$. 
+
+\begin{definition}
+  We say a $\T$-model $A$ is \emph{$\ms U$-presented}, if there merely exists $\ms U$-small $X,R$ such that $A = T\gr XR$. The full subcategory of $\ms U$-presented algebras will be denoted as $\mmod\T^{\ms U}$.
+\end{definition}
+
+\begin{lemma}
+  $\ms U$-presented $\T$-models are $\ms U$-presentable.
+\end{lemma}
+\begin{proof}
+  Let $A$ be a $\ms U$-presented model. Since we are showing a proposition, we assume $A = T\gr XR$ for some $\ms U$-small $X,R$. Let $F : \mc I \to \mmod\T$ be a $\ms U$-filtered diagram. Consider the canonical map
+  \[ \ct_{i:\mc I}\mmod\T(A,Fi) \to \mmod\T(A,\ct_{i:\mc I}Fi). \]
+  To show it is injective, suppose we have $[(i,f)]$ and $[(j,g)]$ in the domain which are identified in the codomain. By construction, this means that
+  \[ \fa xX\ex{k}{\mc I_1}\ex{\alpha}{\mc I(i,k)}\ex{\beta}{\mc I(j,k)} F\alpha(fx) = F\beta(gx). \]
+  We may assume $X$ to be 1-projective, thus there merely is $k : X \to \mc I_1$ with $\alpha,\beta$ satisfying the above condition. In particular, $[(i,f)] = [(j,g)]$.
+
+  To show surjectivity, suppose we are given a map in the codomain, which we may view as a map $f : X \to \ct_{i:\mc I}Fi$ that respects $R$. Again by 1-projectivity, we may first find a cocone $k$ that $f$ factors through and also respects $R$.
+\end{proof}
+
+\begin{lemma}
+  $\mmod\T^{\ms U}$ is closed under $\ms U$-small colimit.
+\end{lemma}
+\begin{proof}
+  By Proposition~\ref{prop:smallcompiffeqcoandeq} it suffices to show $\mmod\T^{\ms U}$ has $\ms U$-small equivariant colimit and coequalisers. For a diagram $F : I \to \mmod\T^{\ms U}$ from a $\ms U$-small set $I$, to show $\ct_{i:I}Fi$ is $\ms U$-presented, by 1-projectivity and the classifier 1-type $U$, we may assume there merely exists for any $i : I$ a presentation $Fi = T\gr{X_i}{R_i}$ with $X_i,R_i$ being $\ms U$-small. Then the colimit is given by $T\gr{\sum_{i:I}X_i}{\sum_{i:\mc I}R_i}$, which is again $\ms U$-presented since $\ms U$ is closed under dependent sum.
+
+  For coequaliser, suppose we have $f,g : T\gr XR \to T\gr YS$. The coequaliser is the same when composed with the quotient $T[X] \surj T\gr XR$, thus we may assume $R$ is empty, and $f,g : X \to T\gr YS$. In this case, by 1-projectivity of $X$ we merely get $\qsi f,\qsi g : X \to \tm{\Sigma}(Y)$, and we may view $X$ as the set of equations
+  \[ x \mapsto \pair{\qsi f,\qsi g} : X \to \eqn\Sigma(Y). \]
+  This way, the coequaliser is $T\gr{Y}{S+X}$.
+\end{proof}
+
+\begin{lemma}
+  For any $X : \mmod\T$, it is the $\ms U$-filtered colimit of the canonical diagram $\mmod\T^{\ms U}/X$.
+\end{lemma}
+\begin{proof}
+  Since $\mmod\T^{\ms U}$ has $\ms U$-small colimits, the diagram $\mmod{\T}^{\ms U}/X$ is indeed $\ms U$-filtered. The map $\ct_{A:\mmod\T^{\ms U}/X}A \to X$ is evidently surjective. Injectivity follows from the fact that $\mmod\T^{\ms U}/X$ has pushouts.
+\end{proof}
+
+\begin{theorem}\label{thm:hornmodelpresentable}
+  For any $\ms U$-Horn theory $\T$, the category $\mmod\T$ is locally $\ms U$-presentable, and $\mmod\T_{\ms U} = \mmod\T^{\ms U}$.
+\end{theorem}
+\begin{proof}
+  We have already seen that $\mmod\T^{\ms U} \subseteq \mmod\T_{\ms U}$. On the other hand, if $A$ is $\ms U$-presentable in $\mmod\T$, then the identity on $A$ merely factors through the colimit diagram $\mmod\T^{\ms U}/A$, thus it must be $\ms U$-presented.
+\end{proof}
+
+\begin{example}[Presentable objects in $\Set$]\label{exa:presentableobjectsinset}
+  Note that by viewing $\Set$ as $\mmod{\mbb O}$, a set is $\ms U$-presented iff it is the set-coequaliser of a pair $R \rightrightarrows X$ for some $\ms U$-small types $X,R$. This implies that $\Set_{\fst} = \Fin$, and $\Set_{\cnt}$ coincide with coequalisers of countable sets.
+\end{example}
 
 
 \section{Classifying topoi for Horn theories with higher arity}
@@ -208,7 +291,7 @@ The next step is to realise that there is an internal $\pf\kappa$-Horn theory in
 which is an internal object in $\Set[\T_\kappa]$. We also use $\geo{\mmod\VT}$ to denote the \emph{externalised} category over $\Set$, which is the image along the global section functor $\Gamma \colon \Set[\T_\kappa] \to \Set$. 
 
 It is easy to observe that there exists a canonical functor internalising an external $\T$-model to an internal model of $\VT$,
-\[ \uv - : \mmod\T \to \geo{\mmod\VT}. \]
+\[ \uv - \colon \mmod\T \to \geo{\mmod\VT}. \]
 Given any $\T$-algebra $X$, the interpretation of $\uv{X}$ at sort $s\in S$ is given by the following presheaf: for any $A\in\mmod{\T}_\kappa$,
 \[ \uv X_s(A) \coloneq (X \otimes A)_s, \]
 where $\otimes$ is the \emph{coproduct} in $\mmod\T$. This admits an evident homomorphism $V_\T \to \uv X$, where levelwise is given by the canonical coproduct inclusion $A \to X \otimes A$.
@@ -219,7 +302,7 @@ where $\otimes$ is the \emph{coproduct} in $\mmod\T$. This admits an evident hom
   which takes a $\VT$-model $M$ in $\Set[\T_\kappa]$ to its global point.
 \end{proposition}
 \begin{proof}
-  We first observe that $\Gamma$ is equivalent to evaluating at $T[\emp]$, the \emph{initial} $T$-model. Hence, given any $f : \geo{\mmod\VT}(\uv X,M)$, by applying $\Gamma$ we get
+  We first observe that $\Gamma$ is equivalent to evaluating at $T[\emp]$, the \emph{initial} $T$-model, since the corepresentable functor takes $T[\emp]$ to the terminal object in $\Set[\T_\kappa]$. Hence, given any $f \colon \geo{\mmod\VT}(\uv X,M)$, by applying $\Gamma$ we get
   \[
   \begin{tikzcd}
     {\uv X} && M && X && {\Gamma M} \\
@@ -233,16 +316,16 @@ where $\otimes$ is the \emph{coproduct} in $\mmod\T$. This admits an evident hom
     \arrow[from=2-6, to=1-7]
   \end{tikzcd}
   \]
-  Since $\Gamma$ preserves limits, $\Gamma f$ is again a homomorphism between $\T$-models. On the other hand, given $g : X \to \Gamma M$, we first obtain a $\T$-homomorphism for any $A : \mmod\T\fp$,
-  \[ M? \circ g : \mmod\T(X,M(A)), \]
-  where $? : \mmod\T(T,A)$ is the unique map from the initial object. This way, we obtain a map
-  \[ [M?\circ g,M_A] : \uv X(A) = X \otimes A \to M(A), \]
-  where $M_A : A \to M(A)$ is given by the map $V_\T \to M$. Verifying these are inverses to each other is routine. 
+  Since $\Gamma$ preserves limits, $\Gamma f$ is again a homomorphism between $\T$-models. On the other hand, given $g \colon X \to \Gamma M$, we first obtain a $\T$-homomorphism for any $A \colon \mmod\T\fp$,
+  \[ M? \circ g \colon \mmod\T(X,M(A)), \]
+  where $? \colon \mmod\T(T,A)$ is the unique map from the initial object. This way, we obtain a map
+  \[ [M?\circ g,M_A] \colon \uv X(A) = X \otimes A \to M(A), \]
+  where $M_A \colon A \to M(A)$ is given by the map $V_\T \to M$. Verifying these are inverses to each other is routine. 
 \end{proof}
 
 \begin{corollary}\label{cor:cpalgebraabsolute}
   $\uv-$ restricts to an equivalence
-  \[ \uv - : \mmod\T\cp = \geo{\mmod\VT\cp}. \]
+  \[ \uv - \colon \mmod\T\cp = \geo{\mmod\VT\cp}. \]
 \end{corollary}
 \begin{proof}
   Since $\uv -$ is a coreflexive embedding, it is automatically fully faithful. Thus, it suffices to show it is essentially surjective, which holds by absoluteness of countable sets in $\Set[\T]$.
@@ -252,7 +335,7 @@ For any $\VT$-model $M$, we define its internal spectrum as follows,
 \[ \spec M \coloneq \mmod\VT(M,V_\T). \]
 
 \begin{lemma}\label{lem:represpecrepre}
-  For any $A : \mmod\T\fp$, we have
+  For any $A \colon \mmod\T\fp$, we have
   \[ \spec \uv A = \yon^A. \]
 \end{lemma}
 \begin{proof}
@@ -267,7 +350,7 @@ For any $\VT$-model $M$, we define its internal spectrum as follows,
 \end{proof}
 
 \begin{lemma}\label{lem:externalqc}
-  For any $A : \mmod\T\fp$, the transpose of the evaluation map
+  For any $A \colon \mmod\T\fp$, the transpose of the evaluation map
   \[ \uv A \to V_T^{\spec \uv A} \]
   is an equivalence between $\VT$-models.
 \end{lemma}
@@ -278,14 +361,14 @@ For any $\VT$-model $M$, we define its internal spectrum as follows,
 \end{proof}
 
 \begin{theorem}[Quasi-Coherence]\label{thm:qc}
-  For any $X : \mmod\VT\fp$, the transpose of the evaluation map
+  For any $X \colon \mmod\VT\fp$, the transpose of the evaluation map
   \[ X \to V_\T^{\spec X} \]
   is an equivalence between $\VT$-models.
 \end{theorem}
 \begin{proof}
   We apply \zcref{lem:externalqc} to the internal theory $\VT$ in $\Set[\T]$. Let $\Set[\T][\VT]$ be the classifying topos of $\VT$ over $\Set[\T]$, and let $V_{V_\T}$ be the generic $\VT$-model in $\Set[\T][\VT]$. By \zcref{lem:externalqc}, we have an equivalence in $\Set[\T][\VT]$
   \[ \uv X = V_{\VT}^{\spec \uv X}, \]
-  and by \zcref{lem:represpecrepre}, $\spec\uv X = \yon^{X}$. Now if we apply the global section $\Gamma : \Set[\T][\VT] \to \Set[\T]$, on one hand we get
+  and by \zcref{lem:represpecrepre}, $\spec\uv X = \yon^{X}$. Now if we apply the global section $\Gamma \colon \Set[\T][\VT] \to \Set[\T]$, on one hand we get
   \[ \Gamma\uv X = \uv X(V_\T) = X \otimes V_\T = X, \]
   and on the other hand, by the computation in \zcref{lem:externalqc},
   \[ \Gamma V_{\VT}^{\spec\uv X} = V_{\VT}^{\spec\uv X}(V_\T) = X \otimes V_\T = X. \]
@@ -324,3 +407,4 @@ For any $\VT$-model $M$, we define its internal spectrum as follows,
 
 \section{Transferring to local subuniverses}
 
+\section{A resulting internal duality}\label{sec:internalduality}

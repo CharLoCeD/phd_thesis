@@ -88,14 +88,14 @@
 \newcommand{\Z}{\mbb Z}
 \newcommand{\T}{\mbb T}
 \newcommand{\gr}[2]{[#1|#2]}
-\newcommand{\fa}[2]{\forall #1\!\colon\!\!#2.\ }
-\newcommand{\ex}[2]{\exists #1\!\colon\!\!#2.\ }
-\newcommand{\exu}[2]{\exists_! #1\!\colon\!\!#2.\ }
-\newcommand{\ld}[2]{\lambda #1\!\colon\!\!#2.\ }
+\newcommand{\fa}[2]{\forall #1\!\in\!#2.\ }
+\newcommand{\ex}[2]{\exists #1\!\in\!#2.\ }
+\newcommand{\exu}[2]{\exists_! #1\!\in\!#2.\ }
+\newcommand{\ld}[2]{\lambda #1\!\in\!\!#2.\ }
 \newcommand{\emp}{\emptyset}
 \newcommand{\eq}{\leftrightarrow}
 \newcommand{\ass}[1]{\llbracket#1\rrbracket} 
-\newcommand{\pss}[1]{|\!|#1|\!|}
+\newcommand{\pss}[1]{\left\|#1\right\|}
 \newcommand{\mmod}[1]{#1\text{-}\mathbf{Mod}}
 \newcommand{\tm}[1]{#1\text{-}\mathrm{Term}}
 \newcommand{\eqn}[1]{#1\text{-}\mathrm{Eqn}}
@@ -111,6 +111,7 @@
 \newcommand{\gp}{\ms{Grpd}}
 \newcommand{\hp}{\text{-}}
 \newcommand{\st}{\ms{Set}}
+\newcommand{\dom}{\operatorname{dom}}
 
 \newcommand\istsym{\ms{t}}
 \newcommand\isfsym{\ms{f}}
@@ -118,7 +119,7 @@
 \newcommand\isf[1]{\isfsym(#1)}
 \newcommand{\pt}{\ms{pt}}
 \newcommand{\tp}{\ms{Type}}
-\newcommand{\pp}{\ms{Prop}}
+\newcommand{\pp}{\mb{Prop}}
 \newcommand{\stt}{\ms{Set}}
 \newcommand{\cnt}{\ms{Cnt}}
 \newcommand{\pcat}{\ms{PCat}}
@@ -145,6 +146,7 @@
 \newcommand{\dneg}{\neg\neg}
 \newcommand{\wTop}{\omega\mb{Esp}}
 \newcommand{\wCPO}{\omega\mb{CPO}}
+\newcommand{\Ob}{\mr{Ob}}
 
 \NewDocumentCommand\obsle{o}{\sqsubseteq_{\ms{obs}}\IfValueT{#1}{^{#1}}}
 \NewDocumentCommand\satle{o}{\le_{\ms{sat}}\IfValueT{#1}{^{#1}}}
@@ -277,6 +279,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Glossary [optional]:
 % %%
+\newglossaryentry{HoTT}{
+    name=HoTT,
+    description={homotopy type theory}
+}
+\newglossaryentry{LEM}{
+    name=LEM,
+    description={the Law of Excluded Middle}
+}
 \newglossaryentry{SDT}{
     name=SDT,
     description={synthetic domain theory}
@@ -304,10 +314,12 @@
 %% Thesis body:
 %%
 \include{source/intro}
-\part{The theories of quasi-coherence}
+\include{source/prelim}
+\part{The theories of quasi-coherence}\label{prt:theory}
+\include{source/lpc}
 \include{source/sqc_horn}
 \include{source/sqc_coh}
-\part{The applications of quasi-coherence}
+\part{The applications of quasi-coherence}\label{prt:appl}
 \include{source/app_domain}
 \include{source/app_arith}
 
@@ -324,6 +336,10 @@
 \addcontentsline{toc}{chapter}{References}
 \bibliographystyle{plainnat}
 \bibliography{thesis}
+
+% \appendix
+
+% \include{source/prelim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Index:

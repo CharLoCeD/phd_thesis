@@ -1,6 +1,20 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{ch:intro}
 
+\section{The theory of classifying topos}\label{sec:intro-classifying}
 
-\section{Notation convention}
+\section{Axiomatising the internal languages of classifying topoi}\label{sec:axiomatiseintlang}
 
-\section{Foundation choice}
+\section{Summary of content}\label{sec:contentoverview}
+
+\section{Foundation choice}\label{sec:foundation}
+
+As mentioned, this document is going to contain two parts, where \zcref{prt:theory} works \emph{externally} from the semantics perspective and proves the validity of the quasi-coherence principle in a variety of topoi, and~\zcref{prt:appl} works \emph{internally} in various classifying topoi where we show the quasi-coherence principle for different theories have different applications in branches of synthetic mathematics.
+
+However, in terms of the mathematical development within the two parts, especially the choice of the back ground logical system, they can be put on an equal footing, by working within a constructive meta-theory. More concretely, we work uniformly in the Bishop-style constructive mathematics, that can be interpreted in the internal language of \emph{any} topos. 
+
+In addition to the usual constructive internal language of topoi, where every quantifier is assumed to be bounded by some small set, we also allow \emph{unbounded quantifiers}. Semantically, this is supported by the \emph{stack semantics} developed by~\citet{shulman2010stack}, which is an extension of the usual Kripke-Joyal semantics that can additionally supports the interpretation of unbounded quantifiers over all sets internally in a topos. Effectively, this means we have a category $\Set$ of (small) sets, and we can make sense of statements of the form: ``For any set $X\in\Set$, \ldots'' In~\zcref{prt:appl} and also in~\zcref{sec:internalduality} where we mainly work internally in a topos $\mc E$ different than the base topos $\Set$, we will also use the explicitly different notation $\mb S$ to refer to the category of sets internally in $\mc E$.
+
+One reason we need a small dose of unbounded quantification in our development is to formulate constructively e.g.\ the notion of \emph{internal projectivity} in a topos. We thus also take the opportunity to mention that, throughout this document we will assume that \emph{countable choice} holds, i.e.\ the natural numbers object $\N$ is projective in the base category $\Set$ of sets. In many stream of constructive mathematics this is indeed considered as a valid principle, though its validity is also often debated in the literature; we refer the interested reader to the chapter by~\citet{richman_countable}. 
+
+In $\Set$ there is also a universe of \emph{propositions}, which we denote as $\pp$. We will identify a proposition with its \emph{extension}, viz.\ as a subset of the terminal set $\mb 1$. We do assume $\pp$ is \emph{impredicative}, in the sense that quantifying over all sets still produces a proposition in the universe $\pp$. Internally in an arbitrary topos, this form of impredicativity is indeed supported by the stack semantics. Similar to the case of $\Set$, when we work within the internal language of a topos, we will often write the universe of propositions as $\Omega$, which is the standard notation for the subobject classifier in a topos.
+

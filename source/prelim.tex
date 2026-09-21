@@ -1,2 +1,96 @@
-\chapter{Preliminaries}\label{ch:preliminaries}
+\chapter{Preliminaries}\label{ch:preliminary}
 
+In this chapter we set up basic notation convention for this document, and collect various notions and constructions that will be useful later in the file.
+
+\section{Notation and terminology convention}\label{sec:notation}
+
+For any $n\in\N$, we use $\mb n$ to denote the finite cardinal containing exactly $n$ elements. In particular, $\mb 0$ and $\mb 1$ will be identified with the proposition \emph{falsum} and \emph{verum}, respectively.
+
+For any set $X$, we write $\pss{X}$ for the proposition that $X$ is inhabited, viz.\ $\ex{x}{X}\top$.
+
+We reserve symbols $\mc A,\mc B,\mc C$ for small categories. Fixed large categories are often denoted by bold face symbols, like $\Set$, $\Fin$, etc. We will reserve the sf font for 2-categories. For instance, $\Catt$ will denote the \emph{2-category} of categories, while $\Cat$ will be the \emph{1-category} of categories and functors. Other common 2-categories include $\Lex$, the 2-category of small lex categories, and $\Top$, the 2-category of topoi.
+
+We use $\yon$ to denote the Yoneda embedding. More explicitly, we use the symbol for both the covariant and contravariant Yoneda embedding, but distinguishing them by subscription or superscription,
+\[ \yon_- \colon \mc C \hook \psh(\mc C), \quad \yon^- \colon \mc C\op \hook [\mc C,\Set]. \]
+
+In our constructive setting, by an \emph{equivalence} between categories we mean a functor $F \colon \mc A \to \mc B$ that is both \emph{fully faithful} and \emph{essentially surjective}. This is sometimes also referred to as a \emph{weak equivalence} between categories. For most practical usage, the notion of weak equivalence suffices, since one can show that all relevant categorical properties are preserved under weak equivalence. 
+
+
+\begin{remark}[Comparison with homotopy type theory]
+  This document has adopted the language of the old-fashioned Bishop-style constructive set theory, instead of currently more trending homotopy type theory (\gls{HoTT}), as described in the book~\cite{hottbook}. In particular, using the notion of \emph{univalent categories} developed in~\citet{AHRENS_KAPULKIN_SHULMAN_2015}, one can in fact show every weak equivalence between univalent categories admits an inverse. However, \ldots
+\end{remark}
+
+\section{Dominance}\label{sec:prelim-dominance}
+
+We recall the notion of \emph{dominance} in the sense of~\citet{rosolini1986continuity}:
+
+\begin{definition}[Dominance]\label{def:dominance}
+  A dominance $\Sigma$ is a subuniverse of $\pp$ that is closed under dependent sums, i.e.\ $\mb 1\in\Sigma$, and for any $\varphi\in\Sigma$ together with a family $\psi \colon \varphi \to \Sigma$, the dependent sum $\sum_{x\in\varphi}\psi(x)$ also belongs to $\Sigma$.
+\end{definition}
+
+\section{Classical propositions}
+
+Since we work in general in a constructive environment, propositions satisfying certain classical properties deserve additional attention:
+
+\begin{definition}[Decidable and classical propositions]
+  We say a proposition $p \in \pp$ is \emph{decidable}, if $p = 0 \vee p = 1$. We say $p$ is \emph{classical}, if $\neg\neg p = p$. 
+\end{definition}
+
+\begin{remark}[The subuniverse of decidable and classical propositions]
+  Note that the set of decidable propositions is given by $\mb 2 = \set{\mb 0,\mb 1}$. We also denote the set of classical propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $\mb 2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
+\end{remark}
+
+\begin{definition}[Decidable and classical sets]\label{def:decidableset}
+  For a set $X$, we say it is \emph{decidable} (resp.\ \emph{classical}) if its equalities are decidable (resp.\ classical), i.e.\ for any $x,y\in X$, the proposition $x = y$ is decidable (resp.\ classical).
+\end{definition}
+
+\begin{remark}[Caveat on complemented subtypes]\label{rem:complementedsubtype}
+  Given a set $X$, it is common in the literature to refer to $S$ as a \emph{decidable subset} of $X$ if, as a function $S \colon X \to \pp$, it factors through the decidable propositions $2 \subseteq \pp$. However, this might be misunderstood as the set $S$ itself is decidable as in~\zcref{def:decidableset}. Hence, we will always refer to such a subset as a \emph{complemented} subset.
+\end{remark}
+
+\section{Stack semantics}\label{sec:stacksem}
+
+Another important property for a set is whether it satisfies \emph{choice}. We introduce the following notion of \emph{projectivity} of a set:
+
+\begin{definition}[Projectivity]
+  A set $X$ is \emph{projective} if for any surjection $f \colon Y \surj X$ there exists a section.
+\end{definition}
+
+\begin{example}[Finite sets are projective]\label{exa:finiteprojective}
+  For any $n\in\N$, the finite cardinal $\mb n$ is projective.
+\end{example}
+
+\begin{example}[Countable choice]\label{exa:countablechoice}
+  The projectivity of $\N$ is simply \emph{choice principle} as discussed in~\zcref{sec:foundation}.
+\end{example}
+
+\begin{lemma}\label{lem:projdecsubset}
+  If $X$ is projective, then any complemented subset $I$ of $X$ is also projective.
+\end{lemma}
+\begin{proof}
+  This holds since if $I$ is complemented with complement $J$, then for any surjection $Y \surj I$ over $I$, one can construct a surjection $Y + J \surj I + J \cong X$, where now projectivity of $X$ induces a section. Restricting that section to $I$ provides a section of $Y \surj I$. 
+\end{proof}
+
+Recall the well-established notion of \emph{internal projectivity} in a topos; see e.g.~\citet[Exer. IV.16]{maclane1992sheaves}. An object $X\in\mc E$ is internally projective if and only if the functor $(-)^X \colon \mc E \to \mc E$ preserves epis.
+
+\begin{proposition}[Projectivity in topoi]\label{prop:projectiveintopos}
+  An object $X\in\mc E$ is projective in the stack semantics if and only if it is internally projective.
+\end{proposition}
+\begin{proof}
+  For a proof see~\citet[Thm. 3.3]{nlab:internally_projective_object}.
+\end{proof}
+
+\begin{theorem}[Presheaf categories have countable choice]\label{thm:liftingofcountablechoice}
+  For any small category $\mc C$, the natural numbers object $\N$ in $\psh(\mc C)$ is (internally) projective.
+\end{theorem}
+\begin{proof}
+  Recall that the natural numbers object $\N$ in $\psh(\mc C)$ is the constant presheaf on $\N$, viz.\ $\N \cong \Delta\N \cong \coprod_{n\in\N}\mb 1$. For any $X\in\psh(\mc C)$ and $c\in\mc C$, the exponential is thus computed by 
+  \begin{align*}
+    &X^\N(c) \\
+    &\quad \cong \mc E(\yon_c \times \N, X) \\
+    &\quad \cong \mc E(\coprod_{n\in\N}\yon_c,X) \\
+    &\quad \cong \prod_{n\in\N}\mc E(\yon_c,X) \\
+    &\quad \cong X(c)^\N
+  \end{align*}
+  In particular, the exponential $(-)^\N$ is in fact computed \emph{pointwise}. Since colimits in $\psh(\mc C)$ are also computed pointwise, an epi in $\psh(\mc C)$ is simply a pointwise surjection. Then the claim holds if $(-)^\N$ preserves epis in $\Set$, which follows from countable choice (in $\Set$).
+\end{proof}
