@@ -2,7 +2,7 @@
 
 In this chapter we recall some basic theory of locally presentable categories following~\citet{adamek1994locally}. The reason we are redeveloping some of these materials is that in this document we have adopted a constructive meta-theory, and the treatment of locally presentable categories in \emph{loc.\ cit.}\ is not always evidently constructive. 
 
-Our choice for a constructive meta-theory is \emph{not} philosophical. One technique that will be useful for our development of quasi-coherence for Horn theories with higher arity is to interpret an externally proven fact in the internal logic of a suitable topos. Such an internalisation process is valid only if the internal logic of the topos supports all the logical resources used in the original proof, and in general a topos only supports constructive logic. Thus, a constructive development of the theory of locally presentable categories, despite of interest in itself, is also quite useful for developing the subject of this document.
+Our choice for a constructive meta-theory is \emph{not} philosophical. One technique that will be useful for our development of \gls{QC} for Horn theories with higher arity is to interpret an externally proven fact in the internal logic of a suitable topos. Such an internalisation process is valid only if the internal logic of the topos supports all the logical resources used in the original proof, and in general a topos only supports constructive logic. Thus, a constructive development of the theory of locally presentable categories, despite of interest in itself, is also quite useful for developing the subject of this document.
 
 Though the theory of locally presentable categories is well-established, one of the innovative parts of our constructive treatment is to find a suitable notion of \emph{size}, that can replace the notion of \emph{regular cardinal} in classical set theory.
 
@@ -14,14 +14,22 @@ Though the theory of locally presentable categories is well-established, one of 
     \item $\kappa$ is \emph{replete}, i.e.\ it is closed under isomorphisms of sets;
     \item $\kappa$ contains all \emph{finite cardinals} $\mb n$ for $n\in\N$;
     \item $\kappa$ is closed under \emph{dependent sums}: for any $A \in \kappa$ and a family $B \colon A \to \kappa$, the disjoint union $\sum_{a\in A}B(a)$ belongs to $\kappa$;
-    \item sets in $\kappa$ are \emph{projective}.
+    \item sets in $\kappa$ are \emph{projective};
   \end{itemize}
   We say $\kappa$ is \emph{separated}, if it is also closed under identities:
   \begin{itemize}
-    \item For any $X\in\kappa$ and $x,y\in X$, the proposition $x = y$ also belongs to $\kappa$.
+    \item for any $X\in\kappa$ and $x,y\in X$, the proposition $x = y$ also belongs to $\kappa$.
+  \end{itemize}
+  We say $\kappa$ is \emph{essentially small}, if it is classified by a small set:
+  \begin{itemize}
+    \item there exists a small set $K$ and a map $\El \colon K \to \kappa$, such that for any $\kappa$-small set $I$, there exists $k\in K$ such that $I \cong \El(k)$.
   \end{itemize}
   A set is \emph{$\kappa$-small} if it belongs to $\kappa$, and $\kappa\hp\Set$ denotes the full subcategory of $\kappa$-small sets.
 \end{definition}
+
+\begin{remark}[Comparison of the notion of size]\label{rem:comparethenotionofsize}
+  Classically in \gls{ZFC} the above notion of an essentially small (separated) size corresponds exactly to an infinite \emph{regular cardinal}: under \gls{LEM}, being separated is automatic since every set is decidable; under choice, every set is also projective; thus the remaining condition of containing all finite sets and being closed under dependent sums exactly corresponds to an infinite cardinal. Constructively, a very similar notion of size was also independently proposed in a recent work~\citet{coquand_et_al:LIPIcs.LICS.2026.31}, though they do not require a size to be separated; this condition is to make sure $\kappa$-small sets induce $\kappa$-small discrete groupoids (cf.~\zcref{exa:discgroupoidkappasmall}).
+\end{remark}
 
 \begin{remark}[Closure properties of $\kappa$-small sets]\label{rem:closurepropofkappa}
   For a notion of size $\kappa$, being closed under dependent sums, together with the other requirements specified in~\zcref{def:size}, has many useful consequences for closure properties of the category $\kappa\hp\Set$ of $\kappa$-small sets. For instance, $\kappa\hp\Set$ will be closed under \emph{$\kappa$-small coproducts}, in particular it will be closed under \emph{cartesian products}. If $\kappa$ is \emph{separated}, then it is also closed under \emph{equalisers}, since given $f,g \colon X \to Y$, the equaliser is given by the subset 
@@ -31,25 +39,29 @@ Though the theory of locally presentable categories is well-established, one of 
 
 For our purpose, we are exclusively interested in the following two notions of size:
 
-\begin{example}[Finiteness as a notion of size]
+\begin{example}[Finiteness as a notion of size]\label{exa:finitesize}
   We say a set $X$ is \emph{finite} if it is isomorphic to a finite cardinal,
   \[ \ms{isFin}(X) \coloneq \ex n{\N} X \cong \mb n. \]
-  Finite sets are \emph{decidable}, thus they are closed under identities. Finite sets are also closed under dependent sums, which can be shown by induction. By construction, finite sets are also projective. Thus, finite sets form a separated size in the sense of~\zcref{def:size}, and we denote this size as $\omega$. The full subcategory $\omega\hp\Set$ of finite sets will also be denoted as $\Fin$. 
+  Finite sets are \emph{decidable}, thus they are closed under identities. Finite sets are also closed under dependent sums, which can be shown by induction. By construction, finite sets are also projective. Furthermore, finite sets by definition has a classifier $\N$. Thus, finite sets form a separated and essentially small size in the sense of~\zcref{def:size}, and we denote this size as $\omega$. The full subcategory $\omega\hp\Set$ of finite sets will also be denoted as $\Fin$. 
 \end{example}
 
 \begin{example}[Countability as a notion of size]\label{exm:countablesize}
   A set $X$ is \emph{countable} if it is isomorphic to a complemented subset of the natural numbers,
-  \[ \ms{isCnt}(X) \coloneq \ex{I}{2^\N} X \cong \scomp{n\in\N}{I(n)}. \]
+  \[ \ms{isCnt}(X) \coloneq \ex{I}{\mb 2^\N} X \cong \scomp{n\in\N}{I(n)}. \]
   The collection of countable sets will be denoted as $\omega_1$. By construction, all countable sets are (isomorphic to) complemented subsets of $\N$, thus they are all decidable. This in particular means $\omega_1$ is closed under identities. By countable choice, $\N$ is projective, and thus by~\zcref{lem:projdecsubset} all countable sets are projective. Suppose $X$ is countable and $Y \colon X \to \omega_1$ is a countable family of countable sets. To show $\sum_{x:X}Y_x$ is countable, we may assume $X$ is isomorphic to $I$ for some complemented subset $I$ of $\N$. Then by assumption, 
-  \[ \fa{i}{I}\ex{J}{2^\N} Y_i \cong \scomp{n\in\N}{J(n)}. \] 
-  By $I$ being projective, there exists a family $J_i$ of complemented subsets of $\N$ such that $Y_i \cong J_i$. Thus, the dependent sum $\sum_{x:X}Y_x$ will be equivalent to $\sum_{i:I}J_i$, which is a complemented subset of $\N \times \N$. Via a bijection $\N \times \N \cong \N$, this shows $\sum_{x:X}Y_x$ is countable. This shows $\omega_1$ is also a separated size. We denote the category $\omega_1\hp\Set$ of countable sets also as $\Cnt$.
+  \[ \fa{i}{I}\ex{J}{\mb 2^\N} Y_i \cong \scomp{n\in\N}{J(n)}. \] 
+  By $I$ being projective, there exists a family $J_i$ of complemented subsets of $\N$ such that $Y_i \cong J_i$. Thus, the dependent sum $\sum_{x:X}Y_x$ will be equivalent to $\sum_{i:I}J_i$, which is a complemented subset of $\N \times \N$. Via a bijection $\N \times \N \cong \N$, this shows $\sum_{x:X}Y_x$ is countable. Furthermore, again by construction $\omega_1$ has a classifier $\mb 2^\N$. This shows $\omega_1$ is also a separated essentially small size. We denote the category $\omega_1\hp\Set$ of countable sets also as $\Cnt$.
 \end{example}
 
 \begin{remark}[Coequalisers of countable sets]\label{rem:coequalisercntandmarkov}
   $\Fin$ can be shown to be a Boolean elementary topos, see e.g.~\citet[D5.2]{johnstone2002sketches}. In particular, it has coequalisers. On the other hand, constructively $\Cnt$ is not necessarily closed under coequalisers. For instance, it is not hard to see that $\Cnt$ having coequalisers implies the \emph{Markov principle}.
 \end{remark}
 
-At the end of this section, we observe that any notion of size $\kappa$ induces a \emph{dominance} in the sense of~\citet{rosolini1986continuity} (cf.~\zcref{def:dominance}):
+At the end of this section, we observe that any notion of size $\kappa$ induces a \emph{dominance} in the sense of~\citet{rosolini1986continuity}:
+
+\begin{definition}[Dominance]\label{def:dominance}
+  A dominance $\Sigma$ is a subuniverse of $\pp$ that is closed under dependent sums, i.e.\ $\mb 1\in\Sigma$, and for any $\varphi\in\Sigma$ together with a family $\psi \colon \varphi \to \Sigma$, the dependent sum $\sum_{x\in\varphi}\psi(x)$ also belongs to $\Sigma$.
+\end{definition}
 
 \begin{definition}[$\kappa$-overt propositions]\label{def:kappaopen}
   A proposition is \emph{$\kappa$-overt}, if it is of the form $\pss X$ for some $\kappa$-small set $X$. The subuniverse of $\kappa$-overt propositions will be denoted as $\mb{O}_\kappa$. 
@@ -74,9 +86,9 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
   In fact, it is not hard to see that the universe $\mb O_{\omega_1}$ of $\omega_1$-overt propositions is identical to $\Sigma_{\mr{s.d.}}$. The proof in \emph{loc.\ cit.}\ also crucially relies on countable choice. In fact, the proof of~\zcref{prop:sizedominance} can be seen as a suitable generalisation of this proof that works for any notion of size. For $\omega$ we have $\mb O_\omega = \mb 2$, recovering the dominance of decidable propositions.
 \end{remark}
 
-\section{Filtered Diagram}
+\section{Filtered diagrams}
 
-In this section we fix a \emph{separated size} $\kappa$. We say a category $\mc A$ is \emph{$\kappa$-small} if $\Ob(\mc A) \in \kappa$ and for any $a,b \in \mc A$, the hom-set $\mc A(a,b)\in\kappa$. 
+In this section we fix a \emph{separated size} $\kappa$. We say a category $\mc A$ is \emph{$\kappa$-small} if its set of objects is $\kappa$-small, and for any $a,b \in \mc A$, the hom-set $\mc A(a,b)$ is $\kappa$-small. 
 
 \begin{example}[Discrete groupoids from $\kappa$-smalls sets are $\kappa$-small]\label{exa:discgroupoidkappasmall}
   The requirement for $\kappa$ to be separated is to make $\kappa$-small sets also $\kappa$-small discrete groupoids. For any $X\in\kappa$, the hom-sets in the associated discrete groupoid is given by $X(x,y) \cong (x = y)$ for any $x,y\in X$. By assumption the identity proposition $x = y$ is $\kappa$-small since $\kappa$ is separated, hence $X$ as a discrete groupoid will be a $\kappa$-small category.
@@ -173,7 +185,7 @@ This leads to the following well-known result:
 
 
 
-\section{Locally Presentable Category}
+\section{Locally presentable categories}
 
 Again we fix a separated notion of size $\kappa$.
 
@@ -209,7 +221,7 @@ There is an equivalent criterion for dense subcategories:
   See~\citet[Prop. 4.5.14]{borceux1994handbookI}; the proof there is constructive.
 \end{proof}
 
-\begin{definition}[Locally presentable categories]
+\begin{definition}[Locally presentable categories]\label{def:locallypresentablecategory}
   A category $\mc A$ is \emph{locally $\kappa$-presentable}, if it is cocomplete and $\mc A_\kappa$ is dense and essentially small.
 \end{definition}
 

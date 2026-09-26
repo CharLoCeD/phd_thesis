@@ -1,6 +1,263 @@
-\chapter{The internal logic of classifying topoi for coherent theories}
+\chapter{The internal logic of classifying topoi for coherent theories}\label{ch:sqccoh}
 
-\section{The path topos of a coherent topos}
+Now moving towards a different direction of generalisation of \gls{QC} in~\zcref{ch:sqchorn}, in this chapter we state and prove a version of \gls{QC} for \emph{coherent theories}. Unlike an algebraic or a Horn theory, whose signature only contains function symbols and whose axioms only allow (sequents between) equations, a coherent theory allows arbitrary relation and function symbols in the signature, and can have sequents between arbitrary \emph{coherent formulas}, which are built from $\top,\wedge,\bot,\vee,\exists,=$, instead of just equalities.
 
-\section{Synthetic quasi-coherence for coherent theories}
+Many important theories are indeed coherent but not algebraic or Horn. Perhaps the most commonly seen mathematical example is the theory of \emph{fields}. It can be seen as extending the algebraic theory of commutative rings with the following \emph{coherent} axiom,
+\[ \top \vdash_{\ms x} \ms x = 0 \vee \exists \ms y.\, \ms x\cdot \ms y = 1. \]
+This sequent states that for any element in the field, either it is 0, or it has a multiplicative inverse. The use of the disjunction $\vee$ and existential quantifier $\exists$ is essential to this statement, and cannot be replaced by mere equational presentation. The coherent theories that will be important for~\zcref{prt:appl} of this thesis include the coherent theory of \emph{arithmetic} (cf.~\citet{ye_categorical_2026}), and the coherent theory of \emph{decidable atomless Boolean algebras} (cf.~\citet[D3.4.12]{johnstone2002sketches}).
+
+We also comment here that \gls{QC} for coherent theories we are going to establish in~\zcref{sec:qcforcoh} in fact also sheds new lights even for finitary algebraic or Horn theories. Indeed, even if the theory $\T$ is a finitary Horn theory, by viewing it as a coherent theory the induced \gls{QC} principle will be \emph{stronger} than merely viewing it as a Horn theory. 
+
+Ultimately, we will understand this by viewing \gls{QC} as the \emph{fibred Yoneda lemma} (cf.~\zcref{sec:qcforcoh}). Then the additional generality of \gls{QC} by viewing a Horn theory as a coherent theory lies in the fact that the coherent defining site of the same theory contains \emph{more objects} than the algebraic site. To show case why \gls{QC} for coherent theories is desirable, let us first describe the simplest example of the \emph{Sierpi\'nski topos}. Here we would also like to thank \emph{Quentin Schroeder} for asking us the \gls{QC} principle for the Sierpi\'nski topos during the \emph{Ultracategories and Stone Duality Workshop} (\url{https://www.irif.fr/rencontres/pps2026/ultracategories-workshop}), whose analysis has now turned into~\zcref{sec:testcasesierpinski}.
+
+\section{A test study for the generic proposition in the Sierpi\'nski topos}\label{sec:testcasesierpinski}
+
+In this section, assume \gls{LEM} in the external universe of sets.\footnote{Constructively, the correct definition of the Sierpi\'nski topos appears to be more subtle~\cite{5085280}.} Let $\mc I$ be the \emph{Sierpi\'nski topos}. As a category it is equivalent to the arrow category on $\Set$,
+\[ \mc I \coloneq [\mbb 2, \Set], \]
+where $\mbb 2 = \set{0 < 1}$ is the Sierpi\'nski poset. It is well-known that $\mc I$ is the classifying topos of the \emph{generic proposition}, viz.\ the coherent theory $\mbb S$ whose signature contains a single 0-ary predicate $\ms p$, with no axioms. The fact that $\mc I \simeq \Set[\mbb S]$ then can be seen via the universal property of $\mc I$: given any topos $\mc E$, there is a natural equivalence 
+\[ \Top(\mc E,\mc I) \simeq \sub_{\mc E}(1), \]
+which exactly states that $\mc I$ classifies propositions in $\mc E$. 
+
+The above equivalence is of course realised by a generic proposition $\mbb p$ in $\mc I$, which corresponds to the arrow $\mb 0 \to \mb 1$. It is then straightforward to observe the following non-geometric property of the generic proposition $\mbb p$:
+
+\begin{proposition}\label{prop:genericpropnegneg}
+  The generic proposition $\mbb p$ in dense (cf.~\zcref{def:propertiesofpropositions}).
+\end{proposition}
+\begin{proof}
+  By direct computation, $\sub_{\mc J}(1) \cong \set{\bot < \mbb p < \top}$, where externally $\bot,\top$ corresponds to the identity arrow on $\mb 0,\mb 1$, respectively. Thus, $\neg\mbb p = \bot$, and $\neg\neg\mbb p = \top$.
+\end{proof}
+
+It would then be expected that the simple non-geometric property of $\mbb p$ should be implied by a corresponding \gls{QC} principle. Indeed, by applying \gls{QC} for the coherent theory $\mbb S$, \zcref{prop:genericpropnegneg} follows as a simple consequence; see~\zcref{exa:qcinsierpinskitopos} for more details.
+
+However, $\mc I$ is also the classifying topos of a finitary \emph{algebraic} theory $\mbb S_a$, while \gls{QC} for this algebraic theory $\mbb S_a$ fails to establish~\zcref{prop:genericpropnegneg}. Concretely, we may view $\mbb S_a$ is a 1-sorted algebraic theory with no function symbols. It has a single equational axiom,
+\[ \top \vdash_{\ms x,\ms y} \ms x = \ms y. \]
+This axiom states that any two elements in a model of $\mbb S_a$ are identical, thus with \gls{LEM} there are only two possible models of $\mbb S_H$, viz.\ the empty set $\mb 0$ and the singleton set $\mb 1$. It is then easy to see that 
+\[ \mmod{\mbb S_a} \simeq \mmod{\mbb S_a}_\omega \simeq \mbb 2. \]
+Thus by~\zcref{thm:classtoposofkappahorn}, indeed we have 
+\[ \mc I = [\mbb 2,\Set] \simeq [\mmod{\mbb S_a}_\omega,\Set] \simeq \Set[\mbb S_a]. \]
+
+As stated in~\zcref{sec:qcforhorn}, the generic $\mbb S_a$-model $V_{\mbb S_a}$ in $\mc I$ is the representable functor on the category of models, which corresponds exactly to the arrow $\mb 0 \to \mb 1$. In other words, $V_{\mbb S_a}$ is indeed the generic proposition in $\mc I$. Hence, for now it seems promising that~\zcref{prop:genericpropnegneg} might follow from \gls{QC} for $\mbb S_a$.
+
+However, a slightly more detailed analysis shows this is impossible. In particular, let us look at what are the finitely presented $V_{\mbb S_a}$-algebras in $\mc I$. By construction, $V_{\mbb S_a}[\mb 0] \cong V_{\mbb S_a}$, while $V_{\mbb S_a}[\mb n] \cong \mb 1$ for any $n \ge 1$. This is due to the fact that to be an $\mbb S_a$-algebra, once it has an element, it is the unique element the algebra has by the axiomatisation of $\mbb S_a$. In particular, among the finitely presented $\mbb S_a$ algebras we do not find the initial object $\mb 0$. Hence, \gls{QC} for $\mbb S_a$ provides us essentially \emph{no} information on how to compute the exponential $V_{\mbb S_a} \to \mb 0$, which is required to establish~\zcref{prop:genericpropnegneg}. However, this is only a heuristic argument. The following formally establishes that~\zcref{prop:genericpropnegneg} cannot be a consequence of \gls{QC} for $\mbb S_a$:
+
+\begin{proposition}\label{prop:algebraicnotsufficefordense}
+  The fact that the generic proposition is dense in $\mc I$ cannot be a consequence of \gls{QC} for the algebraic theory $\mbb S_a$.
+\end{proposition}
+\begin{proof}
+  It suffices to construct a model of \gls{QC} for the algebraic theory $\mbb S_a$ where it is \emph{false} that the generic model $V_{\mbb S_a} = \mbb p$ is dense. For this look at the \emph{closed subtopos} $\mc I_{\neg\mbb p}$ of $\mc I$ determined by the proposition $\mbb p$. It is easy to see that $\mc I_{\neg\mbb p} \simeq \Set$, and the adjunction between them is given as follows,
+  \[\begin{tikzcd}
+    {\mc I_{\neg\mbb p} \simeq \Set} & {\mc I \simeq [\mbb 2,\Set]}
+    \arrow[""{name=0, anchor=center, inner sep=0}, "{X \mapsto (X \to 1)}"', curve={height=12pt}, from=1-1, to=1-2]
+    \arrow[""{name=1, anchor=center, inner sep=0}, "{(A \to B) \mapsto B}"', curve={height=12pt}, from=1-2, to=1-1]
+    \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
+  \end{tikzcd}\]
+  In particular, as $V_{\mbb S_a} = \mbb p = (\mb 0 \to \mb 1)$, it is contained in the subtopos $\mc J_{\neg\mbb p}$, hence by~\zcref{thm:qcdescent}, \gls{QC} for $\mbb S_a$ also holds in $\mc J_{\neg\mbb p}$. However, by construction, $V_{\mbb S_a}$ becomes the \emph{initial object} in $\mc J_{\neg\mbb p}$, hence it cannot be dense. This shows that~\zcref{prop:genericpropnegneg} cannot be a consequence of \gls{QC} for $\mbb S_a$.
+\end{proof}
+
+As we will see, the reason that \gls{QC} for the coherent theory $\mbb S$ does imply that the generic proposition $\mbb p$ is dense is due to the fact that, the initial object $\mb 0$ in $\mc J$, which does \emph{not} belong to the defining site of the algebraic theory $\mbb S_a$, or equivalently is not a finitely presented $V_{\mbb S_a}$-algebra, is actually included in the \emph{coherent} defining site for $\mbb S$. Hence, in this case the \gls{QC} for $\mbb S$ does allow computation of the exponential $\mbb p \to \mb 0$, which can then be used to deduce~\zcref{prop:genericpropnegneg} (cf.~\zcref{exa:qcinsierpinskitopos}). However, the proof of~\zcref{prop:algebraicnotsufficefordense} also suggests that \gls{QC} for $\mbb S$ cannot be valid in the subtopos $\mc J_{\neg\mbb p}$, even if this subtopos contains the generic proposition $\mbb p$. Hence, in this sense \gls{QC} for coherent theories is more sensitive to quotient theories than that for Horn theories.
+
+\section{Coherent theories and their classifying topoi}\label{sec:cohtheory}
+
+Let $\T$ be a coherent theory. The \emph{signature} of $\T$ contains a set of \emph{sorts}, \emph{function symbols}, and \emph{relation symbols}, where the function and relation symbols are sorted. The set of \emph{coherent formulas} is then inductively defined as usual as those finite formulas that can be built from the logical connectives including $\top,\wedge,\bot,\vee,\exists,=$. In fact, we will often write a coherent formula as $\varphi(\ov{\ms x})$, where $\ov{\ms x}$ is a list of sorted variables that serve as the \emph{context} of $\varphi$, i.e.\ all the free variables in $\varphi$ must be contained in $\ov{\ms x}$. A coherent \emph{sequent} is then of the form 
+\[ \varphi \vdash_{\ov{\ms x}} \psi, \]
+where $\varphi,\psi$ are coherent formulas in context $\ov{\ms x}$. A coherent theory $\T$ is then simply a set of axioms consisting of coherent sequents. For more detailed discussion, we refer the reader to~\citet[D1.1]{johnstone2002sketches}. 
+
+From every coherent theory $\T$ one can build a \emph{syntactic category} $\mb C[\T]$, whose objects are coherent formulas in contexts in $\T$ up to $\alpha$-equivalence (renaming of free variables), and whose morphisms are $\T$-provably functional formulas up to $\T$-provable equivalence. The resulting syntactic category $\mb C[\T]$ is a \emph{coherent category}; for more information, see e.g.~\citet[D1.4]{johnstone2002sketches}. One can also freely complete $\mb C[\T]$ into a \emph{pretopos}, by firstly freely adding finite coproducts and then adding all the missing effective quotients; the resulting pretopos will be denoted as $\mb P[\T]$ (cf.~\citet[D1.4.12(ii)]{johnstone2002sketches}). 
+
+Let us denote the 2-category of coherent categories and coherent functors as $\Coh$. The 2-category of pretopoi is a full sub 2-category of $\Coh$. For any (pre)topos $\mc E$, by construction $\mb C[\T]$ and $\mb P[\T]$ has an equivalent category of functors into $\mc E$,
+\[ \Coh(\mb C[\T],\mc E) \simeq \Coh(\mb P[\T],\mc E). \]
+Functorial semantics then suggests that the above category can be \emph{identified} as the category $\mmod{\T}(\mc E)$ of $\T$-models in $\mc E$ (cf.~\citet[D1.2]{johnstone2002sketches}).
+
+Every coherent category has a corresponding finitary Grothendieck topology $J_{\mr{coh}}$, where the covering families are finite jointly epic family of maps. The two categories $\mb C[\T]$ and $\mb P[\T]$, both with the coherent topology, are in fact \emph{Morita equivalent}, in the sense that they have the same sheaf topos (cf.~\cite[C2.2.3]{johnstone2002sketches}),
+\[ \sh(\mb C[\T],J_{\mr{coh}}) \simeq \sh(\mb P[\T],J_{\mr{coh}}). \]
+We use $\Set[\T]$ to denote this topos and call it the \emph{classifying topos} of $\T$. Categorically, $\mb P[\T]$ (but not $\mb C[\T]$) is completely determined by the classifying topos $\Set[\T]$, as it is equivalent to the full subcategory of coherent objects in $\Set[\T]$ (cf.~\citet[D3.3.8]{johnstone2002sketches}).
+
+
+By construction, $\Set[\T]$ indeed classifies $\T$-models: for any topos $\mc E$, there is a natural equivalence (cf.~\citet[D3.1]{johnstone2002sketches}),
+\[ \Top(\mc E,\Set[\T]) \simeq \mmod{\T}(\mc E). \]
+As for the case of Horn theories as explained in~\zcref{sec:qcforhorn}, such an equivalence is realised by a generic model $V_\T$ in $\Set[\T]$, and it is the corestricted Yoneda embedding,
+\[
+\begin{tikzcd}
+  \mb P[\T] \ar[r, hook, "V_\T"] \ar[dr, hook, "\yon"'] & \Set[\T] \ar[d, hook] \\
+  & \psh(\mb P[\T])
+\end{tikzcd}
+\]
+The coherent topology on $\mb P[\T]$ exactly makes $V_\T$ into a coherent functor, thus giving a $\T$-model in $\Set[\T]$. For a general topos $\mc E$, given a $\T$-model $M \colon \mb P[\T] \to \mc E$, the corresponding inverse image $M^*$ of the induced geometric morphism $M \colon \mc E \to \Set[\T]$ is given by left Kan extension along $V_\T$,
+\[
+\begin{tikzcd}
+  \mb P[\T] \ar[d, hook, "V_\T"'] \ar[r, "M"] & \mc E \\
+  \Set[\T] \ar[ur, dashed, "M^* = \lan_{V_\T}M"']
+\end{tikzcd}
+\]
+In particular, $M \cong M^*V_\T$.
+
+\section{The diagram theory of the generic model and the path topos}
+
+Following~\zcref{ch:sqchorn}, what will play an important role for \gls{QC} is the internal theory of ``$V_\T$-algebras'' in $\Set[\T]$. For first-order logic, this is better-known in model theory as the \emph{theory of diagrams} of a model:
+
+\begin{definition}[Theory of diagram]
+  Let $\T$ be any coherent theory and let $M$ be a $\T$-model. Then the coherent theory of \emph{diagram of $M$}, denoted as $M\!\ltimes\!\T$, is defined as follows:
+  \begin{itemize}
+    \item it extends the language of $\T$ with constants $c_m$ of sort $s$ for any element $m\in M_s$;
+    \item it extends the axioms of $\T$ with all closed coherent formulas that are true in $M$.
+  \end{itemize}
+\end{definition}
+
+The universal property of the theory of diagrams is similar to the case for Horn theories, in that it classifies $\T$-model homomorphisms from $M$:
+
+\begin{proposition}\label{prop:diagrammodel}
+  For any $\T$-model $M$, there is a natural equivalence 
+  \[ \mmod{M\! \ltimes\! \T} \simeq M/\mmod{\T}. \]
+\end{proposition}
+\begin{proof}
+  Directly from construction; see also e.g.~\citet[\S2.4]{breiner2014scheme}.
+\end{proof}
+
+\begin{remark}[The syntactic pretopos of the diagram theory]
+  For any coherent theory $\T$ and any $\T$-model $M$, \citet[\S2.4]{breiner2014scheme} has also shown how to compute the syntactic pretopos $\mb P[M\!\ltimes\!\T]$ for the diagram theory of $M$. Viewing $M$ as a coherent functor $M \colon \mb P[\T] \to \Set$, the pretopos $\mb P[M\!\ltimes\!\T]$ can be computed as the following filtered colimit of categories,
+  \[ \mb P[M\!\ltimes\!\T] \simeq \ct_{(\varphi,x)\in\elem M}\mb P[\T]/\varphi, \]
+  where $\elem M$ is the category of elements of $M$. Since $M$ is in particular left exact, $\elem M$ will be filtered, and this filtered colimit of categories indeed computes a pretopos, since the doctrine of pretopos is finitary; cf.~\citet{di2025bi}.
+\end{remark}
+
+We shall then focus on the \emph{internal coherent theory} $\VT$ of the diagram theory of $V_\T$ in the classifying topos $\Set[\T]$ of the coherent theory $\T$. The goal of this section is to show that, the relative classifying topos of $\VT$ over $\Set[\T]$ is equivalent to the \emph{path topos} over $\Set[\T]$.
+
+Recall from~\zcref{sec:testcasesierpinski} that $\mc I$ is the Sierpi\'nski topos. As a presheaf topos, $\mc I$ is \emph{exponentiable} in the 2-category $\Top$ of topoi (cf.~\citet[B4.3.3]{johnstone2002sketches}), and we call the exponential $\Set[\T]^{\mc I}$ the \emph{path topos} of $\Set[\T]$. From a categorical perspective, the Sierpi\'nski topos $\mc I$ is indeed equivalent to a tensor in the 2-category $\Top$, 
+\[ \mc I \simeq \mbb 2 \otimes \Set, \]
+where $\Set$ is identified as the \emph{terminal topos} and $\mbb 2$ is the walking arrow category. In particular, $\mc I$ is naturally bi-pointed with a 2-cell between them,
+\[\begin{tikzcd}
+	\Set & {\mc I}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "{d_0}", curve={height=-15pt}, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{d_1}"', curve={height=15pt}, from=1-1, to=1-2]
+	\arrow[between={0.2}{0.8}, Rightarrow, nfold, from=0, to=1]
+\end{tikzcd}\]
+The exponential thus transposes this 2-cell into the following diagram,
+\[\begin{tikzcd}
+	{\Set[\T]^{\mc I}} & {\Set[\T]}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "{\partial_0}", curve={height=-15pt}, from=1-1, to=1-2]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{\partial_1}"', curve={height=15pt}, from=1-1, to=1-2]
+	\arrow[between={0.2}{0.8}, Rightarrow, nfold, from=0, to=1]
+\end{tikzcd}\]
+In particular, there are two natural geometric morphisms $\partial_0,\partial_1 \colon \Set[\T]^{\mc I} \to \Set[\T]$. Unless otherwise stated, for us if we view $\Set[\T]^{\mc I}$ as a \emph{relative topos over $\Set[\T]$}, we always mean the geometric morphism $\partial_0$.
+
+\begin{theorem}\label{thm:diagtheoryispath}
+  Let $\Set[\T][\VT] \to \Set[\T]$ be the classifying topos of $\VT$ relative to $\Set[\T]$. Over $\Set[\T]$, it is equivalent to the path topos $\partial_0 \colon \Set[\T]^{\mc I} \to \Set[\T]$,
+  \[\begin{tikzcd}[column sep = small]
+    {\Set[\T][\VT]} && {\Set[\T]^{\mc I}} \\
+    & {\Set[\T]}
+    \arrow["\simeq", from=1-1, to=1-3]
+    \arrow["\lambda"', from=1-1, to=2-2]
+    \arrow["{\partial_0}", from=1-3, to=2-2]
+  \end{tikzcd}\]
+\end{theorem}
+\begin{proof}
+  Notice that a topos over $\Set[\T]$ can be identified as topos equipped with a $\T$-model. For any such relative topos $M \colon \mc E \to \Set[\T]$, we also use $M$ to denote the corresponding internal $\T$-model $M^*V_\T$ in $\mc E$. We thus have the following natural equivalences
+  \begin{align*}
+    &\Top/\Set[\T](\mc E,\Set[\T][\VT]) \\
+    &\quad\simeq \mmod{\VT}(\mc E) \\
+    &\quad\simeq M/\mmod{\T}(\mc E)
+  \end{align*}
+  The first equivalence holds by construction, and the second equivalence holds by~\zcref{prop:diagrammodel} and the fact that $M \cong M^*V_\T$. On the other hand, by the universal property of the path topos $\Set[\T]^{\mc I}$, similarly we have natural equivalences
+  \begin{align*}
+    &\Top/\Set[\T](\mc E,\Set[\T]^{\mc I}) \\
+    &\quad\simeq \scomp{f \colon \mc E \to \Set[\T]^{\mc I}}{\partial_0f = M} \\
+    &\quad\simeq \scomp{f \colon \mc E \times \mc I \to \Set[\T]}{f_0 = M} \\
+    &\quad\simeq \scomp{f \colon [\mbb 2,\Top(\mc E, \Set[\T])]}{f_0 = M} \\
+    &\quad\simeq M/\mmod{\T}(\mc E)
+  \end{align*}
+  In particular, the second equivalence holds by the universal property of the exponential; the third equivalence holds since taking product with the Sierpi\'nski topos is equivalently taking the tensor with $\mbb 2$ in $\Top$, viz.\ $\mc E \times \mc I \simeq \mbb 2 \otimes \mc E$ (cf.~\citet[B3.3]{johnstone2002sketches}); the final equivalence holds by the fact that $\Top(\mc E,\Set[\T]) \simeq \mmod{\T}(\mc E)$.
+\end{proof}
+
+
+
+\section{Synthetic quasi-coherence for coherent theories}\label{sec:qcforcoh}
+
+Under the equivalence given in~\zcref{thm:diagtheoryispath}, in this section we can now give a short and geometric proof of \gls{QC} for coherent theories. 
+
+Let $\T$ be a coherent theory, and we now work internally in its classifying topos $\Set[\T]$, where as in~\zcref{sec:qcforhorn} we use $\mb S$ to denote the internal category of sets in $\Set[\T]$. As $\VT$ is an internal coherent theory, it has an internal classifying pretopos $\mb P[\VT]$. By~\zcref{prop:diagrammodel}, $\VT$ classifies $\T$-models equipped with a homomorphism from $V_\T$, thus in particular the identity $\id \colon V_\T \to V_\T$ is a model of $\VT$. This produces a coherent interpretation functor 
+\[ \ass- \colon \mb P[\VT] \to \mb S. \]
+
+\begin{theorem}[\gls{QC} for coherent theories]\label{thm:sqcforcoherent}
+  The interpretation functor $\ass- \colon \mb P[\VT] \to \mb S$ is \emph{fully faithful}.
+\end{theorem}
+\begin{proof}
+  The internal categories $\mb P[\VT]$ and $\mb S$ in $\Set[\T] \simeq \sh(\mb P[\T])$ externally can be viewed as fibrations over $\mb P[\T]$ (cf.~\citet[B3.1]{johnstone2002sketches}). In particular, the latter corresponds to the fundamental fibration for the sheaf topos $\sh(\mb P[\T])$,
+  \[ F_{\mb S} \colon \sh(\mb P[\T]) \cv \mb P[\T] \to \mb P[\T], \]
+  whose fibres $\mb S^\varphi$ over $\varphi\in\mb P[\T]$ is simply given by the slice,
+  \[ F_{\mb S}^\varphi \simeq \sh(\mb P[\T])/\varphi. \]
+  Equipping $\sh(\mb P[\T]) \cv \mb P[\T]$ with the canonical topology, $F_{\mb S}$ indeed becomes a \emph{fibration of site} in the sense of~\citet[C2.5]{johnstone2002sketches}, and it presents the identity geometric morphism on the classifying topos $\Set[\T]$
+  \[ \sh(\sh(\mb P[\T])\cv\mb P[\T],J_{\mr{can}}) \simeq \sh(\mb P[\T]). \]
+  
+  For $\mb P[\VT]$, consider the characterisation of the relative classifying topos $\Set[\T][\VT]$ as the path topos $\Set[\T]^{\mc I}$ given in~\zcref{thm:diagtheoryispath}. From~\citet[Lem.~V.1.1]{moerdijk2000proper}, the path topos $\Set[\T]^{\mc I}$ is indeed presented by the arrow category $\mb P[\T]^{\mbb 2}$ with the coherent topology,
+  \[ \Set[\T]^{\mc I} \simeq \sh(\mb P[\T]^{\mbb 2,},J_{\mr{coh}}). \]
+  Furthermore, given the computation in \emph{loc.\ cit.}, it is straightforward to see that the geometric morphism $\partial_0 \colon \Set[\T]^{\mc I} \to \Set[\T]$ is presented by the following fibration of site,
+  \[ \cod \colon (\mb P[\T]^{\mbb 2},J_{\mr{coh}}) \to (\mb P[\T],J_{\mr{coh}}). \]
+  Hence, the relative topos $\partial_0 \colon \Set[\T]^{\mc I} \to \Set[\T]$, or equivalently $\Set[\T][\VT] \to \Set[\T]$, is presented by the fibration of site $(\mb P[\T]^{\mbb 2},J_{\mr{coh}})$ as an internal site in $\Set[\T]$. Since $\mb P[\T]^{\mbb 2} \to \mb P[\T]$ is fibrewise a pretopos, the internal classifying pretopos $\mb P[\VT]$ must already be equivalent to the fibration $\cod \colon \mb P[\T]^{\mbb 2} \to \mb P[\T]$. In particular, the fibres over $\varphi\in\mb P[\T]$ are given by
+  \[ F_{\mb P[\VT]}^\varphi \simeq \mb P[\T]/\varphi. \]
+  
+  Finally, by construction the $\VT$-model $\id \colon V_\T \to V_\T$ in $\Set[\T]$ induces a \emph{section} of $\Set[\T][\VT] \to \Set[\T]$. Under the equivalence with the path topos, this corresponds to the geometric morphism for the constant path,
+  \[ \delta \colon \Set[\T] \to \Set[\T]^{\mc I}. \]
+  As a relative geometric morphism over $\Set[\T]$, this is presented by a \emph{morphism of fibration of sites} (cf.~\citet{bartoli2023morphisms}), which by construction is exactly the evaluation functor $\ass- \colon \mb P[\VT] \simeq \mb P[\T]^{\mbb 2} \to \sh(\mb P[\T])\cv\mb P[\T]$. We claim this is simply given by the fully faithful fibrewise Yoneda embedding
+  \[ \ass- = \yon \cv \mb P[\T] \colon \mb P[\T] \cv \mb P[\T] \hook \sh(\mb P[\T]) \cv \mb P[\T]. \]
+  Indeed, this is a morphism of site as well as a morphism of fibration, since by construction it preserves finite limits and covers. The induced relative geometric morphism is then given by
+  \[\begin{tikzcd}[column sep = large]
+    {\Set[\T]^{\mc I} \simeq \sh(\mb P[\T]^{\mbb 2})} & {\sh(\sh(\mb P[\T])\cv\mb P[\T])} \\
+    & {\Set[\T] \simeq \sh(\mb P[\T])}
+    \arrow["{\sh(\yon\cv\mb P[\T])}", from=1-1, to=1-2]
+    \arrow["{\delta^*}"', from=1-1, to=2-2]
+    \arrow["\simeq", from=1-2, to=2-2]
+  \end{tikzcd}\]
+  The composite $\sh(\mb P[\T]^{\mbb 2}) \to \sh(\sh(\mb P[\T])\cv\mb P[\T]) \simeq \sh(\mb P[\T])$ by construction takes an arrow $\varphi \to \psi$ in $\mb P[\T]^{\mbb 2}$ to $\varphi\in\mb P[\T]$. On the other hand, $\delta$ is also induced by the morphism of site $\dom \colon \mb P[\T]^{\mbb 2} \to \mb P[\T]$. Thus, $\ass-$ is indeed the fibrewise Yoneda embedding, and this shows it is fully faithful.
+\end{proof}
+
+\begin{remark}[Relative geometric morphism by relative site]
+  For more information on relative geometric morphisms induced by a relative site, we refer the reader to~\citet{bartoli2023morphisms}.
+\end{remark}
+
+\begin{remark}[Relation to logical schemes]\label{rem:relationtologicalscheme}
+  Mention here the relation to the sheaf/stack representation of pretopoi developed in~\citet{breiner2014scheme}.
+\end{remark}
+
+Let us now complete our promise in~\zcref{sec:testcasesierpinski}, showing that the denseness of the generic proposition is a direct consequence of the \gls{QC} for the coherent theory of a generic proposition:
+
+\begin{example}[\gls{QC} in the Sierpi\'nski topos]\label{exa:qcinsierpinskitopos}
+  Let $\mbb S$ be the coherent theory of a proposition $\ms p$. Its classifying topos is the Sierpi\'nski topos $\mc I$, and we let $\mbb p$ be the generic proposition (cf.~\zcref{sec:testcasesierpinski}). Internally in $\mc I$, since there are no sorts in $\mbb S$, the theory $\mbb p \ltimes \mbb S$ coincides with $\mbb S$, and by construction $\ass{\ms p} = \mbb p$. Similarly, $\ass{\bot} = \mb 0$. By \gls{QC}, the function space $\mbb p \to \mb 0$ then coincides with $\mb P[\mbb S](\ms p,\bot)$, which is equivalent to the proposition $\mbb S \vdash (\mbb p \vdash \bot)$, and is clearly false. This shows that $\neg(\mbb p \to \mb 0)$, or equivalently, $\neg\neg\mbb p$. Hence,~\zcref{prop:genericpropnegneg} is a consequence of \gls{QC} for the coherent theory $\mbb S$.
+\end{example}
+
+For the remaining of this section, we show how \gls{QC} for coherent theories \emph{implies} \gls{QC} for (finitary) Horn theories, and in fact is stronger than the latter. For this, let $\T$ be a Horn theory. By definition, it is automatically a coherent theory as well; from another perspective, the presheaf topos $\Set[\T] \simeq [\mmod{\T}_\omega,\Set]$ is indeed a coherent topos (cf.~\citet[D3.3.1]{johnstone2002sketches}). The following observation is immediate:
+
+\begin{lemma}\label{lem:freepretoposfullyfaithful}
+  There is a fully faithful embedding $\mmod{\T}_\omega\op \hook \mb P[\T]$.
+\end{lemma}
+\begin{proof}
+  We have mentioned in~\zcref{sec:cohtheory} that $\mb P[\T]$ can be identified as the full subcategory of coherent objects in $\Set[\T]$ (cf.~\citet[D3.3.8]{johnstone2002sketches}). On the other hand, $\mmod{\T}_\omega\op$ can be viewed as the representable objects in $\Set[\T] \simeq [\mmod{\T}_\omega,\Set]$, which are indeed coherent. Thus, $\mmod{\T}_\omega\op$ as a full subcategory of $\Set[\T]$ is contained in $\mb P[\T]$.
+\end{proof}
+
+\begin{remark}[Free pretopos completion from a syntactic perspective]\label{rem:freepretopossyntactic}
+  The inclusion $\mmod{\T}_\omega\op \hook \mb P[\T]$ indeed computes the \emph{free pretopos} generated from the lex category $\mmod{\T}_\omega\op$. From a logical perspective, $\mmod{\T}_\omega\op$ can indeed be viewed as the \emph{cartesian syntactic category} of the Horn theory $\T$ (cf.~\citet[D3.1]{johnstone2002sketches}), thus its objects can be equivalently viewed as \emph{finite conjunctions of equations in contexts} in $\T$. For any such finite conjunction of equations in context $\varphi(\ov{\ms x})$, it corresponds to the finitely presented $\T$-algebra $T\gr{\ms{\ov x}}{\varphi(\ov{\ms x})}$, where the variables are generators and $\varphi$ specifies the generating congruence. The fact that it fully faithfully embeds into $\mb P[\T]$ is then a certain conservativity result between cartesian logic and coherent logic, i.e.\ if $\T$ is a Horn theory, then any $\T$-provably functional coherent formulas are already defined by terms of $\T$.
+\end{remark}
+
+\begin{theorem}[\gls{QC} for coherent theories as a generalisation for \gls{QC} for Horn theories]\label{thm:qccohgeneraliseqchorn}
+  Let $\T$ be a Horn theory. Then by viewing it as a coherent theory, the corresponding principle of \gls{QC} implies \gls{QC} for the Horn theory $\T$.
+\end{theorem}
+\begin{proof}
+  Internally in $\Set[\T]$, recall $\VT$ is the Horn theory of $V_\T$-algebras. Observe that internally we have the following diagram,
+  \[
+  \begin{tikzcd}
+    \mmod{\VT}_\omega\op \ar[dr, "\spec"'] \ar[r, hook] & \mb P[\VT] \ar[d, hook, "\ass-"] \\
+    & \mb S
+  \end{tikzcd}
+  \]
+  The top horizontal arrow is fully faithful by~\zcref{lem:freepretoposfullyfaithful}, and the right vertical map being fully faithful is the statement of \gls{QC} for the coherent theory $\T$. This shows that $\spec$ is fully faithful, which by~\zcref{rem:ageneralduality} is indeed equivalent to \gls{QC} for the Horn theory $\T$. Hence, it suffices to see the above diagram commutes. For any finitely presented $\VT$-algebra $A = T\gr{\ov{\ms x}}{\varphi(\ov{\ms x})}$ in $\mmod{\VT}_\omega$, by~\zcref{rem:freepretopossyntactic} its image in $\mb P[\VT]$ is indeed the formula in context $\varphi(\ov{\ms x})$. This way, we have the following isomorphisms,
+  \begin{align*}
+    &\spec A \\
+    &\quad\cong \VT\alg(T\gr{\ms{\ov x}}{\varphi(\ov{\ms x})},V_\T) \\
+    &\quad\cong \scomp{\ov{\ms x}\in V_\T}{\varphi(\ov{\ms x})} \\
+    &\quad\cong \ass{\varphi(\ov{\ms x})}.
+  \end{align*}
+  In particular, the second isomorphism holds by the universal property of the free algebra $T\gr{\ov{\ms x}}{\varphi(\ov{\ms x})}$, and the third isomorphism holds by the definition of the evaluation functor $\ass{-}$, which takes the interpretation of $\varphi(\ov{\ms x})$ in the $\VT$-model of identity on $V_\T$. 
+\end{proof}
+
+\begin{remark}[Why \gls{QC} for coherent theories is properly stronger]
+  It should now be clear from~\zcref{thm:qccohgeneraliseqchorn} that, for a Horn theory $\T$, by viewing it as a coherent theory, the corresponding principle of \gls{QC} in $\Set[\T]$ is strictly \emph{stronger} than \gls{QC} for the Horn theory $\T$. This is due to the fact that the pretopos site $\mb P[\VT]$ contains more objects than $\mmod{\VT}_\omega\op$. As explained in the concrete example of the Sierpi\'nski topos $\mc I$ in~\zcref{sec:testcasesierpinski}, the corresponding cartesian site $\mmod{\VT}_\omega\op$ only contains the generic proposition $\mbb p$ and the terminal object $\mb 1$, while the coherent site $\mb P[\VT]$ also contains the initial object $\mb 0$. This way, the exponential $\neg\mbb p = \mbb p \to \mb 0$ can be computed via \gls{QC} for the coherent theory $\T$ classifying $\mc I$, but cannot be computed via \gls{QC} for the corresponding Horn theory.
+\end{remark}
 

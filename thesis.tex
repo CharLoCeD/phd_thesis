@@ -13,6 +13,7 @@
 \usepackage{enumitem}
 \usepackage{stix2}
 \usepackage{anyfontsize}
+\usepackage{bbold}
 
 \newcommand{\mc}[1]{\mathcal{#1}}
 \newcommand{\mb}[1]{\mathbf{#1}}
@@ -36,6 +37,7 @@
 \newcommand{\Grp}{\mb{Grp}}
 \newcommand{\sub}{\mr{Sub}}
 \newcommand{\Lex}{\mf{Lex}}
+\newcommand{\Coh}{\mf{Coh}}
 \newcommand{\Pos}{\mb{Pos}}
 \newcommand{\alg}{\text{-}\mb{Alg}}
 \newcommand{\Var}{\mb{Var}}
@@ -75,11 +77,11 @@
 \newcommand{\inj}{\rightarrowtail}
 \newcommand{\hook}{\hookrightarrow}
 \newcommand{\prth}[1]{\left(#1\right)}
-\newcommand{\fn}{_{\mr{f.}}}
-\newcommand{\fp}{_{\mr{f.p.}}}
-\newcommand{\fpp}{_{\mr{f.p.,+}}}
-\newcommand{\cp}{_{\mr{c.p.}}}
-\newcommand{\cpp}{_{\mr{c.p.,+}}}
+\newcommand{\fn}{_\omega}
+\newcommand{\fp}{_\omega}
+\newcommand{\fpp}{_{\omega,+}}
+\newcommand{\cp}{_{\omega_1}}
+\newcommand{\cpp}{_{\omega_1,+}}
 \newcommand{\dv}{\operatorname{\uparrow}}
 \newcommand{\cv}{\operatorname{\downarrow}}
 \newcommand{\et}{_{\text{\'et}}}
@@ -106,12 +108,13 @@
 \newcommand{\El}{\mr{El}}
 \newcommand{\lan}{\ms{lan}}
 \newcommand{\ran}{\ms{ran}}
-\newcommand{\VT}{V_\T\!\ltimes\!\T}
+\newcommand{\VT}{V_\T\hspace{-.4ex}\ltimes\hspace{-.4ex}\T}
 \newcommand{\uv}[1]{\underline{#1}}
 \newcommand{\gp}{\ms{Grpd}}
 \newcommand{\hp}{\text{-}}
 \newcommand{\st}{\ms{Set}}
 \newcommand{\dom}{\operatorname{dom}}
+\newcommand{\cod}{\operatorname{cod}}
 
 \newcommand\istsym{\ms{t}}
 \newcommand\isfsym{\ms{f}}
@@ -245,20 +248,18 @@
 \subjectline{Computer Science}
 \keywords{topoi, internal language, synthetic mathematics}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Abstract:
 %%
 \abstract{%
-  This thesis contributes to the understanding of the internal language of topoi, through the \emph{first-order theory it classifies}. The PhD thesis of~\citet{blechschmidt:2017} with the unpublished but wildly circulated note~\cite{blechschmidt_general_2020} has introduced a \emph{synthetic quasi-coherence principle (\gls{SQC})} for classifying topoi of Horn theories, connecting the higher-order internal logic of the classifying topos with the first-order Horn theory it classifies. We have generalised this principle to the case of \emph{$\kappa$-Horn theories}, which allows for operations with \emph{higher arity}, and also to the case of \emph{coherent theories}, which allows for theories with coherent axioms. 
+  This thesis contributes to the understanding of the internal language of topoi, through the \emph{first-order theory it classifies}. The PhD thesis of~\citet{blechschmidt:2017} with the unpublished but wildly circulated note~\cite{blechschmidt_general_2020} has introduced a \emph{quasi-coherence (\gls{QC}) principle} for classifying topoi of Horn theories, connecting the higher-order internal logic of the classifying topos with the first-order Horn theory it classifies. We have generalised this principle to the case of \emph{$\kappa$-Horn theories}, which allows for operations with \emph{higher arity}, and also to the case of \emph{coherent theories}, which allows for theories with coherent axioms. 
 
   These generalisations greatly improve the applicability of the quasi-coherence principle, and the second part of this thesis showcases this in various contexts, drawing new connections between different \emph{first-order theories} and branches of \emph{synthetic mathematics}: 
   \begin{itemize}
-    \item The classifying topoi for \emph{distributive lattices} and \emph{$\sigma$-frames}: the \gls{SQC} for which provides a full account for the axioms of \emph{synthetic domain theory (\gls{SDT})} as specified by~\citet{hyland_first_2006}. These techniques also draw new connections between the properties of an \emph{interval object} and that of the theory of distributive lattices, with further applications in synthetic higher category theory.
-    \item The classifying topos for \emph{coherent arithmetic} as in~\citet{ye_categorical_2026}: the \gls{SQC} for which induces the structure of \emph{synthetic computability} in the sense of~\citet{bauer_first_2006}. This provides the first known example of a \emph{sheaf topos} validating \emph{Church's thesis}, and unveils a striking parallelism between the structure of arithmetic and computability.
-    \item The classifying topos for \emph{Heyting algebras}: the \gls{SQC} for which provides a new environment for doing \emph{synthetic topology}. In particular, there is a striking new connection between \emph{uniform interpolation} for intuitionistic propositional logic established in~\citet{pitts_interpretation_1992}, and the topological structures of open subspaces.
-    \item The classifying topos for \emph{decidable atomless Boolean algebras}: the \gls{SQC} for which provides a striking connection with \emph{synthetic probability theory} in the style of~\citet{SimpsonAlex2024EaCI}, and the structure of \emph{partitions} of a Boolean algebra. The \emph{quantifier elimination} for this coherent theory also provides new proof strategies for establishing properties of independence relations of relative probability distribution in a synthetic way.
+    \item The classifying topoi for \emph{distributive lattices} and \emph{$\sigma$-frames}: the \gls{QC} for which provides a full account for the axioms of \emph{synthetic domain theory (\gls{SDT})} as specified by~\citet{hyland_first_2006}. These techniques also draw new connections between the properties of an \emph{interval object} and that of the theory of distributive lattices, with further applications in synthetic higher category theory.
+    \item The classifying topos for \emph{coherent arithmetic} as in~\citet{ye_categorical_2026}: the \gls{QC} for which induces the structure of \emph{synthetic computability} in the sense of~\citet{bauer_first_2006}. This provides the first known example of a \emph{sheaf topos} validating \emph{Church's thesis}, and unveils a striking parallelism between the structure of arithmetic and computability.
+    % \item The classifying topos for \emph{Heyting algebras}: the \gls{QC} for which provides a new environment for doing \emph{synthetic topology}. In particular, there is a striking new connection between \emph{uniform interpolation} for intuitionistic propositional logic established in~\citet{pitts_interpretation_1992}, and the topological structures of open subspaces.
+    \item The classifying topos for \emph{decidable atomless Boolean algebras}: the \gls{QC} for which provides a striking connection with \emph{synthetic probability theory} in the style of~\citet{SimpsonAlex2024EaCI}, and the structure of \emph{partitions} of a Boolean algebra. The \emph{quantifier elimination} for this coherent theory also provides new proof strategies for establishing properties of independence relations of relative probability distribution in a synthetic way.
   \end{itemize}
 }
 
@@ -283,6 +284,10 @@
     name=HoTT,
     description={homotopy type theory}
 }
+\newglossaryentry{IPC}{
+    name=IPC,
+    description={intuitionistic propositional calculus}
+}
 \newglossaryentry{LEM}{
     name=LEM,
     description={the Law of Excluded Middle}
@@ -291,37 +296,45 @@
     name=SDT,
     description={synthetic domain theory}
 }
-\newglossaryentry{SQC}{
-    name=SQC,
-    description={synthetic quasi-coherence}
+\newglossaryentry{SGDT}{
+    name=SGDT,
+    description={synthetic guarded domain theory}
 }
+\newglossaryentry{QC}{
+    name=QC,
+    description={quasi-coherence}
+}
+\newglossaryentry{ZFC}{
+    name=ZFC,
+    description={Zermelo-Fraenkel set theory with choice}
+}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Contents:
 %%
 \begin{document}
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Title page, abstract, declaration etc.:
 %% -    the title page (is automatically omitted in the technical report mode).
 \frontmatter{}
 
-
+\setcounter{page}{1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Thesis body:
 %%
 \include{source/intro}
-\include{source/prelim}
-\part{The theories of quasi-coherence}\label{prt:theory}
+% \include{source/prelim}
+\part{The theories of synthetic quasi-coherence}\label{prt:theory}
 \include{source/lpc}
 \include{source/sqc_horn}
 \include{source/sqc_coh}
-\part{The applications of quasi-coherence}\label{prt:appl}
+\part{The applications of synthetic quasi-coherence}\label{prt:appl}
 \include{source/app_domain}
 \include{source/app_arith}
+\include{source/app_prob}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% References:
@@ -337,9 +350,9 @@
 \bibliographystyle{plainnat}
 \bibliography{thesis}
 
-% \appendix
+\appendix
 
-% \include{source/prelim}
+\include{source/prelim}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Index:

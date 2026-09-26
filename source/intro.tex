@@ -1,12 +1,70 @@
 \chapter{Introduction}\label{ch:intro}
 
-\section{The theory of classifying topos}\label{sec:intro-classifying}
+\section{Topoi and their classifying geometric theories}\label{sec:intro-classifying}
 
-\section{Axiomatising the internal languages of classifying topoi}\label{sec:axiomatiseintlang}
+\section{Axiomatising the internal languages of topoi}\label{sec:axiomatiseintlang}
 
-\section{Summary of content}\label{sec:contentoverview}
+\subsection{On the generic model}
 
-\section{Foundation choice}\label{sec:foundation}
+Explain the history and idea of \gls{QC}. Starting from~\citet{RN879}, and then explain the recent development of~\citet{blechschmidt:2017} and~\citet{blechschmidt_general_2020}. Mention specific works including~\citet{Cherubini_Coquand_Hutzler_2024},~\citet{,cherubini2024foundation}, and of course~\citet{sterling2025domains}.
+
+Mention that from concrete applications, two directions of generalising \gls{QC} for finitary Horn theories are needed. One is to generalise it to \emph{infinitary}, or at least \emph{countable}, Horn theories. Note that the development for synthetic topology in~\citet{cherubini2024foundation} requires \gls{QC} for countably presented algebras, but still for a finitary algebraic theory, viz.\ the theory of Boolean algebras. However, the developments for \gls{SDT} in \citet{sterling2025domains} require to have a version of \gls{QC} for an infinitary Horn theory, viz.\ that of $\sigma$-frames (cf.~\zcref{exa:theoryofsigmaframe}). This will be developed in~\zcref{ch:sqchorn}.
+
+Other applications also require us to generalise \gls{QC} to another \emph{type} of theories, viz.\ to \emph{coherent theories}. Through the process of Morleyisation (cf.~\citet[Prop.~2.1.1]{caramello2018theories}) every classical first-order theory can be understood as a coherent theory, thus indeed most structures we see in everyday mathematical life can be axiomatised this way. 
+
+The reason a principle of \gls{QC} for coherent theories is desirable is that, \gls{QC} for Horn theories sometimes is not strong enough to prove the desired result that we expect to have synthetically. A simple example with the \emph{Sierpi\'nski topos} $\mc I$ is provided in~\zcref{sec:testcasesierpinski}. It is not hard to see that $\mc I$ classifies \emph{propositions}, and the generic proposition in $\mc I$ is \emph{dense} in the sense of~\zcref{def:propertiesofpropositions}, i.e.\ it is $\neg\neg$-closed (cf.~\zcref{prop:genericpropnegneg}). $\mc I$ is the classifying topos of both an algebraic theory and a coherent theory. However, \gls{QC} for the corresponding algebraic theory in $\mc I$ fails to establish the denseness of the generic proposition in $\mc I$ (cf.~\zcref{prop:algebraicnotsufficefordense}), while \gls{QC} for the corresponding coherent theory in $\mc I$ does suffice (cf.~\zcref{exa:qcinsierpinskitopos}). 
+
+Of course, more importantly there are potentially lot more applications of \gls{QC} for coherent theories towards synthetic mathematics. We will come back to this in~\zcref{sec:logicandmath}. 
+
+\subsection{On universes}
+
+Explain that the task of axiomatising $\Omega$ has been initiated in~\citet{blechschmidt_general_2020}, though the resulting theory is not completely formal and there are some technical difficulties in doing this. List two examples: 
+
+When we have a particular normal form result, we can provide a complete axiomatisation of $\Omega$, say in the case of the theory of filters on $\omega$ and the corresponding example of synthetic guarded domain theory (\gls{SGDT}). This provides a complete analysis of \gls{SGDT} as modelled in~\citet{birkedal_first_2012} in the topos of trees, from the pure logical properties of the theory of filters on $\omega$.
+
+Another more extreme case is when the geometric theory in hand has a very strong quantifier elimination property, which results in a \emph{Boolean} classifying topos (cf.~\citet{blass_boolean_1983}). In this case, $\Omega \cong 1 + 1$, which admits a very simple axiomatisation. We will see that this together with \gls{QC} has many profound applications in~\zcref{ch:BAandprobability}.
+
+However, the more difficult question is how to axiomatise the \emph{universe}. A step towards this is explained in~\citet{JazMyers_Liberating}. As for applications, for instance all the elementary axioms in~\citet{orton_axioms_2018} are consequence of \gls{QC} of a suitable algebraic theory (say of \emph{connection algebra}); while the last axiom states that the universe is somehow cofibrantly generated from the algebraic data of the interval. This would indeed provide some insight on how to obtain a general axiomatisation of the universe.
+
+\section{Intuition of quasi-coherence}
+
+Explain that, from a logical perspective, \gls{QC} is a definability result, i.e. maps between objects in the site are definable from the site. Also include the external characterisation of the subobject classifier in a coherent topos and indicate how an axiomatisation for the universe of propositions might look like for a coherent theory.
+
+Also explain that, from a categorical or geometrical perspective, \gls{QC} (at least for finitary theories) is nothing but the fibred Yoneda.
+
+\section{On the connection of synthetic mathematics and logical theories}\label{sec:logicandmath}
+
+Here explain that, beyond the technical development, the more important insight of this thesis is that there is a deeper connection between a particular style of synthetic mathematics for some field, and an algebraic/logical structure behind. This differs a lot from previous styles of synthetic mathematics based on realisability models, and is a new way of doing synthetic mathematics that may provide new insights.
+
+And one of the main contributions of this thesis is to exemplify this claim by supplying many (surprising) examples. In particular, the seemingly different structures of domain theory and distributive lattices and $\sigma$-frames (cf.~\zcref{ch:domain}), of computability theory and arithmetic (cf.~\zcref{ch:coharith}), and of probability theory and atomless Boolean algebras (cf.~\zcref{ch:BAandprobability}), are intimately tied together. The classifying topoi of the latter theories in all cases provide \emph{models} for the synthetic development of the former field of mathematics, and \gls{QC} introduces new techniques in reasoning about the synthetic mathematics happening this way.
+
+Also explain our examples will justify the two types of generalisations of \gls{QC} that will be developed in~\zcref{ch:sqchorn,ch:sqccoh}.
+
+\subsection{Domains and sigma-frames}
+
+The development of \gls{SDT} in the classifying topos of $\sigma$-frames is based on the work~\citet{sterling2025domains}. In particular, we will show that \gls{QC} for $\sigma$-frames alone imply \emph{all} the axioms of synthetic domain theory as specified in~\citet{hyland_first_2006}. It also introduces new ways of understanding the \emph{geometry} of a generic interval, and some techniques have already appeared in~\citet{bakke2026synthetic}. 
+
+Here explain the intuition of the following facts: 
+\begin{itemize}
+  \item the finitary part (dominance + Phoa's principle) is implied by the algebraic structure of distributive lattices;
+  \item the infinitary part (existence of unions of chains) is intuitively provided by the infinite union of $\sigma$-frames.
+\end{itemize}
+ 
+\subsection{Computability and arithmetic}
+
+Explain the the coherent theory of \emph{arithmetic} (cf.~\citet{ye_categorical_2026}). In~\zcref{ch:coharith} we will show its classifying topos provides a model of \emph{synthetic computability} as in~\citet{bauer_first_2006}. This provides the first known example of a model of arithmetic satisfying a version of \emph{Church's thesis} in a \emph{sheaf topos} (cf.~\citet{bauer2026laugh}). 
+
+Explain the intuition behind this: by replacing ``computable'' in computability theory to ``definable'' in arithmetic, one sees that the underlying mathematical structure of the two cases are in striking parallel with each other. The corresponding Church's thesis now states that any map between the natural numbers are \emph{definable}, and the fact that definable subsets of the natural numbers are enumerable is due to the fact that one can code formulas \`a la G\"odel. 
+
+Also explain that the internalisation of \emph{provability} also gives a \emph{modality} on the dominance of definable subsets, and it satisfies \emph{strong L\"ob induction}. Also mention why in this case it satisfies the strong version (use the old material on the rejected paper). Mention the relationship with the work of~\citet{ramesh2023introspective}.
+
+\subsection{Probability and atomless Boolean algebras}
+
+The second one is for the coherent theory of \emph{decidable atomless Boolean algebras} (cf.~\citet[D3.4.12]{johnstone2002sketches}). It is shown in~\citet{SimpsonAlex2024EaCI} that its classifying topos can serve as an environment for doing \emph{synthetic probability theory}. We will see in~\zcref{ch:BAandprobability} how such structures arise from the principle of \gls{QC} for this coherent theory.
+
+Explain the intuition behind that random variables corresponds logically to \emph{decomposition} of the generic Boolean algebra, and the independence laws corresponds to independent decompositions, etc.
+
+\section{Foundation choices}\label{sec:foundation}
 
 As mentioned, this document is going to contain two parts, where \zcref{prt:theory} works \emph{externally} from the semantics perspective and proves the validity of the quasi-coherence principle in a variety of topoi, and~\zcref{prt:appl} works \emph{internally} in various classifying topoi where we show the quasi-coherence principle for different theories have different applications in branches of synthetic mathematics.
 
@@ -18,3 +76,41 @@ One reason we need a small dose of unbounded quantification in our development i
 
 In $\Set$ there is also a universe of \emph{propositions}, which we denote as $\pp$. We will identify a proposition with its \emph{extension}, viz.\ as a subset of the terminal set $\mb 1$. We do assume $\pp$ is \emph{impredicative}, in the sense that quantifying over all sets still produces a proposition in the universe $\pp$. Internally in an arbitrary topos, this form of impredicativity is indeed supported by the stack semantics. Similar to the case of $\Set$, when we work within the internal language of a topos, we will often write the universe of propositions as $\Omega$, which is the standard notation for the subobject classifier in a topos.
 
+Since we work in general in a constructive environment, propositions satisfying certain classical properties deserve additional attention:
+
+\begin{definition}[Classical properties of propositions]\label{def:propertiesofpropositions}
+  We say a proposition $p \in \pp$ is \emph{decidable}, if $p = 0 \vee p = 1$. We say $p$ is \emph{classical}, if $\neg\neg p = p$. We say $p$ is \emph{dense}, if $\neg\neg p = 1$. 
+\end{definition}
+
+\begin{remark}[The subuniverse of decidable and classical propositions]
+  Note that the set of decidable propositions is given by $\mb 2 = \set{\mb 0,\mb 1}$. We also denote the set of classical propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $\mb 2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
+\end{remark}
+
+\begin{definition}[Decidable and classical sets]\label{def:decidableset}
+  For a set $X$, we say it is \emph{decidable} (resp.\ \emph{classical}) if its equalities are decidable (resp.\ classical), i.e.\ for any $x,y\in X$, the proposition $x = y$ is decidable (resp.\ classical).
+\end{definition}
+
+\begin{remark}[Caveat on complemented subsets]\label{rem:complementedsubtype}
+  Given a set $X$, it is common in the literature to refer to $S$ as a \emph{decidable subset} of $X$ if, as a function $S \colon X \to \pp$, it factors through the decidable propositions $2 \subseteq \pp$. However, this might be misunderstood as the set $S$ itself is decidable as in~\zcref{def:decidableset}. Hence, we will always refer to such a subset as a \emph{complemented} subset.
+\end{remark}
+
+
+\section{Notation and terminology conventions}\label{sec:notation}
+
+We will use fonts $\ms x,\ms y,\ms z,\cdots$ to denote \emph{formal variables}.
+
+For any $n\in\N$, we use $\mb n$ to denote the finite cardinal containing exactly $n$ elements. In particular, $\mb 0$ and $\mb 1$ will be identified with the proposition \emph{falsum} and \emph{verum}, respectively.
+
+For any set $X$, we write $\pss{X}$ for the proposition that $X$ is inhabited, viz.\ $\ex{x}{X}\top$.
+
+We reserve symbols $\mc A,\mc B,\mc C$ for small categories. Fixed large categories are often denoted by bold face symbols, like $\Set$, $\Fin$, etc. We will reserve the sf font for 2-categories. For instance, $\Catt$ will denote the \emph{2-category} of categories, while $\Cat$ will be the \emph{1-category} of categories and functors. Other common 2-categories include $\Lex$, the 2-category of small lex categories, and $\Top$, the 2-category of topoi.
+
+We use $\yon$ to denote the Yoneda embedding. More explicitly, we use the symbol for both the covariant and contravariant Yoneda embedding, but distinguishing them by subscription or superscription,
+\[ \yon_- \colon \mc C \hook \psh(\mc C), \quad \yon^- \colon \mc C\op \hook [\mc C,\Set]. \]
+
+In our constructive setting, by an \emph{equivalence} between categories we mean a functor $F \colon \mc A \to \mc B$ that is both \emph{fully faithful} and \emph{essentially surjective}. This is sometimes also referred to as a \emph{weak equivalence} between categories. For most practical usage, the notion of weak equivalence suffices, since one can show that all relevant categorical properties are preserved under weak equivalence. 
+
+
+\begin{remark}[Comparison with homotopy type theory]
+  This document has adopted the language of the old-fashioned Bishop-style constructive set theory, instead of currently more trending homotopy type theory (\gls{HoTT}), as described in the book~\cite{hottbook}. In particular, using the notion of \emph{univalent categories} developed in~\citet{AHRENS_KAPULKIN_SHULMAN_2015}, one can in fact show every weak equivalence between univalent categories admits an inverse. However, \ldots
+\end{remark}

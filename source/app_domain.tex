@@ -70,6 +70,8 @@
 
 \chapter{Distributive lattice, sigma-frames, and synthetic domain theory}\label{ch:domain}
 
+This chapter is based on~\citet{sterling2025domains}.
+
 \section{Introduction}\label{sec:intro}
 
 \subsection{Synthetic domain theory}\label{subsec:sdt}
@@ -164,13 +166,13 @@ many important objects for domain theory can be written as \emph{spectra}. This 
     \item As a special case of locality, we also connect to the recent approach of synthetic (higher) category theory~\citep{riehl2017type,buchholtz2021synthetic,gratzer2024directed}. In particular, we show spectra will be synthetic categories (\zcref{thm:soberposet}). As another example, we also show $\omega$ is a synthetic category, in fact it satisfies \emph{all} the orthogonality conditions discussed in this paper except chain completeness (\zcref{thm:omegaortho}).
   \end{enumerate}
 
-  \item \emph{New models for synthetic domain theory.} Consequently, we uncover a large family of new models for synthetic domain theory based on sites induced by countably presented $\sigma$-frames. We will discuss these models in \zcref{sec:model}, and compare them to the existing sheaf models for synthetic domain theory~\citep{FIORE1997151} in \zcref{subsec:compare}.
+  \item \emph{New models for synthetic domain theory.} Consequently, we uncover a large family of new models for synthetic domain theory based on sites induced by countably presented $\sigma$-frames. We will discuss these models in \zcref{sec:newmodelforsdt}, and compare them to the existing sheaf models for synthetic domain theory~\citep{FIORE1997151} in \zcref{subsec:compare}.
 \end{enumerate}
 
 
 \subsection{Style and notation of the paper}
 
-Our motivation for domain theory encourages us to work in a context as general as possible, so as to allow future developments that connect more specific flavours of domain theory existing in the literature. This means that besides \zcref{sec:model} where we discuss models, throughout the paper we will work constructively in a type theory enriched with a generic model $\mbb{I}$. The base type system we work with is intensional type theory with a universe satisfying function extensionality, which can be interpreted in any ($\infty$-)topos. 
+Our motivation for domain theory encourages us to work in a context as general as possible, so as to allow future developments that connect more specific flavours of domain theory existing in the literature. This means that besides \zcref{sec:newmodelforsdt} where we discuss models, throughout the paper we will work constructively in a type theory enriched with a generic model $\mbb{I}$. The base type system we work with is intensional type theory with a universe satisfying function extensionality, which can be interpreted in any ($\infty$-)topos. 
 
 We do not assume any additional assumption globally. Whenever we introduce an assumption under the \textbf{Axiom} environment, it should be viewed as introducing the \emph{content} of that assumption, rather than assuming it directly afterwards. In particular, the development is completely modular, and any additional assumption will be explicitly mentioned in each result.
 
@@ -185,152 +187,6 @@ we will write $A/a = b$ to indicate the \emph{quotient algebra} identifying $a_j
 
 
 \section{Quasi-coherence and sober spaces}\label{sec:basics}
-
-We will work in intensional type theory extended by a model $\mbb{I}$ of some Horn theory $\T$. In this section we will first describe the quasi-coherence property, and briefly recap some of its elementary consequences. The results in this section applies to any Horn theory $\T$, thus at this stage we do not assume $\T$ to satisfy any additional properties.
-
-As mentioned in \zcref{subsec:qc}, an $\mbb{I}$-algebra is a $\T$-model $A$ equipped with a homomorphism $\mbb{I} \to A$. Here by a $\T$-model we always mean a \emph{set} (in the sense of univalent foundations) equipped with a family of operations satisfying the axioms specified by $\T$. $\mbb{I}\alg$ will denote the category of $\mbb{I}$-algebras. We have a construction of spectra as a contravariant functor:
-
-\begin{definition}[Spectrum]
-  The \emph{spectrum} of an $\mbb{I}$-algebra $A$ is defined to be the set of $\mbb{I}$-algebra homomorphisms from $A$ into $\mbb{I}$:
-  \[ \spec A \coloneq \mbb{I}\alg(A,\mbb{I})\text{.} \]
-  This gives us a contravariant functor 
-  \[ \spec \colon \mbb{I}\alg\op \to \Set\text{,} \]
-  acting on morphisms by pre-composition.
-\end{definition}
-
-\begin{definition}[Observation algebra]
-  Given a set $X$, its \emph{algebra of observations} is the product of following $\mbb{I}$-algebras:
-  \[ 
-    \opens X \coloneq \mbb{I}^X = \prod_{x:X}\mbb{I}
-  \] 
-  This gives us a functor \[ \opens \colon \Set \to \mbb{I}\alg\op \]
-  taking any set to its algebra of observations.
-\end{definition}
-
-\begin{proposition}\label{specrightadj}
-  The spectrum construction is right adjoint to the functor taking a set $X$ to its algebra of observations:
-  \[\begin{tikzcd}
-    {\mbb{I}\alg\op} & \Set
-    \arrow[""{name=0, anchor=center, inner sep=0}, "\spec"', curve={height=18pt}, from=1-1, to=1-2]
-    \arrow[""{name=1, anchor=center, inner sep=0}, "\opens"', curve={height=18pt}, from=1-2, to=1-1]
-    \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
-  \end{tikzcd}\]
-\end{proposition}
-
-\begin{proof}
-  For any $\mbb{I}$-algebra $A$ and set $X$, we have a natural equivalence 
-  \[ (\spec A)^X \cong \mbb{I}\alg(A,\mbb{I})^X \cong \prod_{x:X}\mbb{I}\alg(A,\mbb{I})\cong \mbb{I}\alg(A,\opens{X})\text{.} \qedhere\]
-\end{proof}
-
-\begin{convention}[Unit and counit]
-  Following \citet{Taylor2011}, we shall write $\eta\colon 1_{\Set}\to {\spec}\circ \opens$ and $\iota\colon \opens\circ\spec\to 1_{\mbb{I}\alg\op}$ for the unit and counit of the adjunction $\opens\dashv \spec\colon \mbb{I}\alg\op\to \Set$ respectively. Due to the contravariance of the adjunction, the components of the counit are written $\iota_A\colon A\to \opens\spec{A}$ in the category of $\mbb{I}$-algebras. Both $\eta_X\colon X\to \spec\opens{X}$ and $\iota_A\colon A\to \opens\spec{A}$ are the evident evaluation maps.
-\end{convention}
-
-Many sets can be naturally viewed as the spectrum of a certain $\mbb{I}$-algebra. For example, we have $\spec \mbb{I} \cong \mbb{I}\alg(\mbb{I},\mbb{I}) \cong 1$ because  $\mbb{I}$ is the initial $\mbb{I}$-algebra. Similarly, $\mbb{I}$ itself it the spectrum of the polynomial $\mbb{I}$-algebra $\mbb{I}[\ms{i}]$, as we have $\spec \mbb{I}[\ms{i}] \cong \mbb{I}\alg(\mbb{I}[\ms{i}],\mbb{I}) \cong \mbb{I}$. More generally:
-
-\begin{example}[Cubes]\label{exm:cubesober}
-  For any set $X$, let $\mbb{I}[X]$ be the free $\mbb{I}$-algebra generated by $X$. Then the set $\mbb{I}^X$ is a spectrum, because we have
-  \[ \spec \mbb{I}[X] \cong \mbb{I}\alg(\mbb{I}[X],\mbb{I}) \cong \mbb{I}^X\text{.} \]
-\end{example}
-
-Notice $\mbb{I}[X]$ is the $X$-fold coproduct of the polynomial $\mbb{I}$-algebra $\mbb{I}[\ms{i}]$, and its spectrum is the $X$-fold product of $\spec\mbb{I}[\ms{i}] \cong \mbb{I}$. In fact, all the spectra can be obtained as equalisers of powers of $\mbb{I}$:
-
-\begin{proposition}\label{prop:spectra-are-powers-of-the-interval}
-  Every spectrum is an equaliser of powers of $\mbb{I}$. 
-\end{proposition}
-
-To verify \zcref{prop:spectra-are-powers-of-the-interval}, we recall some results concerning adjunctions of descent type. This notion was first given in \citet{BarrMichael1985Ttat}, and the following characterisation appeared in \citet{kelly1993adjunctions}
-
-\begin{definition}
-  An adjunction $F\dashv U\colon \mathcal{A}\to \mathcal{C}$ is said to be of \emph{descent type} when either of the equivalent conditions hold:
-  \begin{enumerate}
-    \item The comparison functor $\Phi_{UF}\colon \mc{A} \to \mc{C}^{UF}$ into the Eilenberg--Moore category of the monad $UF$ on $\mathcal{C}$ is fully faithful.
-    \item For each $A\in \mc{A}$, the counit $\epsilon_A\colon FUA\to A$ is a coequaliser in $\mc{A}$:
-    \[\begin{tikzcd}
-      FU FU A \ar[r, shift left, "\epsilon_{FUA}"] \ar[r, shift right, "{FU\epsilon_A}"'] & FUA \ar[r, two heads, "\epsilon_{A}"] & A
-    \end{tikzcd}\]  
-  \end{enumerate}
-\end{definition}
-
-\begin{proposition}\label{lem:horn-free-models-descent}
-  For a Horn theory $\T$, the adjunction $F\dashv U\colon \mmod\T\to\Set$ is of descent type.
-\end{proposition}
-
-\begin{proof}
-  Consider a presentation $\T = (\Sigma_\T,H_\T)$ where $\Sigma_\T$ is a signature and $H_\T$ is a set of Horn clauses over this signature; we may of course regard $\Sigma_\T$ as an algebraic theory without any equations. We may then decompose the adjunction $F\dashv U\colon \mmod\T\to \Set$  into the composite adjunction:
-  \[\begin{tikzcd}
-    {\mmod\T} & {\mmod{\Sigma_\T}} & \Set
-    \arrow[""{name=0, anchor=center, inner sep=0}, "{U_1}", curve={height=-15pt}, hook', from=1-1, to=1-2]
-    \arrow[""{name=1, anchor=center, inner sep=0}, "{F_1}", curve={height=-15pt}, from=1-2, to=1-1]
-    \arrow[""{name=2, anchor=center, inner sep=0}, "{U_0}", curve={height=-15pt}, from=1-2, to=1-3]
-    \arrow[""{name=3, anchor=center, inner sep=0}, "{F_0}", curve={height=-15pt}, from=1-3, to=1-2]
-    \arrow["\dashv"{anchor=center, rotate=90}, draw=none, from=1, to=0]
-    \arrow["\dashv"{anchor=center, rotate=90}, draw=none, from=3, to=2]
-  \end{tikzcd}\]
-
-  The existence and reflectivity of $F_1\dashv U_1\colon \mmod\T\to\mmod{\Sigma_\T}$ is established by Remark~3.19~(1) of \citet{adamek1994locally}, as $\mmod\T$ is a ``quasivariety'' in the sense of \emph{op.\ cit.} The right-hand adjunction $F_0\dashv U_0\colon \mmod{\Sigma_T}\to \Set$ is monadic (i.e.\ of \emph{effective} descent type) because $\Sigma_\T$ is algebraic. Corollary 3.3 of \citet{kelly1993adjunctions} implies that the composition of a reflective adjunction followed by an adjunction of descent type is of descent type. 
-\end{proof}
-
-We are now prepared to verify \zcref{prop:spectra-are-powers-of-the-interval}.
-
-\begin{proof}[Proof of \zcref{prop:spectra-are-powers-of-the-interval}]
-  We wish to show that every spectrum $X=\spec A$ an equaliser of powers of the interval.
-  To that end, we note that the adjunction $F\dashv U\colon \mbb{I}\alg \to\Set$ is of descent type by \zcref{lem:horn-free-models-descent}, since the theory of $\mbb{I}$-algebras is Horn. Hence, the following is a coequaliser in $\mbb{I}\alg$: 
-  \[
-  \begin{tikzcd}
-    \mbb{I}[\mbb{I}[A]] \ar[r, shift left, "\epsilon"] \ar[r, shift right, "{\mbb{I}[\epsilon]}"'] & \mbb{I}[A] \ar[r, two heads, "\epsilon"] & A
-  \end{tikzcd}
-  \]
-
-  Because $\spec\colon \mbb{I}\alg\op\to\Set$ is a right adjoint (\zcref{specrightadj}), it sends colimits of algebras to limits of sets; hence, the following is an equaliser:
-  \[
-  \begin{tikzcd}
-    \spec A \ar[r, hook] & \spec\mbb{I}[A] \cong \mbb{I}^A \ar[r, shift left] \ar[r, shift right] & \spec\mbb{I}[\mbb{I}[A]]\cong\mbb{I}^{\mbb{I}[A]}
-  \end{tikzcd}
-  \qedhere
-  \]
-\end{proof}
-
-\begin{remark}[Spectra are replete]\label{rem:specarereplete}
-  Recall the notion of \emph{replete} type given by \citet{hyland_first_2006}: $X$ is said to replete when it is right orthogonal to any map that $\mbb{I}$ is right orthogonal to. Throughout the paper, by right orthogonality we always mean the \emph{internal} notion: $X$ is right orthogonal to a map $f$ iff the restriction map $X^f$ is an equivalence. Thus, an object is replete iff it belongs to the smallest internal localisation class containing $\mbb{I}$. In particular, replete objects form an exponential ideal. This implies a spectrum $\spec A$ as an equaliser of powers of $\mbb{I}$ will also be replete.
-\end{remark}
-
-We will now define spatial algebras and sober spaces as the \emph{fixed points} of the adjunction in \zcref{specrightadj}:
-
-\begin{definition}[Spatial algebra]
-  An $\mbb{I}$-algebra $A$ is said to be \emph{spatial} when it is a fixed point of the adjunction $\opens \dashv \spec$, i.e.\ the component $\iota_A\colon A \to \opens \spec A$ of the counit is an equivalence of $\mbb{I}$-algebras.
-\end{definition}
-
-We emphasise that the equivalence $A \cong \opens\spec A$ is not only an equivalence of types, but an equivalence of $\mbb{I}$-algebras. This implies that the algebraic structure on $A$ can be viewed as pointwise induced by that on $\mbb{I}$. 
-
-\begin{remark}[Spatial algebras are replete]\label{rem:qcreplete}
-  The underlying set of any spatial algebra $A$ is also replete, as we have $A\cong \opens\spec{A}$ and hence the underlying set of $A$ is $\mbb{I}^{\spec{A}}$.
-\end{remark}
-
-\begin{example}\label{exm:intervalqc}
-  $\mbb{I}$ itself by definition is spatial. We have seen that $\spec \mbb{I} \cong 1$. Under this equivalence, the canonical map 
-  \[ \mbb{I} \to \opens\spec \mbb{I} \cong \mbb{I} \]
-  is exactly the identity on $\mbb{I}$.
-\end{example}
-
-\begin{definition}[Sober sets]
-  We say a set $X$ is \emph{sober} if it is a fixed point of the adjunction $\opens \dashv \spec$, i.e.\ the unit map $\eta_X\colon X \to \spec\opens X$ is an equivalence.
-\end{definition}
-
-In the future whenever we indicate $X$ is sober with $X \cong \spec A$, we will assume $A$ is the spatial $\mbb{I}$-algebra $A \cong \opens X$.
-
-\begin{remark}[Spatiality and sobriety as general properties]
-  Our focus on spatiality and sobriety indicates an important difference between our approach and the ones taken in the related works~\citep{Cherubini_Coquand_Hutzler_2024,cherubini2024foundation}. There, the notion is directly connected to the size of presentation, i.e.\ they are spectra of finitely presented or countably presented algebras. Since we aim for a completely modular development, our notion is more general, which a priori does not favour a class of size-related algebras. 
-\end{remark}
-
-Being the fixed points of an adjunction, spatial $\mbb{I}$-algebras and sober spaces induces certain duality results. The first half of the following result appears in Prop.~2.2.1 of \citet{Cherubini_Coquand_Hutzler_2024} (for the more restrictive definition of quasi-coherence). We include the result here for completeness since our assumption is slightly more general.
-
-\begin{proposition}\label{prop:duality}
-  Let $A$ be spatial. For any $\mbb{I}$-algebra $B$, the canonical map $\mbb{I}\alg(B,A) \to (\spec B)^{\spec A}$ is an equivalence. Similarly, if $X$ is sober, for any set $Y$ the canonical map $X^Y \to \mbb{I}\alg(\opens X,\opens Y)$ is an equivalence.
-\end{proposition}
-\begin{proof}
-  This holds generally for fixed points of an adjunction.
-\end{proof}
 
 \section{Open propositions and the dominance property}\label{sec:dominance}
 
@@ -715,7 +571,7 @@ The strongest locality axiom states that the simplicial structure is truncated t
 Geometrically, (\AxiomOneCS) additionally requires the canonical inclusion $\partial\Delta_2 \hook \Delta_2$ from the boundary $\partial\Delta_2$ to the 2-simplex $\Delta_2$ is an equivalence, where $\partial\Delta_2$ type-theoretically is simply
 \[ \partial\Delta_2 \coloneq \scomp{i,j : \mbb{I}}{\isf{i} \vee (i = j) \vee \ist{i}}\text{.} \]
 
-In general we will at most work with the weakest locality axiom (\AxiomNT). However, we will show in \zcref{sec:local} that $\mbb{I}$, hence all spatial algebras and spectra, will be \emph{right orthogonal} to the maps that define these local principles as shown above. We will see in \zcref{sec:model} that these axioms corresponds to various coverages we can put on the presheaf classifying topos, and the orthogonality result particularly implies that $\mbb{I}$ will belong to these subtopoi.
+In general we will at most work with the weakest locality axiom (\AxiomNT). However, we will show in \zcref{sec:local} that $\mbb{I}$, hence all spatial algebras and spectra, will be \emph{right orthogonal} to the maps that define these local principles as shown above. We will see in \zcref{sec:newmodelforsdt} that these axioms corresponds to various coverages we can put on the presheaf classifying topos, and the orthogonality result particularly implies that $\mbb{I}$ will belong to these subtopoi.
 
 
 \section{Order-theoretic structure on algebras and spaces}\label{sec:order-theoretic-structure}
@@ -1736,7 +1592,7 @@ As another consequence, we can also show the following general result establishi
   \caption{Summary of axioms considered in this paper. Unlike the usual axiom sets for synthetic domain theory~\citep{hyland_first_2006}, the goal of these axioms is not to modularly specify all the properties of the interval with minimal overlap but instead to identify a sequence of increasingly strong descriptions of intervals that may play a role in synthetic domain theory.}
 \end{figure}
 
-\section{New models for synthetic domain theory}\label{sec:model}
+\section{New models for synthetic domain theory}\label{sec:newmodelforsdt}
 
 It is now instructive to discuss models for the axioms we have used in the previous sections. For this purpose, we now work externally under the assumption that the base topos $\Set$ satisfies the axiom of choice. Our axioms for synthetic domain theory can be organised into two classes:
 
@@ -1929,7 +1785,7 @@ Both synthetic topology~\citep{bauer2009dedekind} and synthetic computability th
 
 \subsection{Connection with existing models}\label{subsec:compare}
 
-Finally, it will be instructive to compare the sheaf models for synthetic domain theory constructed by \citet{FIORE1997151} with the models discussed in \zcref{sec:model}. Recall the topos $\mc H$ constructed in \emph{loc.\ cit.}\ is the following sheaf topos,
+Finally, it will be instructive to compare the sheaf models for synthetic domain theory constructed by \citet{FIORE1997151} with the models discussed in \zcref{sec:newmodelforsdt}. Recall the topos $\mc H$ constructed in \emph{loc.\ cit.}\ is the following sheaf topos,
 \[ \mc H \coloneq \sh(\mb P,J_{\ms{can}})\text{,} \]
 where $\mb P$ be the full subcategory of the category $\wCPO$ of $\omega$-cpos consisting of retracts of the Scott's graph model $G$, and $J_{\ms{can}}$ is the canonical topology on $\mb P$. An $\omega$-cpo is simply a poset having joins of countable chains, and morphisms between them are maps preserving joins of countable chains.
 
