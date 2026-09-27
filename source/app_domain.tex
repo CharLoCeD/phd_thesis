@@ -1,7 +1,7 @@
 \NewDocumentCommand\AxiomSQCI{}{SQCI}
 \NewDocumentCommand\PrintAxiomSQCI{}{
   \begin{axiom}[\AxiomSQCI]
-    $\mbb{I}$ is stably spatial, i.e.\ the slice $\mbb{I}/i$ is spatial for every $i:\mbb{I}$.
+    $\mbb{I}$ is stably spatial, i.e.\ the slice $\mbb{I}/i$ is spatial for every $i \in \mbb I$.
   \end{axiom}
 }
 
@@ -29,28 +29,28 @@
 \NewDocumentCommand\AxiomL{}{L}
 \NewDocumentCommand\PrintAxiomL{}{
   \begin{axiom}[\AxiomL]
-    $\mbb{I}$ is local, i.e.\ $0 \neq 1$, and $\ist{i\vee j} \eq \ist{i} \vee \ist{j}$ for $i,j : \mbb{I}$. 
+    $\mbb{I}$ is local, i.e.\ $0 \neq 1$, and $\ist{i\vee j} \eq \ist{i} \vee \ist{j}$ for $i,j \in \mbb{I}$. 
   \end{axiom}
 }
 
 \NewDocumentCommand\AxiomCL{}{cL}
 \NewDocumentCommand\PrintAxiomCL{}{
   \begin{axiom}[\AxiomCL]
-    $\mbb{I}$ is colocal, i.e.\ $0 \neq 1$ and $\isf{i\wedge j} \eq \isf{i} \vee \isf{j}$ for all $i,j : \mbb{I}$.
+    $\mbb{I}$ is colocal, i.e.\ $0 \neq 1$ and $\isf{i\wedge j} \eq \isf{i} \vee \isf{j}$ for all $i,j \in \mbb{I}$.
   \end{axiom}
 }
 
 \NewDocumentCommand\AxiomSL{}{SL}
 \NewDocumentCommand\PrintAxiomSL{}{
   \begin{axiom}[\AxiomSL]
-    $\mbb{I}$ is a \emph{strict linear order}, i.e.\ $0 \neq 1$ and $i \le j \vee j \le i$ for all $i,j:\mbb{I}$. 
+    $\mbb{I}$ is a \emph{strict linear order}, i.e.\ $0 \neq 1$ and $i \le j \vee j \le i$ for all $i,j\in\mbb{I}$. 
   \end{axiom}
 }
 
 \NewDocumentCommand\AxiomOneCS{}{1cS}
 \NewDocumentCommand\PrintAxiomOneCS{}{
   \begin{axiom}[\AxiomOneCS]
-    $\mbb{I}$ is \emph{1-coskeletal}, i.e.\ (\AxiomSL) holds and $i \le j \eq \isf{i} \vee (i = j)\vee \ist{j}$ for all $i,j : \mbb{I}$.
+    $\mbb{I}$ is \emph{1-coskeletal}, i.e.\ (\AxiomSL) holds and $i \le j \eq \isf{i} \vee (i = j)\vee \ist{j}$ for all $i,j \in \mbb{I}$.
   \end{axiom}
 }
 
@@ -70,96 +70,42 @@
 
 \chapter{Distributive lattice, sigma-frames, and synthetic domain theory}\label{ch:domain}
 
-This chapter is based on~\citet{sterling2025domains}.
-
-\section{Introduction}\label{sec:intro}
-
-\subsection{Synthetic domain theory}\label{subsec:sdt}
+This chapter is based on~\citet{sterling2025domains}, which has systematically investigated the new connection between the $\omega$-Horn theory of distributive lattices (cf.~\zcref{exa:finitealgebratheories}) and the $\omega_1$-Horn theory of $\sigma$-frames (cf.~\zcref{exa:theoryofsigmaframe}), and \emph{synthetic domain theory} (\gls{SDT}), through the lens of \gls{QC}.
 
 The proposal to develop a synthetic theory of domains was raised by Dana Scott in the early 1980s. The thesis is that (pre)domains should be viewed simply as some special sets in a suitable universe, and any function between them should automatically respect the computational data associated to domains. Later \citet{hyland_first_2006} gave an extensive list of the properties such a universe might satisfy.
 
-Firstly, a universe for synthetic domains should contain an interval object $\mbb{I}$, which induces an observational preorder (or \emph{specialisation} preorder from a topological perspective) on domains for which function is automatically monotone. An internal axiom that characterises the synthetic nature of this fact is the so-called \emph{Phoa principle}: The function space $\mbb{I}^\mbb{I}$ should classify the order on $\mbb{I}$. In other words, the functions from $\mbb{I}$ to itself are completely determined by the order structure on $\mbb{I}$. 
+A universe for synthetic domains should contain an interval object $\mbb{I}$. From the perspective of \gls{QC}, as we shall see, a good candidate for such an interval object is the \emph{generic model} of distributive lattices or $\sigma$-frames, in their corresponding classifying topoi. The reason is that, the \emph{logical/algebraic} structure of distributive lattices and $\sigma$-frames, via \gls{QC}, translates exactly to the synthetic behaviours of the interval $\mbb I$ required for a good notion of synthetic domains. 
 
-Additionally, $\mbb{I}$ should also form a subuniverse of propositions closed under dependent sums, so as to form a dominance in the sense of \citet{rosolini1986continuity}. The dominance structure is used to parametrise partial functions through a \emph{partial map classifier} functor $L$ constructed from $\mbb{I}$. 
+As a first instance, the interval $\mbb I$ induces an observational preorder (or \emph{specialisation} preorder from a topological perspective) on domains for which functions should be automatically monotone. An internal axiom that characterises the synthetic nature of this fact is the so-called \emph{Phoa principle}: the function space $\mbb{I}^\mbb{I}$ should classify the \emph{order} on $\mbb{I}$. In other words, functions from $\mbb{I}$ to itself are completely determined by the order structure on $\mbb{I}$. 
+
+From the perspective of \gls{QC}, we already know that $\mbb I$ is a spectrum (cf.~\zcref{exm:cubesober}), thus via \gls{QC} for Horn theories the exponential $\mbb I^{\mbb I}$ then can be computed as the \emph{free algebra} $\mbb I[\ms x]$ (but even without \gls{QC}, this observation is already contained in~\citet{RN879}). \citet{gratzer2024directed} has shown that when $\mbb{I}$ is the generic distributive lattice, the isomorphism $\mbb{I}^\mbb{I} \cong \mbb{I}[\ms{x}]$ implies Phoa's principle---because for distributive lattices, the polynomial $\mbb{I}$-algebra $\mbb{I}[\ms{x}]$ always classifies the partial order on $\mbb{I}$. This is a striking example of how the properties of a theory impact the internal logic of its classifying topos, which is the running theme of~\zcref{prt:appl} of this thesis.
+
+Additionally for \gls{SDT}, $\mbb{I}$ should also form a subuniverse of propositions closed under dependent sums, so as to form a dominance in the sense of \citet{rosolini1986continuity}. The dominance structure is used to parametrise partial functions through a \emph{partial map classifier} functor $L$ constructed from $\mbb{I}$. 
 
 Besides these elementary axioms, the main additional axiom of synthetic domain theory is the \emph{chain completeness} of the interval: 
 \begin{itemize}
   \item[]
-  Let $\omega$ and $\ov\omega$ be the carriers of the internal initial algebra and final coalgebra to the partial map classifier functor $L$ respectively. There is a canonical inclusion $\omega \hook \ov\omega$, and the chain completeness axiom states that $\mbb{I}$ is \emph{right orthogonal} to this inclusion in the sense that the canonically induced restriction map $\mbb{I}^{\ov\omega} \to \mbb{I}^{\omega}$ should be an equivalence. 
+  Let $\omega$ and $\ov\omega$ be the carriers of the internal initial algebra and final coalgebra to the partial map classifier functor $L$ respectively. There is a canonical inclusion $\omega \hook \ov\omega$, and the chain completeness axiom states that $\mbb{I}$ is \emph{right orthogonal} to this inclusion in the sense that the canonically induced restriction map $\mbb{I}^{\ov\omega} \to \mbb{I}^{\omega}$ should be an isomorphism. 
 \end{itemize} 
 This can be viewed as the synthetic version of the $\omega$-completeness of the Sierpi\'nski space in traditional domain theory.
 
-\subsection{Two viewpoints on synthetic domains}
+As we shall see, \gls{QC} for distributive lattices and $\sigma$-frames suffices to explain the behaviour of the above mentioned axioms in synthetic domain theory all at once, including not only the dominance property and Phoa's principle, but also the chain completeness of the interval and the inductive construction of the initial $L$-algebra. In fact, both the dominance property and the Phoa's principle are \emph{equivalent} to certain \gls{QC} axiom (cf.~\zcref{thm:chardominance,obs:sqcp-phoa-gen}).
 
-The most studied models of synthetic domain theory are those arising from realisability---in which the interval $\mbb{I}$ is taken to be Rosolini's dominance of semidecidable propositions in the Effective Topos~\citep{hyland_first_2006,PhoaWesleyKym-Son1991DtiR}, which happens to coincide there with the \emph{initial $\sigma$-frame} by virtue of countable choice. The model of synthetic domain theory in $\mathbf{Eff}$ ultimately interprets domain theoretic concepts in terms of Turing machines, which makes them applicable to the classical theory of computation~\citep{bauer_first_2006}. 
-
-On the other hand, realisability models do not provide a direct connection to classical theories of domains. For the latter, researchers returned to the original suggestion of Scott and devised sheaf models of synthetic domain theory in which the site is obtained from some existing category of domains or a dense generator thereof~\citep{fiore-plotkin:1996,FIORE1997151,fiore2001domains}.
-
-Much effort has been put toward identifying a common axiomatics that accounts for both realisability and sheaf models of synthetic domain theory; cf.\ the work of \citet{reus-streicher:1999,simpson:2004}. Beyond these basic axioms, the realisability and sheaf models of synthetic domain theory behave very differently, as exemplified in the failure of the initial $L$-algebra to be inductive in the former, as \citet{VANOOSTEN2000233} pointed out.
-
-The goal of the present paper is to identify a number of axioms emerging from the theory of \emph{classifying topoi} that suffice to explain the behaviour of sheaf models of synthetic domain theory all at once, including not only the dominance property and Phoa's principle, but also the chain completeness of the interval and the inductive construction of the initial $L$-algebra. We stress that the strongest of these axioms \emph{cannot} hold in the realisability model of synthetic domain theory, but they can be used to generate \emph{new} and exotic sheaf models of synthetic domains.
-
-\subsection{Classifying topoi and Phoa's principle}\label{subsec:classtopphoa}
-
-As a preliminary observation, there is a connection between Phoa's principle and classifying topoi (cf.\ \citet[Lem 3.8]{gratzer2024directed}).
-\emph{A posteriori}, the technical elements required for this observation are already contained in the work of \citet{RN879}.
-
-To recap, let $\T$ be a (finitary) Horn theory. Recall that the classifying topos of $\T$ is given by the following presheaf category (cf.\ \citet[D3.1]{johnstone2002sketches}),
-\[ \Set[\T] \coloneq [\mmod\T\fp,\Set]\text{,} \]
-where $\mmod\T\fp$ is the category of finitely presented $\T$-algebras. In particular, there is a generic $\T$-model $U_\T$, such that any $\T$-model in a topos $\mc E$ is realised as the inverse image of $U_\T$ under an essentially unique geometric morphism $\mc E \to \Set[\T]$. The observation of \citet{RN879} is that, internally in $\Set[\T]$, the function space of $U_\T$ is completely characterised by polynomials,
-\[ U_\T^{U_\T} \cong U_\T[\ms{x}]\text{,} \]
-where $U_\T[\ms{x}]$ denotes the free $\T$-model generated by an additional element, which is a  polynomial algebra on $U_\T$.
-
-\citet{gratzer2024directed} have shown that when $\T$ is taken to be the theory $\mbb D$ of \emph{bounded distributive lattices} and $\mbb{I}$ is the generic $\mbb D$-model, the equivalence $\mbb{I}^\mbb{I} \cong \mbb{I}[\ms{i}]$ implies Phoa's principle---because for bounded distributive lattices, the polynomial $\mbb{I}$-algebra $\mbb{I}[\ms{i}]$ always classifies the partial order on $\mbb{I}$. This is a striking example of how the properties of a theory impact the internal logic of its classifying topos. We will see many more examples in this paper.
-
-\subsection{Synthetic quasi-coherence}\label{subsec:qc}
-
-Recently, the work of Blass has been greatly generalised by Blechschmidt in his PhD thesis~\citep{blechschmidt:2017} (also see the unpublished note~\citep{blechschmidt_general_2020} by the same author), which identifies a stronger property satisfied by the generic model $U_\T$ in $\Set[\T]$, termed \emph{(synthetic) quasi-coherence}. The terminology is motivated by its application in algebraic geometry.
-
-The main algebraic objects of study within the classifying topos $\Set[\T]$ will be the $U_\T$-algebras, i.e.\ $\T$-models $A$ equipped with a homomorphism $U_\T\to A$. Of course, the identity homomorphism exhibits $U_\T$ as a $U_\T$-algebra, and given any object $X$, we may define \[\opens X\coloneq U_\T^X\] to be the $X$-fold product $\prod_{x:X}U_\T$ of $U_\T$-algebras. 
-
-Conversely, given any $U_\T$-algebra $A$ we may define its \emph{spectrum} to be the type of $U_\T$-algebra homomorphisms 
-\[ \spec A \coloneq U_\T\alg(A,U_\T)\text{.}\]
-
-The quasi-coherence principle in $\Set[\T]$ proposed by \citet{blechschmidt:2017} is, then, that for any \emph{finitely presented} $U_\T$-algebra $A$, the canonical homomorphism
-\[
-  A\to \opens\spec A
-\]
-obtained on elements by transposing the evaluation map $A\times \spec A\to U_\T$ is an equivalence.
-Types of the form $\spec A$ for such $A$ are called `affine' by \citet{blechschmidt:2017}. This in fact induces an internal duality between finitely presented $U_\T$-algebras and `affine' types. In particular, it implies Blass's result. 
-
-The appearance of finite presentation in the formulation of quasi-coherence above is perhaps misleading. Following the development of \citet{blechschmidt:2017,blechschmidt_general_2020}, it is clear that the quasi-coherence principle with respect to finitely presented algebras can be generalised to larger cardinality,
-if we enlarge the site of the classifying topos $\Set[\T]$. For instance, one can consider
-\[ \Set[\T]_\omega \coloneq [\mmod\T\cp,\Set]\text{,} \]
-where $\mmod\T\cp$ denotes the category of \emph{countably presented} $\T$-models. In this case, the quasi-coherence principle will hold also with respect to \emph{countably presented} $U_\T$-algebras. This is the theoretical basis in a recent approach for synthetic topology suggested by \citet{cherubini2024foundation}, who consider a variation on the quasi-coherence principle for \emph{countably} presented Boolean algebras. 
-%
-Horn theories $\T$ whose operations have \emph{countable} arity can also be considered in this case, so long as the base topos $\Set$ satisfies countable choice. These examples will not fit directly into the discipline of classifying toposes because geometric theories cannot have infinitary operations: but a suitable doctrine may arise when considering geometric morphisms whose inverse image functors preserve countable rather than finite limits.
-
-Because of the importance of varying the class of algebras with respect to which the quasi-coherence principle holds, we shall take a slightly different approach to the axiomatics inspired by locale theory and synthetic topology. In particular, the homomorphism $A\to \opens\spec A$ is the \emph{counit} of a contravariant adjunction $\opens\dashv \spec\colon U_\T\alg\op\to \Set$, so the algebras with respect to which the quasi-coherence principle holds are \emph{precisely} those that are fixed points of this adjunction.  We will therefore refer to algebras and sets as \emph{spatial} and \emph{sober} respectively when they arise as fixed points of this adjunction. Therefore, sober sets play the role of `affine schemes' in our setting, and a ``quasi-coherence principle'' is then no more than an assumption that certain classes of algebras are spatial.
-
-Blechschmidt also points out that quasi-coherence descends from the classifying (presheaf) topos $\Set[\T]$ to any subtopos containing the generic model $U_\T$; see \citet[Cor. 7.7]{blechschmidt_general_2020}. From a logical perspective, a subtopos $\Set[\mbb S] \hook \Set[\T]$ can be identified as the classifying topos for a \emph{geometric quotient} $\mbb S$ of the Horn theory $\T$. If $U_\T$ is a sheaf for $\Set[\mbb S]$, then $U_\T$ in the subtopos $\Set[\mbb S]$ will be the generic $\mbb S$-model.
-Hence, in such a subtopos, $U_\T$ will validates more geometric sequents as specified by the topology, which should be viewed as certain \emph{local properties}. For instance, \citet{blechschmidt:2017,Cherubini_Coquand_Hutzler_2024} work with \emph{local rings}, where the additional geometric properties are validated by the Zariski topology.
-In the case of synthetic Stone duality, the Boolean algebra used by \citet{cherubini2024foundation} is the set 2, which is again only true in a suitably chosen topology.
-
-\subsection{Summary of contributions}\label{sec:contributions}
-
-We study an emerging connection between synthetic domain theory and the quasi-coherence axioms for \emph{bounded distributive lattices} and \emph{$\sigma$-frames}. As a first indication of why quasi-coherence for these theories might be useful for domain theory, we have observed that by taking the interval $\mbb{I}$ to be a bounded distributive lattice or $\sigma$-frame internal to some topos,
-many important objects for domain theory can be written as \emph{spectra}. This include the cubes $\mbb{I}^n$ (\zcref{exm:cubesober}), the simplices $\Delta^n$ (\zcref{exm:simplicessober}), and the final coalgebra $\ov\omega$ (\zcref{exm:ovomegasober}). Here we outline the main results of this paper, and discuss some of their potential applications.
+As a first indication of why \gls{QC} for these theories might be useful for domain theory, we have observed that by taking the interval $\mbb{I}$ to be a distributive lattice or $\sigma$-frame internal to some topos, many important objects for domain theory can be written as \emph{spectra}. We have mentioned the example of $\mbb I$ itself; this includes furthermore the cubes $\mbb{I}^n$ (\zcref{exm:cubesober}), the simplices $\Delta^n$ (\zcref{exm:simplicessober}), and the final coalgebra $\ov\omega$ (\zcref{exm:ovomegasober}). Here we outline the main results of this chapter, and discuss some of their potential applications.
 
 \begin{enumerate}[leftmargin=*]
-  \item \emph{Quasi-coherence produces synthetic domain theory.} We show that several quasi-coherence principles suffice to account for \emph{all} essential axioms for synthetic domain theory. Specifically:
+  \item \emph{\gls{QC} produces \gls{SDT}.} We show that several instances of the principle of \gls{QC} suffice to account for \emph{all} essential axioms for \gls{SDT}. Specifically:
   \begin{enumerate}
-    \item\label{contribution:dominance} In the case of both bounded distributive lattices and $\sigma$-frames, the \emph{dominance property} is identified as a quasi-coherence principle with respect to quotient algebras $\mathbb{I}/(i=1)$ in \zcref{prop:Idominance}; the co-dominance principle is dually identified with quasi-coherence with respect to quotient algebras $\mathbb{I}/(i=0)$ in \zcref{cor:dualisdominance}. This leads to an explicit computation of the partial map classifiers of spatial $\mbb{I}$-algebras (\zcref{prop:liftingofalgebra}), and of spectra (\zcref{prop:liftofsober}).
+    \item\label{contribution:dominance} In the case of both distributive lattices and $\sigma$-frames, the \emph{dominance property} is identified as a \gls{QC} principle with respect to quotient algebras $\mathbb{I}/(i=1)$ in \zcref{prop:Idominance}; the co-dominance principle is dually identified with \gls{QC} with respect to quotient algebras $\mathbb{I}/(i=0)$ in \zcref{cor:dualisdominance}. This leads to an explicit computation of the partial map classifiers of spatial $\mbb{I}$-algebras (\zcref{prop:liftingofalgebra}), and of spectra (\zcref{prop:liftofsober}).
     \item We give an explicit computation of the \emph{observational preorder} (\zcref{defn:specialisation}) for sober spaces (\zcref{lem:specorderofsober}) and spatial $\mbb{I}$-algebras (\zcref{cor:specordonalgiscan}).
-    \item A generalisation of Phoa's principle that applies to an arbitrary $\mbb{I}$-algebra $A$ is stated (\zcref{def:gen-phoa}), and is shown to coincide with quasi-coherence with respect to polynomial algebras (\zcref{obs:sqcp-phoa-gen}). As a corollary, we see that spatiality of finitely generated free $\mbb{I}$-algebras is equivalent to Phoa's principle (\zcref{cor:phoa-vs-quasicoherence}).
-    \item In the case of $\sigma$-frames, quasi-coherence with respect to countably presented algebras implies chain completeness of $\mbb{I}$ (\zcref{thm:complete}) assuming $\mbb{I}$ is non-trivial. 
-    This is the only place where it is important to work with $\sigma$-frames and not bounded distributive lattices (cf.~\zcref{rem:whynotdis}). This gives a full account of the axioms for synthetic domain theory as specified by \citet{hyland_first_2006}. 
+    \item A generalisation of Phoa's principle that applies to an arbitrary $\mbb{I}$-algebra $A$ is stated (\zcref{def:gen-phoa}), and is shown to coincide with \gls{QC} with respect to polynomial algebras (\zcref{obs:sqcp-phoa-gen}). As a corollary, we see that spatiality of finitely generated free $\mbb{I}$-algebras is equivalent to Phoa's principle (\zcref{cor:phoa-vs-quasicoherence}).
+    \item In the case of $\sigma$-frames, \gls{QC} with respect to countably presented algebras implies chain completeness of $\mbb{I}$ (\zcref{thm:complete}) assuming $\mbb{I}$ is non-trivial. This is the only place where it is important to work with $\sigma$-frames and not distributive lattices (cf.~\zcref{rem:whynotdis}). This gives a full account of the axioms for \gls{SDT} as specified by \citet{hyland_first_2006}. 
   \end{enumerate}
 
-  \item \emph{Local properties of spectra.} Though in general we do not assume the generic interval $\mbb{I}$ to satisfy any local property such as linearity, we do discuss many instances of them and investigate their consequences.
+  \item \emph{Local properties of spectra.} Though in general we do not assume the generic interval $\mbb{I}$ to satisfy any further geometric property such as linearity, we do discuss many instances of them and investigate their consequences.
   \begin{enumerate}
 
-    \item \zcref{sec:locality} introduces various local conditions for $\mbb{I}$, all of which will be compatible with quasi-coherence. This showcases the flexibility of this framework to encompass different flavours of domain theory.
+    \item \zcref{sec:locality} introduces various local conditions for $\mbb{I}$, all of which will be compatible with \gls{QC}. This showcases the flexibility of this framework to encompass different flavours of domain theory.
 
     \item  More interestingly, without assuming the local properties globally, one can still show that $\mbb{I}$ will be \emph{right orthogonal} to the maps that classifies these local properties (\zcref{specisnontrivial,specistriangulated,specis1t}). In general, any limiting diagram of spatial algebras will induce a localisation class containing $\mbb{I}$; cf.\ \zcref{rem:limofalgloc}. This exhibits a new type of techniques in reasoning about domains in this framework.
     
@@ -169,81 +115,70 @@ many important objects for domain theory can be written as \emph{spectra}. This 
   \item \emph{New models for synthetic domain theory.} Consequently, we uncover a large family of new models for synthetic domain theory based on sites induced by countably presented $\sigma$-frames. We will discuss these models in \zcref{sec:newmodelforsdt}, and compare them to the existing sheaf models for synthetic domain theory~\citep{FIORE1997151} in \zcref{subsec:compare}.
 \end{enumerate}
 
+\begin{remark}[A note on realisability models of \gls{SDT}]
+  As \gls{QC} are based on classifying topoi, our models of \gls{SDT} will be \emph{sheaf models}. The most studied models of \gls{SDT} are in fact those arising from \emph{realisability}---in which the interval $\mbb{I}$ is taken to be Rosolini's dominance of semidecidable propositions in the Effective Topos $\mathbf{Eff}$~\citep{hyland_first_2006,PhoaWesleyKym-Son1991DtiR}, which happens to coincide there with the \emph{initial $\sigma$-frame} by virtue of countable choice. The model of \gls{SDT} in $\mathbf{Eff}$ ultimately interprets domain theoretic concepts in terms of Turing machines, which makes them applicable to the classical theory of computation~\citep{bauer_first_2006}. 
 
-\subsection{Style and notation of the paper}
+  On the other hand, realisability models do not provide a direct connection to classical theories of domains. For the latter, researchers returned to the original suggestion of Scott and devised sheaf models of \gls{SDT} in which the site is obtained from some existing category of domains or a dense generator thereof~\citep{fiore-plotkin:1996,FIORE1997151,fiore2001domains}.
 
-Our motivation for domain theory encourages us to work in a context as general as possible, so as to allow future developments that connect more specific flavours of domain theory existing in the literature. This means that besides \zcref{sec:newmodelforsdt} where we discuss models, throughout the paper we will work constructively in a type theory enriched with a generic model $\mbb{I}$. The base type system we work with is intensional type theory with a universe satisfying function extensionality, which can be interpreted in any ($\infty$-)topos. 
+  Much effort has been put toward identifying a common axiomatics that accounts for both realisability and sheaf models of \gls{SDT}; cf.\ the work of \citet{reus-streicher:1999,simpson:2004}. Beyond these basic axioms, the realisability and sheaf models of \gls{SDT} behave very differently, as exemplified in the failure of the initial $L$-algebra to be inductive in the former, as \citet{VANOOSTEN2000233} pointed out.
+\end{remark}
 
-We do not assume any additional assumption globally. Whenever we introduce an assumption under the \textbf{Axiom} environment, it should be viewed as introducing the \emph{content} of that assumption, rather than assuming it directly afterwards. In particular, the development is completely modular, and any additional assumption will be explicitly mentioned in each result.
+Our motivation for domain theory encourages us to work in a context as general as possible, so as to allow future developments that connect more specific flavours of domain theory existing in the literature. This means that besides \zcref{sec:newmodelforsdt} where we discuss models, throughout the chapter we will work constructively in a language enriched with a generic model $\mbb{I}$. We do not assume any additional assumption globally (even \gls{QC}). Whenever we introduce an assumption under the \textbf{Axiom} environment, it should be viewed as introducing the \emph{content} of that assumption, rather than assuming it directly afterwards. In particular, the development is completely modular, and any additional assumption will be explicitly mentioned in each result.
 
-In fact, we even take a step further. For the first half of this paper we will not work with bounded distributive lattices specifically. Instead, we assume to work with an arbitrary \emph{propositionally stable} theory in the sense of \zcref{defn:propositional}. In particular, the construction of the dominance and the computation of partial map classifier mentioned in \zcref{sec:contributions} (\ref{contribution:dominance}) works in this generality. Only from \zcref{sec:locality} onward will we then work more specifically with theories based on bounded distributive lattices.
-
-\subsection*{Notation and preliminaries}
-We work informally in the vernacular of univalent foundations~\citep{hottbook}.
-By \emph{proposition} and \emph{set}, we will always use them in the sense of the HoTT Book~\citep{hottbook}, i.e.\ $-1$-types and $0$-types. The subuniverse of propositions and sets will be denoted as $\pp$ and $\stt$, respectively. Propositions are used to define subtypes $P \colon X \to \pp$, and we also write the dependent sum $\sum_{x:X}P(x)$ suggestively as $\scomp{x:X}{P(x)}$. In this case, for $x:X$ we also write $x\in P$ to denote the proposition $P(x)$. Notice that function extensionality implies $\pp$ and $\stt$ are both closed under dependent product, and $\stt$ furthermore is closed under dependent sums. For emphasis, we will also use $\fa xXP(x)$ to denote the dependent product $\prod_{x:X}P(x)$ when $P(x)$ is a family of propositions; in this case, we shall write $\ex xXP(x)$ for the propositional truncation $\pss{\sum_{x:X}P(x)}$. By \emph{existence} we will always mean the latter truncated version, and we may emphasise this by referring to \emph{mere existence}.\footnote{Here we deviate from the conventions of the HoTT Book~\citep{hottbook}.} Similarly, we use $P \vee Q$ to mean the truncated proposition $\pss{P + Q}$. We will write $\N$ for the type of natural numbers. For $n:\N$, we will also abuse notation and treat $n$ as the finite type of $n$ elements. 
-
-Given an $\mbb{I}$-algebra $A$, we will abuse notation by identifying elements of $\mbb{I}$ as elements of $A$ via the structural map $\mbb{I} \to A$. For an algebra $A$ and two lists of terms $a,b \colon J \to A$, 
-we will write $A/a = b$ to indicate the \emph{quotient algebra} identifying $a_j$ with $b_j$ for all $j : J$. We also write $A[J]$ for the free algebra over $A$ generated from $J$, or we also explicitly mention the generators $A[\ms{j}_1,\cdots,\ms{j}_n]$. We write the \emph{coproduct} of $\mbb{I}$-algebras as $A \otimes B$.
-
-
-\section{Quasi-coherence and sober spaces}\label{sec:basics}
+In fact, we even take a step further. For the first half of this chapter we will not work with distributive lattices specifically. Instead, we assume to work with an arbitrary \emph{propositionally stable} theory in the sense of \zcref{defn:propositional}. In particular, the construction of the dominance and the computation of partial map classifier mentioned in (\ref{contribution:dominance}) earlier in this chapter works in this generality. Only from \zcref{sec:locality} onward will we then work more specifically with theories based on distributive lattices.
 
 \section{Open propositions and the dominance property}\label{sec:dominance}
 
-Notice that up till this point we have not used any special property of $\T$ rather than the fact that it is a Horn theory. However, to move closer to the intended application in domain theory, we start by assuming our theory $\T$ is \emph{propositionally stable} in the following sense: 
+We start by assuming we have a Horn theory $\T$ (which might be infinite) which is \emph{propositionally stable} in the following sense: 
 
 \begin{definition}[Propositionally stable theory]\label{defn:propositional}
-  We say a Horn theory $\T$ is \emph{propositionally stable}, if it extends the theory of bounded meet-semi-lattices (1, $\wedge$), and truth of an element is computed by slicing: For any $\T$-model $A$ and element $a:A$, the quotient $A/a=1$ is given by the restriction map
+  We say $\T$ is \emph{propositionally stable}, if it extends the theory of meet-semi-lattices (1, $\wedge$), and quotient by truth of an element is computed by \emph{slicing}: for any $\T$-model $A$ and element $a\in A$, the quotient $A/a=1$ is given by the restriction map
   \[ {a \wedge -} \colon A \surj A/a\text{,} \]
-  where the slice $A/a$ by definition is ${\cv} a \coloneq \scomp{b:A}{b\le a}$, with $\le$ the partial order on $A$ induced by the bounded meet-semi-lattice structure.
+  where the slice $A/a$ by definition is ${\cv} a \coloneq \scomp{b\in A}{b\le a}$, with $\le$ the partial order on $A$ induced by the meet-semi-lattice structure.
 \end{definition}
 
 \begin{remark}[Examples of propositionally stable theories]
-  $\mbb M$ of bounded meet-semi-lattices, $\mbb D$ of bounded distributive lattices, $\mbb H$ of Heyting algebras, and $\mbb B$ of Boolean algebras are all examples of propositionally stable theories. In fact, all finitary quotients of $\mbb H$ or $\mbb B$ will again be propositionally stable. More generally, for any propositionally stable theory $\T$ and any $\T$-model $D$, the theory of $D$-algebras will again be so, because quotients of $D$-algebras are computed the same as quotients of models of $\T$.
+  $\mbb M$ of meet-semi-lattices, $\mbb D$ of distributive lattices, $\mbb H$ of Heyting algebras, and $\mbb B$ of Boolean algebras are all examples of propositionally stable theories. In fact, all finitary quotients of $\mbb H$ or $\mbb B$ will again be propositionally stable. More generally, for any propositionally stable theory $\T$ and any $\T$-model $D$, the theory of $D$-algebras will again be so, because quotients of $D$-algebras are computed the same as quotients of models of $\T$.
 \end{remark}
 
 \begin{remark}[The theory of $\sigma$-frames]\label{rem:sigmaframe}
-  A $\sigma$-frame $A$ is a lattice with finite meets and countable joins satisfying the distributivity axiom 
-  \[ a \wedge \bigvee_{n:\N} b_n = \bigvee_{n:\N} a \wedge b_n\text{,} \]
-  for any $a$ in $A$ and $b \colon \N \to A$. We can axiomatise $\sigma$-frames as an \emph{infinitary} algebraic theory $\mbb S$, extending the theory of bounded meet-semi-lattices with a constant $0$ and a function symbol $\bigvee$ with \emph{countable} arity. (Such an axiomatisation can be found e.g.\ in \citet[Exa.~3.26]{adamek1994locally}.) It is easy to see that $\mbb S$ is propositionally stable. 
-
-  A notable fact about $\sigma$-frames is that their finitary behaviours are exactly the same as bounded distributive lattices, in the sense that for any $\sigma$-frame $A$, the finitely presented $\sigma$-frame $A[n]/R$ coincides with the finitely presented \emph{bounded distributive lattice} $A[n]/R$. Thus, there will be no difference between working with $\sigma$-frames or bounded distributive lattice when we work with finitely presented $\mbb{I}$-algebras. The salience of countable joins will emerge only in \zcref{sec:infdomain} when we prove chain completeness of $\mbb{I}$.
+  Recall the $\omega_1$-Horn theory $\sigma\mbb F$ of $\sigma$-frames in~\zcref{exa:theoryofsigmaframe}. Equivalently, a model of $\sigma\mbb F$ is a lattice with finite meets and countable joins, where finite meets distributes over countable joins. A notable fact about $\sigma$-frames is that their finitary behaviours are exactly the same as distributive lattices, in the sense that for any $\sigma$-frame $A$, the finitely presented $\sigma$-frame $A[n]/R$ coincides with the finitely presented \emph{distributive lattice} $A[n]/R$. Thus, there will be no difference between working with $\sigma$-frames or distributive lattice when we work with finitely presented $\mbb{I}$-algebras. The salience of countable joins will emerge only in \zcref{sec:infdomain} when we prove chain completeness of $\mbb{I}$.
 \end{remark}
 
 \begin{remark}[Propositionally op-stable theories]\label{rem:opprop}
-  There is an evident ``opposite'' notion of being propositionally stable, which requires $\T$ to extend the theory of bounded join-semi-lattices and the quotient $A/a = 0$ for any $a:A$ is computed by ${a \vee -} \colon A \surj a/A$. Every propositionally stable theory corresponds to a propositionally op-stable theory by dualising: The theories of join-semi-lattices and coHeyting algebras are propositionally op-stable; Boolean algebras and distributive lattices dualise to themselves; the theory of $\sigma$-frames is also propositionally op-stable.
+  There is an evident ``opposite'' notion of being propositionally stable, which requires $\T$ to extend the theory of join-semi-lattices and the quotient $A/a = 0$ for any $a\in A$ is computed by ${a \vee -} \colon A \surj a/A$. Every propositionally stable theory corresponds to a propositionally op-stable theory by dualising: the theories of join-semi-lattices and coHeyting algebras are propositionally op-stable; Boolean algebras and distributive lattices dualise to themselves; the theory of $\sigma$-frames is also propositionally op-stable.
 \end{remark}
 
-For a propositionally stable theory $\T$, we think of the generic model $\mbb{I}$ as certain interval object, since it is equipped with a partial order. In this case, more types can be realised as spectra. The important examples are \emph{simplices}:
+For a propositionally stable theory $\T$, we think of the generic model $\mbb{I}$ as certain interval object, since it is equipped with a partial order. In this case, more sets can be realised as spectra. The important examples are \emph{simplices}:
 
-\begin{example}\label{exm:simplicessober}
-  For any $n : \N$, let $\Delta^n \hook \mbb{I}^n$ be the $n$-simplex
+\begin{example}[Simplices as spectra]\label{exm:simplicessober}
+  For any $n \in \N$, let $\Delta^n \hook \mbb{I}^n$ be the $n$-simplex
   \[ \Delta^n \coloneq \scomp{i \colon n \to \mbb{I}}{i_1 \ge \cdots \ge i_n}\text{.} \]
-  This type is indeed a spectrum, since by definition we have
+  This set is indeed a spectrum, since by definition we have
   \[ \Delta^n \cong \spec\mbb{I}[\ms{i}_1,\cdots,\ms{i}_n]/\ms{i}_1\ge\cdots\ge \ms{i}_n\text{.} \]
-  To simplify later discussion, we might also introduce the following types isomorphic to simplices above,
+  To simplify later discussion, we might also introduce the following sets isomorphic to simplices above,
   \[ \Delta_n \coloneq \scomp{i \colon n \to \mbb{I}}{i_1 \le \cdots \le i_n}\text{.} \]
 \end{example}
 
-The constant $1 : \mbb{I}$, which is the top element in $\mbb{I}$, induces a predicate
+The constant $1 \in \mbb{I}$, which is the top element in $\mbb{I}$, induces a predicate
 \[ \istsym\colon \mbb{I} \to \pp\text{,} \]
-which takes $i : \mbb{I}$ to the proposition $i = 1$. Using $\istsym$, we can think of the spectrum $\spec A$ of an $\mbb{I}$-algebra $A$ as its set of \emph{models}, with a satisfaction relation $\models$ as follows:
+which takes $i \in \mbb{I}$ to the proposition $i = 1$. Using $\istsym$, we can think of the spectrum $\spec A$ of an $\mbb{I}$-algebra $A$ as its set of \emph{models}, with a satisfaction relation $\models$ as follows:
 
 \begin{definition}[Satisfaction]
-  For any $\mbb{I}$-algebra $A$ and elements $a:A$ and $x:\spec A$, we say $x$ \emph{satisfies} $a$, written $x \models a$, if $\ist{xa}$.
+  For any $\mbb{I}$-algebra $A$ and elements $a\in A$ and $x\in \spec A$, we say $x$ \emph{satisfies} $a$, written $x \models a$, if $\ist{xa}$.
 \end{definition}
 
 For instance, the satisfaction relation can be used to carve out sober subspaces consisting of models satisfying some element in $A$:
 
 \begin{example}
-  For any $\mbb{I}$-algebra $A$ and $a:A$, the subtype $D_a\subseteq \spec A$ defined below is again a spectrum:
-  \[ D_a \coloneq \scomp{x : X}{x \models a} \cong \spec A/a\text{.} \]
+  For any $\mbb{I}$-algebra $A$ and $a\in A$, the subset $D_a\subseteq \spec A$ defined below is again a spectrum:
+  \[ D_a \coloneq \scomp{x \in X}{x \models a} \cong \spec A/a\text{.} \]
 \end{example}
 
-The first observation is that $\istsym$ takes $i : \mbb{I}$ to a spectrum:
+The first observation is that $\istsym$ takes $i \in \mbb I$ to a spectrum:
 
 \begin{lemma}\label{lem:openpropsober}
-  The spectrum $\spec\mbb{I}/i$ for any $i:\mbb{I}$ is equivalent to the proposition $\ist{i}$.
+  The spectrum $\spec\mbb{I}/i$ for any $i \in \mbb I$ is equivalent to the proposition $\ist{i}$.
 \end{lemma}
 \begin{proof}
   We have $\spec \mbb{I}/i \cong \mbb{I}\alg(\mbb{I}/i,\mbb{I})$ by definition. Since $\mbb{I}$ is the initial $\mbb{I}$-algebra and $\mbb{I}/i$ is a quotient of $\mbb{I}$, any homomorphism $\mbb{I}/i \to \mbb{I}$ will be unique, hence $\spec\mbb{I}/i$ is a proposition. It thus suffices to show $\spec\mbb{I}/i$ implies $\ist{i}$. Because $\T$ is propositionally stable, an $\mbb{I}$-algebra morphism $f \colon \mbb{I}/i \to \mbb{I}$ is a commutative diagram as follows,
@@ -258,11 +193,10 @@ The first observation is that $\istsym$ takes $i : \mbb{I}$ to a spectrum:
   The final identity holds since $f$ preserves the top element. 
 \end{proof}
 
-The goal of this section is to show that, under a suitable quasi-coherence assumption, $\istsym\colon \mbb{I} \to \pp$ makes $\mbb{I}$ a \emph{dominance} in the sense of \citet{rosolini1986continuity}. In fact, at the end of this section we will provide an exact characterisation of the dominance property of $\mbb{I}$ as a quasi-coherence principle. It turns out that it suffices to require all slices of $\mbb{I}$ to be spatial:
+The goal of this section is to show that, under a suitable \gls{QC} assumption, $\istsym\colon \mbb{I} \to \pp$ makes $\mbb{I}$ a \emph{dominance} in the sense of \citet{rosolini1986continuity} (cf.~\zcref{def:dominance}). In fact, at the end of this section we will provide an exact characterisation of the dominance property of $\mbb{I}$ as a principle of \gls{QC}. It turns out that it suffices to require all slices of $\mbb{I}$ to be spatial:
 
 \begin{definition}[Stable spatiality and sobriety]
-  An $\mbb{I}$-algebra $A$ is \emph{stably spatial}, if for any $i:\mbb{I}$, the slice $A/i$ is spatial. A sober space $X \cong \spec A$ is \emph{stably sober} if $A$ is stably spatial.
-  % $ : \N$ and $a,b \colon n \to A$, the quotient $A/a=b$ is again spatial. 
+  An $\mbb{I}$-algebra $A$ is \emph{stably spatial}, if for any $i \in \mbb I$, the slice $A/i$ is spatial. A sober space $X \cong \spec A$ is \emph{stably sober} if $A$ is stably spatial.
 \end{definition}
 
 \PrintAxiomSQCI
@@ -270,7 +204,7 @@ The goal of this section is to show that, under a suitable quasi-coherence assum
 As a first consequence, we show the following important lemma:
 
 \begin{lemma}[\AxiomSQCI]\label{lem:intconserve}
-  The interval $\mbb{I}$ is \emph{conservative}: For any $i,j : \mbb{I}$
+  The interval $\mbb{I}$ is \emph{conservative}: For any $i,j \in \mbb{I}$
   \[ (\ist{i} \eq \ist{j}) \eq i = j\text{.} \]
 \end{lemma}
 \begin{proof}
@@ -289,35 +223,35 @@ Thus, under (\AxiomSQCI), we may view the generic algebra $\mbb{I}$ as a subuniv
 
 Under (\AxiomSQCI), by \zcref{lem:intconserve} the $i$ that $p \eq \ist{i}$ will be \emph{unique}, thus being open is itself a proposition. Also, open propositions are evidently closed under finite conjunctions, since $\istsym$ preserves them. 
 
-More generally, we may define the notion of open subtypes:
+More generally, we may define the notion of open subsets:
 
-\begin{definition}[Open subtype]
-  A subtype $U$ of $X$ is \emph{open} if for any $x:X$ the proposition $x\in U$ is open.
+\begin{definition}[Open subset]
+  A subset $U$ of $X$ is \emph{open} if for any $x\in X$ the proposition $x\in U$ is open.
 \end{definition}
 
-If $X$ is sober, open subtypes are easy to classify:
+If $X$ is sober, open subsets are easy to classify:
 
 \begin{lemma}[\AxiomSQCI]\label{lem:openofsobergivesalgebra}
-  Let $X \cong \spec A$ be sober. Then any open subset of $X$ is of the form $D_a$ for some $a:A$.
+  Let $X \cong \spec A$ be sober. Then any open subset of $X$ is of the form $D_a$ for some $a\in A$.
 \end{lemma}
 \begin{proof}
-  Let $U$ be an open subtype of $X$, so that for any $x:X$ there exists some (by conservativity, necessarily unique) element $i:\mbb{I}$ that $x \in U \eq \ist{i}$.
-  Hence we have a map $\qsi a \colon X \to \mbb{I}$ with $x \in U \eq \ist{\qsi ax}$. Because $X$ is sober, we may identify $\qsi a$ with an element $a:A$, where $\qsi ax = xa$. This way,
+  Let $U$ be an open subset of $X$, so that for any $x\in X$ there exists some (by conservativity, necessarily unique) element $i \in \mbb I$ that $x \in U \eq \ist{i}$.
+  Hence we have a map $\qsi a \colon X \to \mbb{I}$ with $x \in U \eq \ist{\qsi ax}$. Because $X$ is sober, we may identify $\qsi a$ with an element $a\in A$, where $\qsi ax = xa$. This way,
   \[ \fa xX x \in U \eq x \models a\text{,} \]
-  and thus $U$ is the subtype $D_a$.
+  and thus $U$ is the subset $D_a$.
 \end{proof}
 
 \begin{proposition}[\AxiomSQCI]\label{prop:Idominance}
-  The type of opens $\mbb{I}$ forms a dominance.
+  The set of opens $\mbb{I}$ forms a dominance.
 \end{proposition}
 \begin{proof}
-  Since $\istsym\colon \mbb{I} \hook \pp$ by definition is closed under finite meets, it suffices to show that an open subtype of an open proposition is again an open proposition. Suppose $p$ is an open proposition and $q$ is an open subtype of $p$. By definition $p \eq \ist{i}$ for some $i:\mbb{I}$. Since $\ist{i}$ is sober, \zcref{lem:openofsobergivesalgebra} implies that $q$ is $D_j$ for some $j : \mbb{I}/i$. Since $\T$ is propositionally stable, equivalently $j$ can be viewed as an element $j : \mbb{I}$ with $j \le i$. Hence,
+  Since $\istsym\colon \mbb{I} \hook \pp$ by definition is closed under finite meets, it suffices to show that an open subset of an open proposition is again an open proposition. Suppose $p$ is an open proposition and $q$ is an open subset of $p$. By definition $p \eq \ist{i}$ for some $i \in \mbb I$. Since $\ist{i}$ is sober, \zcref{lem:openofsobergivesalgebra} implies that $q$ is $D_j$ for some $j \in \mbb I/i$. Since $\T$ is propositionally stable, equivalently $j$ can be viewed as an element $j \in \mbb I$ with $j \le i$. Hence,
   \[ q \eq D_j \eq \spec(\mbb{I}/i)/j \eq \spec\mbb{I}/j\text{,} \]
   which implies $q$ is also an open proposition.
 \end{proof}
 
 \begin{remark}[Dominance without choice]\label{rem:dominancewithoutchoice}
-  The related work of \citet{Cherubini_Coquand_Hutzler_2024} contains a similar construction of a dominance from a generic \emph{ring}. However, the proof there relies on certain classical axiom, which they call \emph{Zariski local choice}. The reason that the construction here does not require a similar assumption is precisely due to conservativity of $\mbb{I}$: the dominance is $\mbb{I}$ itself, rather than an image of $\mbb{I}$. In this way, we can transform an open subtype of $X$ to a map $X \to \mbb{I}$, which by quasi-coherence can be further identified as an element of the algebra if $X$ is sober. 
+  The related work of \citet{Cherubini_Coquand_Hutzler_2024} contains a similar construction of a dominance from a generic \emph{ring}. However, the proof there relies on certain classical axiom, which they call \emph{Zariski local choice}. The reason that the construction here does not require a similar assumption is precisely due to conservativity of $\mbb{I}$: the dominance is $\mbb{I}$ itself, rather than an image of $\mbb{I}$. In this way, we can transform an open subset of $X$ to a map $X \to \mbb{I}$, which by \gls{QC} can be further identified as an element of the algebra if $X$ is sober. 
 \end{remark}
 
 We end this section by showing that $\mbb{I}$ being stably spatial, i.e.\ all slices of $\mbb{I}$ are spatial, is a \emph{characterisation} the dominance property of $\mbb{I}$. Under this assumption, we can prove the (surprising) fact that all spatial algebras will indeed be stably spatial:
@@ -331,135 +265,124 @@ We end this section by showing that $\mbb{I}$ being stably spatial, i.e.\ all sl
   \end{enumerate}
 \end{theorem}
 \begin{proof}
-  We have shown (1) $\nt$ (2) in~\zcref{prop:Idominance}. Evidently, (3) $\nt$ (1) since by~\zcref{exm:intervalqc} $\mbb{I}$ is spatial. We first show (2) $\nt$ (1). Suppose $\mbb{I}$ is a dominance and take any $i:\mbb{I}$. We construct an explicit inverse $s \colon \mbb{I}^{\ist{i}} \to \mbb{I}/i$ by defining $s$ as follows,
-  \[ s(j) \coloneq \sum_{p:\ist i} j(p). \]
-  By construction $s(j) \le i$, since if $(p,x) : s(j)$, then $p : \ist i$ which implies $i = 1$, hence $x \le i$. To show this is an inverse of $\eta \colon \mbb{I}/i \to \mbb{I}^{\ist i}$, for any $j \le i$,
-  \[ s\eta(j) \eq \sum_{p:\ist i}j \eq j. \]
-  On the other hand, for any $j:\mbb{I}^{\ist i}$, to show $j = \eta s(j)$ by function extensionality it suffices to assume $i = 1$, viz.\ there is $p:\ist i$. In this case, 
+  We have shown (1) $\nt$ (2) in~\zcref{prop:Idominance}. Evidently, (3) $\nt$ (1) since by~\zcref{exm:intervalqc} $\mbb{I}$ is spatial. We first show (2) $\nt$ (1). Suppose $\mbb{I}$ is a dominance and take any $i \in \mbb I$. We construct an explicit inverse $s \colon \mbb{I}^{\ist{i}} \to \mbb{I}/i$ by defining $s$ as follows,
+  \[ s(j) \coloneq \sum_{p\in\ist i} j(p). \]
+  By construction $s(j) \le i$, since if $(p,x) \in s(j)$, then $p \in \ist i$ which implies $i = 1$, hence $x \le i$. To show this is an inverse of $\eta \colon \mbb{I}/i \to \mbb{I}^{\ist i}$, for any $j \le i$,
+  \[ s\eta(j) \eq \sum_{p\in\ist i}j \eq j. \]
+  On the other hand, for any $j\in\mbb{I}^{\ist i}$, to show $j = \eta s(j)$ by function extensionality it suffices to assume $i = 1$, viz.\ there is $p\in\ist i$. In this case, 
   \[ \eta s(j) = \eta j(p) = \ld{q}{\ist i} j(p). \]
-  But in this case, for any $q:\ist i$, $q = p$, thus $j(q) = j(p)$, which by function extensionality again it follows that 
+  But in this case, for any $q\in\ist i$, $q = p$, thus $j(q) = j(p)$, which by function extensionality again it follows that 
   \[ \eta s(j) = j. \]
   This shows $s$ is indeed an inverse of $\eta$, hence $\mbb{I}/i$ is spatial.
 
   Now we show (1) $\nt$ (3). Suppose $A$ is a spatial $\mbb{I}$-algebra. Since the slice $A/i$ is the quotient algebra $A/i = 1$, it follows that $A/i \cong A \otimes \mbb{I}/i$. By~\zcref{specrightadj}, we have
   \[ \spec(A/i) \cong \spec A \times \spec{\mbb{I}/i} \cong \spec A \times \ist i. \]
   Since $\mbb{I}/i$ is spatial, the following canonical isomorphisms hold,
-  \[ \opens{\spec(A/i)} \cong (\mbb{I}/i)^{\spec A} \cong \scomp{U:\opens{\spec A}}{\fa x{\spec A} U(x) \le i}. \]
+  \[ \opens{\spec(A/i)} \cong (\mbb{I}/i)^{\spec A} \cong \scomp{U\in\opens{\spec A}}{\fa x{\spec A} U(x) \le i}. \]
   Since $A$ is spatial, $A \cong \opens{\spec A}$. In fact, spatiality also implies that there are ``enough points'' in the spectrum to detect its order (cf.~\zcref{lem:canon-beh-coincide}),
-  \[ \opens{\spec(A/i)} \cong \scomp{a:A}{\fa x{\spec A} x(a) \le i} \cong \scomp{a:A}{a \le i} \cong A/i. \]
+  \[ \opens{\spec(A/i)} \cong \scomp{a\in A}{\fa x{\spec A} x(a) \le i} \cong \scomp{a\in A}{a \le i} \cong A/i. \]
   This shows $A/i$ is also spatial.
 \end{proof}
 
 \section{Partial map classifier}\label{sec:lifting}
-Given the interval $\mbb{I}$, we can construct internally the partial map classifier. For any type $X$, it is given by
-\[ L X \coloneq \sum_{i:\mbb{I}}X^{\ist{i}}\text{.} \]
+Given the interval $\mbb{I}$, we can construct internally the partial map classifier. For any set $X$, it is given by
+\[ L X \coloneq \sum_{i \in \mbb I}X^{\ist{i}}\text{.} \]
 The functoriality is easy to express: For any $f \colon X \to Y$, we have
 \[ L f(i,x) \coloneq (i,\ld{w}{\ist{i}}fxw)\text{.} \]
 There is an evident unit $\eta_L \colon X \to L(X)$, where
 \[ \eta_L(x) \coloneq (1,\ld\_ 1 x)\text{.} \]
-The unit $\eta_L$ then classifies the partial maps out of $X$ with an \emph{open} domain. If $\mbb{I}$ forms a dominance, then there is also a multiplication $\mu \colon L(L X) \to L X$, where $\mu$ takes any $(i,u)$ with $i : \mbb{I}$ and $u \colon \ist{i} \to L X$ first to $(j,x)$, where $j$ is the dependent sum
-\[ j \coloneq \sum_{w:\ist{i}} (uw)_0\text{,} \]
-and $x \colon \ist{j} \to X$ is the partial element such that for $w : \ist{i}$ and $v : (uw)_0$
+The unit $\eta_L$ then classifies the partial maps out of $X$ with an \emph{open} domain. If $\mbb{I}$ forms a dominance, then there is also a multiplication $\mu \colon L(L X) \to L X$, where $\mu$ takes any $(i,u)$ with $i \in \mbb I$ and $u \colon \ist{i} \to L X$ first to $(j,x)$, where $j$ is the dependent sum
+\[ j \coloneq \sum_{w\in\ist{i}} (uw)_0\text{,} \]
+and $x \colon \ist{j} \to X$ is the partial element such that for $w \in \ist{i}$ and $v \in (uw)_0$
 \[ x(w,v) \coloneq (uw)_1(v)\text{.} \]
 
 \begin{example}
   By definition, it is easy to see that
-  \[ L 1 \cong \sum_{i:\mbb{I}}\ist{i} \cong \mbb{I}\text{.} \]
+  \[ L 1 \cong \sum_{i \in \mbb I}\ist{i} \cong \mbb{I}\text{.} \]
 \end{example}
 
 For synthetic domain theory, the object of particular importance is the partial map classifier of the interval $\mbb{I}$ itself. The following computation works more generally for all stably spatial algebras:
 
 \begin{proposition}\label{prop:liftingofalgebra}
   If $A$ is stably spatial, then we have
-  \[ L A \cong \sum_{i:\mbb{I}}A/i\text{.} \]
+  \[ L A \cong \sum_{i \in \mbb I}A/i\text{.} \]
 \end{proposition}
 \begin{proof}
-  By assumption for $i : \mbb{I}$, the quotient $A/i$ is again spatial. Now notice that we do have
+  By assumption for $i \in \mbb I$, the quotient $A/i$ is again spatial. Now notice that we do have
   \[ A/i \cong A \otimes \mbb{I}/i\text{.} \]
   By \zcref{specrightadj} and spatiality of $A/i$ and $A$,
   \[ A/i \cong \mbb{I}^{\spec(A \otimes \mbb{I}/i)} \cong \mbb{I}^{\spec A \times \spec\mbb{I}/i} \cong A^{\spec \mbb{I}/i} \cong A^{\ist{i}}\text{.} \]
   This way, it follows that 
-  \[ L A \cong \sum_{i:\mbb{I}}A^{\ist{i}} \cong \sum_{i:\mbb{I}}A/i. \qedhere \]
+  \[ L A \cong \sum_{i \in \mbb I}A^{\ist{i}} \cong \sum_{i \in \mbb I}A/i. \qedhere \]
 \end{proof}
 
-In other words, an element $(i,a) : L A$ is simply a pair $i : \mbb{I}$ and $a : A$ that $a \le i$. This way, we can easily compute $L \mbb{I}$:
+In other words, an element $(i,a) \in L A$ is simply a pair $i \in \mbb I$ and $a \in A$ that $a \le i$. This way, we can easily compute $L \mbb{I}$:
 
 \begin{corollary}[\AxiomSQCI]
   $L \mbb{I} \cong \Delta^2$.
 \end{corollary}
 \begin{proof}
   By \zcref{prop:liftingofalgebra} and the assumption (\AxiomSQCI),
-  \[ L\mbb{I} \cong \sum_{i:\mbb{I}}\mbb{I}/i \cong \scomp{i,j : \mbb{I}}{i \ge j} \cong \Delta^2\text{.} \]
+  \[ L\mbb{I} \cong \sum_{i \in \mbb I}\mbb{I}/i \cong \scomp{i,j \in \mbb{I}}{i \ge j} \cong \Delta^2\text{.} \]
   The second equivalence is again due to $\T$ being propositionally stable.
 \end{proof}
 
 \begin{remark}[Algebra vs.\ geometry]\label{rem:alggeoI}
-  One interesting fact to note here is that, though $L\mbb{I}$ by computation is a dependent sum of algebras, it is naturally equivalent to a \emph{spectrum}. In some sense the source is the assumption that $\T$ is propositionally stable, which allows us to identify the algebraic object $\mbb{I}/i$ as a subset $\scomp{j : \mbb{I}}{j \le i}$. There will be more examples of such nature once we work more specifically with bounded distributive lattices; cf.\ \zcref{prop:simplicesasalgebra}.
+  One interesting fact to note here is that, though $L\mbb{I}$ by computation is a dependent sum of algebras, it is naturally equivalent to a \emph{spectrum}. In some sense the source is the assumption that $\T$ is propositionally stable, which allows us to identify the algebraic object $\mbb{I}/i$ as a subset $\scomp{j \in \mbb I}{j \le i}$. There will be more examples of such nature once we work more specifically with distributive lattices; cf.\ \zcref{prop:simplicesasalgebra}.
 \end{remark}
 
-More generally, for domain theoretic applications we would want to compute the partial map classifier of $\Delta^2$, or $\Delta^n$ for any $n:\N$. For this purpose, we observe that we can more generally compute them for any spectra (not only sober spaces):
+More generally, for domain theoretic applications we would want to compute the partial map classifier of $\Delta^2$, or $\Delta^n$ for any $n\in\N$. For this purpose, we observe that we can more generally compute them for any spectra (not only sober spaces):
 
 \begin{proposition}[\AxiomSQCI]\label{prop:liftofsober}
   For an $\mbb{I}$-algebra $A$, we have
-  \[ L\spec A \cong \sum_{i:\mbb{I}}\mbb{I}\alg(A,\mbb{I}/i)\text{.} \]
+  \[ L\spec A \cong \sum_{i \in \mbb I}\mbb{I}\alg(A,\mbb{I}/i)\text{.} \]
 \end{proposition}
 \begin{proof}
-  By (\AxiomSQCI) and \zcref{lem:openpropsober}, $\ist{i}$ is sober for any $i:\mbb{I}$. By the duality result in \zcref{prop:duality}, we have
-  \[ L\spec A \cong \sum_{i:\mbb{I}}(\spec A)^{\ist{i}}\cong \sum_{i:\mbb{I}}\mbb{I}\alg(A,\mbb{I}/i). \qedhere \]
+  By (\AxiomSQCI) and \zcref{lem:openpropsober}, $\ist{i}$ is sober for any $i \in \mbb I$. By the duality result in \zcref{prop:duality}, we have
+  \[ L\spec A \cong \sum_{i \in \mbb I}(\spec A)^{\ist{i}}\cong \sum_{i \in \mbb I}\mbb{I}\alg(A,\mbb{I}/i). \qedhere \]
 \end{proof}
 
-% Thus, motivated by domain theory, we find ourselves naturally move towards the following axiomatisation:
-
-% \begin{axiom}[\AxiomSQCF]
-%   All finitely generated free $\mbb{I}$-algebras, i.e.\ $\mbb{I}[n]$ for $n : \N$, are stably spatial.
-% \end{axiom}
-
-% Equivalently, (\AxiomSQCF) says that any finitely presented $\mbb{I}$-algebra is (stably) spatial, where an $\mbb{I}$-algebra is finitely presented if it is merely of the form $\mbb{I}[n]/s=t$ with $s,t \colon m \to \mbb{I}[n]$ for some finite $n,m$.
-
-% Of course, (\AxiomSQCF) implies (\AxiomSQCI) when taking $n$ to be 0. Furthermore, (\AxiomSQCF) implies that the simplices $\Delta^n$ are now (stably) sober as well. This way, we can indeed compute their lifts:
-
 \begin{corollary}[\AxiomSQCI]
-  For any $n : \N$, we have
+  For any $n\in\N$, we have
   \[ L\Delta^n \cong \Delta^{n+1}\text{,} \]
   and the unit $\eta_L \colon \Delta^n \hook L\Delta^n \cong \Delta^{n+1}$ takes $i_1 \ge \cdots \ge i_n$ in $\Delta^n$ to $1 \ge i_1 \ge \cdots \ge i_n$ in $\Delta^{n+1}$. 
 \end{corollary}
 \begin{proof}
   By \zcref{prop:liftofsober}, for the spectrum $\Delta^n \cong \spec\mbb{I}[n]/\ms{i}_1 \ge \cdots \ge \ms{i}_n$,
   \begin{align*}
-    L\Delta^n
-    &\cong \sum_{i:\mbb{I}}\mbb{I}\alg(\mbb{I}[n]/\ms{i}_1\ge\cdots\ge \ms{i}_n,\mbb{I}/i) \\
-    &\cong \scomp{i_1,\cdots,i_n:\mbb{I}/i}{i_1 \ge \cdots \ge i_n} \\
-    &\cong \scomp{i,i_1,\cdots,i_n:\mbb{I}}{i \ge i_1 \ge \cdots \ge i_n} \\
-    &\cong \Delta^{n+1}
+    & L\Delta^n \\
+    &\quad\cong \sum_{i \in \mbb I}\mbb{I}\alg(\mbb{I}[n]/\ms{i}_1\ge\cdots\ge \ms{i}_n,\mbb{I}/i) \\
+    &\quad\cong \scomp{i_1,\cdots,i_n\in\mbb{I}/i}{i_1 \ge \cdots \ge i_n} \\
+    &\quad\cong \scomp{i,i_1,\cdots,i_n\in\mbb{I}}{i \ge i_1 \ge \cdots \ge i_n} \\
+    &\quad\cong \Delta^{n+1}
   \end{align*}
   Again the third steps holds since $\T$ is propositionally stable.
 \end{proof}
 
 \section{Distributive lattices and locality}\label{sec:locality}
 
-One important finitary axiom for synthetic domain theory is \emph{Phoa's principle}, which we have mentioned in~\zcref{subsec:classtopphoa} is a consequence of the quasi-coherence principle for bounded distributive lattices. 
-Thus, we now work with the theory $\mbb D$ of bounded distributive lattices, or more generally the theory of $D$-algebra for some bounded distributive lattice $D$. As indicated in \zcref{rem:sigmaframe}, computation for finitely presented algebras 
-will not change if we replace bounded distributive lattices by $\sigma$-frames. Hence, the results here and in \zcref{sec:order-theoretic-structure} will be applicable to $\sigma$-frames as well, where only the properties of finitely presented $\mbb{I}$-algebras matter.
+One important finitary axiom for synthetic domain theory is \emph{Phoa's principle}, which we have mentioned at the beginning of this chapter is a consequence of \gls{QC} for distributive lattices. Thus, we now work with the theory $\mbb D$ of distributive lattices, or more generally the theory of $D$-algebra for some distributive lattice $D$. As indicated in \zcref{rem:sigmaframe}, computation for finitely presented algebras will not change if we replace distributive lattices by $\sigma$-frames. Hence, the results here and in \zcref{sec:order-theoretic-structure} will be applicable to $\sigma$-frames as well, where only the properties of finitely presented $\mbb{I}$-algebras matter.
 
-As mentioned in \zcref{rem:opprop}, the theory of bounded distributive lattices is also \emph{propositionally op-stable}, and similarly for $\sigma$-frames. Hence, dual versions of the previous results will also hold by symmetry, when we exchange $1$ for $0$ and $\wedge$ for $\vee$. Thus, we first record some simple corollaries for the dual structure.
+As mentioned in \zcref{rem:opprop}, the theory of distributive lattices is also \emph{propositionally op-stable}, and similarly for $\sigma$-frames. Hence, dual versions of the previous results will also hold by symmetry, when we exchange $1$ for $0$ and $\wedge$ for $\vee$. Thus, we first record some simple corollaries for the dual structure.
 
 \subsection{The dual dominance and co-partial map classifier}
+
 In this case, $\mbb{I}$ has a minimal element $0$. Notice that the constant $0$ also induces a predicate on $\mbb{I}$,
 \[ \isfsym\colon \mbb{I} \to \pp\text{,} \]
-which takes any $i : \mbb{I}$ to $i = 0$. Equivalently, we can view it as the $\ms t$ map for $\mbb{I}\op$.
+which takes any $i \in \mbb I$ to $i = 0$. Equivalently, we can view it as the $\ms t$ map for $\mbb{I}\op$.
 
 \begin{corollary}
   If $\mbb{I}\op$ is stably spatial, then $\isfsym\colon \mbb{I} \to \pp$ is an embedding.
 \end{corollary}
 
-We will now call propositions in the image of $\isfsym$ \emph{closed}, and a subtype classified by $\isfsym$ a \emph{closed subtype}. Analogously to the previous \zcref{prop:Idominance}, closed propositions also form a dominance if $\mbb{I}\op$ is stably spatial:
+We will now call propositions in the image of $\isfsym$ \emph{closed}, and a subset classified by $\isfsym$ a \emph{closed subset}. Analogously to the previous \zcref{prop:Idominance}, closed propositions also form a dominance if $\mbb{I}\op$ is stably spatial:
 
 \begin{corollary}\label{cor:dualisdominance}
   If $\mbb{I}\op$ is stably spatial, then $\isfsym$ forms a dominance.
 \end{corollary}
 
-There is an accompanying ``co-partial map classifier'' $T$ for partial maps with \emph{closed} domains, as \citet{hyland_first_2006} pointed out. Concretely, for any type $X$,
-\[ T X \coloneq \sum_{i:\mbb{I}} X^{\isf{i}}\text{.} \]
+There is an accompanying ``co-partial map classifier'' $T$ for partial maps with \emph{closed} domains, as \citet{hyland_first_2006} pointed out. Concretely, for any set $X$,
+\[ T X \coloneq \sum_{i \in \mbb I} X^{\isf{i}}\text{.} \]
 And analogously to \zcref{prop:liftingofalgebra}, under the assumption that $\mbb{I}\op$ is stably spatial, we can explicitly compute 
 \[ T\Delta^n \cong \Delta^{n+1}\text{,} \]
 where now the unit $\eta_T \colon \Delta^n \hook T\Delta^n \cong \Delta^{n+1}$ takes a sequence $i_1 \ge \cdots \ge i_n$ to $i_1 \ge \cdots \ge i_n \ge 0$ in $\Delta^{n+1}$. 
@@ -468,7 +391,7 @@ To maintain this symmetry, we also introduce the following axiom:
 
 \PrintAxiomSQCID
 
-The remaining part of this section will introduce various locality axioms for the interval $\mbb{I}$, and discuss some of their consequences with the quasi-coherence axiom.
+The remaining part of this section will introduce various locality axioms for the interval $\mbb{I}$, and discuss some of their consequences with the \gls{QC} axiom.
 
 \subsection{Non-triviality}
 
@@ -478,25 +401,25 @@ As a start, a minimal requirement for synthetic domain theory to model divergent
 
 Geometrically, the proposition $0 = 1$ can be identified with the spectrum $\spec\mbb{I}/0=1$. Hence, (\AxiomNT) states that the unique map $\emp \hook \spec\mbb{I}/0=1$ is an equivalence.
  %
-This way, $\emp \eq \ist{0}$ now will be sober, and it is both an open and closed proposition. As mentioned in introduction, (\AxiomNT) together with a strong enough quasi-coherence principle will imply all of Hyland's axioms for synthetic domain theory. Before we discuss that in \zcref{sec:infdomain}, a minimal amount of quasi-coherence provided by (\AxiomSQCI) already implies a lot of elementary properties. As a first consequence of (\AxiomNT) with (\AxiomSQCI), we can show that $\mbb{I}$ is almost the Boolean algebra $2$ in the following sense:
+This way, $\emp \eq \ist{0}$ now will be sober, and it is both an open and closed proposition. As mentioned in introduction, (\AxiomNT) together with a strong enough \gls{QC} principle will imply all of Hyland's axioms for synthetic domain theory. Before we discuss that in \zcref{sec:infdomain}, a minimal amount of \gls{QC} provided by (\AxiomSQCI) already implies a lot of elementary properties. As a first consequence of (\AxiomNT) with (\AxiomSQCI), we can show that $\mbb{I}$ is almost the Boolean algebra $2$ in the following sense:
 
 \begin{proposition}[\AxiomNT, \AxiomSQCID]\label{prop:filed}
-  For any $i : \mbb{I}$ we have:
+  For any $i \in \mbb I$ we have:
   \[ \neg \ist{i} \eq \isf{i}, \quad \neg\isf{i} \eq \ist{i}\text{.} \]
   In particular, the embedding $2 \hook \mbb{I}$ induced by $0,1$ is $\neg\neg$-dense:
-  \[ \fa i\mbb{I} \dneg(\ist{i} \vee \isf{i})\text{.} \]
+  \[ \fa i{\mbb{I}} \dneg(\ist{i} \vee \isf{i})\text{.} \]
 \end{proposition}
 \begin{proof}
-  If $\isf{i}$ then $\neg\ist{i}$ by (\AxiomNT). On the other hand, by the conservativity result in \zcref{lem:intconserve} and (\AxiomNT), if $i \neq 1$ then $i = 0$ since $0 \neq 1$. The dual case also follows by symmetry. Now given $i :\mbb{I}$, if $\neg(\ist{i} \vee \isf{i})$, which implies $\neg\ist{i} \vee \neg\isf{i}$, equivalently $\isf{i} \wedge \ist{i}$, contradictory to (\AxiomNT). Hence, $\neg\neg(\ist{i} \wedge \isf{i})$.
+  If $\isf{i}$ then $\neg\ist{i}$ by (\AxiomNT). On the other hand, by conservativity in \zcref{lem:intconserve} and (\AxiomNT), if $i \neq 1$ then $i = 0$ since $0 \neq 1$. The dual case also follows by symmetry. Now given $i\in\mbb{I}$, if $\neg(\ist{i} \vee \isf{i})$, which implies $\neg\ist{i} \vee \neg\isf{i}$, equivalently $\isf{i} \wedge \ist{i}$, contradictory to (\AxiomNT). Hence, $\neg\neg(\ist{i} \wedge \isf{i})$.
 \end{proof}
 
 This allows us to observe that the open and closed propositions have a bijective correspondence between them:
 
 \begin{corollary}[\AxiomNT, \AxiomSQCID]\label{cor:opendnegclose}
-  For any proposition $p$, $p$ is open iff $\neg p$ is closed and vice versa. Furthermore, open and closed propositions are $\dneg$-stable.
+  For any proposition $p$, $p$ is open iff $\neg p$ is closed and vice versa. Furthermore, open and closed propositions are classical (cf.~\zcref{def:propertiesofpropositions}).
 \end{corollary}
 
-On the other hand, \zcref{sec:order-theoretic-structure} will show that under the axiom (\AxiomNT), quasi-coherence implies the interval $\mbb{I}$ will \emph{never} be isomorphic to $2$. 
+On the other hand, \zcref{sec:order-theoretic-structure} will show that under the axiom (\AxiomNT), \gls{QC} implies the interval $\mbb{I}$ will \emph{never} be isomorphic to $2$. 
 
 \subsection{Locality}
 
@@ -505,16 +428,16 @@ A slightly stronger axiom which is common in the practice of domain theory is th
 \PrintAxiomL
 
 Geometrically, the second condition states that the following two inclusions are jointly surjective. 
-  \[ 
-  \begin{tikzcd}
-    \mbb{I} \ar[r, hook, "{i \mapsto (i,1)}"] & \scomp{i,j : \mbb{I}}{\ist{i\vee j}} & \mbb{I} \ar[l, hook', "{j \mapsto (1,j)}"']
-  \end{tikzcd}
-  \]
+\[ 
+\begin{tikzcd}
+  \mbb{I} \ar[r, hook, "{i \mapsto (i,1)}"] & \scomp{i,j \in \mbb{I}}{\ist{i\vee j}} & \mbb{I} \ar[l, hook', "{j \mapsto (1,j)}"']
+\end{tikzcd}
+\]
 
 Under (\AxiomL), the dominance $\mbb{I}$ will be closed under finite disjunctions. Furthermore, it also implies more elementary properties about $\mbb{I}$:
 
 \begin{lemma}[\AxiomL, \AxiomSQCID]\label{lem:intisnotBoolean}
-  $\mbb{I}$ has no non-trivial complemented elements, i.e.\ if $i : \mbb{I}$ is complemented, then $\ist{i} \vee \isf{i}$. 
+  $\mbb{I}$ has no non-trivial complemented elements, i.e.\ if $i \in \mbb I$ is complemented, then $\ist{i} \vee \isf{i}$. 
 \end{lemma}
 \begin{proof}
   Suppose $i$ has a complement $j$. Then by (\AxiomL) we have
@@ -528,7 +451,7 @@ Under (\AxiomL), the dominance $\mbb{I}$ will be closed under finite disjunction
 
 \begin{example}\label{exm:2issober}
   Consider the algebra $B \coloneq \mbb{I}[\ms{i},\ms{j}]/{\ms{i}\wedge \ms{j} =0,\ms{i}\vee \ms{j} = 1}$. By construction, $B$ classifies complemented elements in $\mbb{I}$-algebras. Thus, assuming (\AxiomL) and (\AxiomSQCI), by \zcref{lem:intisnotBoolean}
-  \[ \spec B \cong \scomp{i,j : \mbb{I}}{i \wedge j = 0 \wedge i \vee j = 1} \cong 2\text{.} \]
+  \[ \spec B \cong \scomp{i,j \in \mbb{I}}{i \wedge j = 0 \wedge i \vee j = 1} \cong 2\text{.} \]
   In particular, this means that for any sober space $X \cong \spec A$, $2^X$ will be equivalent to the set of complemented elements in $A$ by \zcref{prop:duality}.
 \end{example}
 
@@ -568,36 +491,15 @@ The strongest locality axiom states that the simplicial structure is truncated t
 
 \PrintAxiomOneCS
 
-Geometrically, (\AxiomOneCS) additionally requires the canonical inclusion $\partial\Delta_2 \hook \Delta_2$ from the boundary $\partial\Delta_2$ to the 2-simplex $\Delta_2$ is an equivalence, where $\partial\Delta_2$ type-theoretically is simply
-\[ \partial\Delta_2 \coloneq \scomp{i,j : \mbb{I}}{\isf{i} \vee (i = j) \vee \ist{i}}\text{.} \]
+Geometrically, (\AxiomOneCS) additionally requires the canonical inclusion $\partial\Delta_2 \hook \Delta_2$ from the boundary $\partial\Delta_2$ to the 2-simplex $\Delta_2$ is an equivalence, where $\partial\Delta_2$ is simply
+\[ \partial\Delta_2 \coloneq \scomp{i,j \in \mbb{I}}{\isf{i} \vee (i = j) \vee \ist{i}}\text{.} \]
 
 In general we will at most work with the weakest locality axiom (\AxiomNT). However, we will show in \zcref{sec:local} that $\mbb{I}$, hence all spatial algebras and spectra, will be \emph{right orthogonal} to the maps that define these local principles as shown above. We will see in \zcref{sec:newmodelforsdt} that these axioms corresponds to various coverages we can put on the presheaf classifying topos, and the orthogonality result particularly implies that $\mbb{I}$ will belong to these subtopoi.
 
 
 \section{Order-theoretic structure on algebras and spaces}\label{sec:order-theoretic-structure}
 
-In this section, we describe several important local orderings on algebras and spaces, summarised in \zcref{table:orders}.
-
-\begin{table}[ht]
-  \begin{align*}
-    a\le_A b &\eq a\wedge b = a
-    \tag{canonical order}
-    \\
-    a\behle[A]b &\eq 
-    \fa{x}{\spec{A}}x(a)\le_\mbb{I} x(b)
-    \tag{behavioural preorder}
-    \\
-    x\obsle[X]y &\eq \fa{U}{\opens{X}} U(x)\le_\mbb{I} V(x)
-    \tag{observational preorder}
-    \\ 
-    x\satle[\spec{A}]y &\eq \fa{a}{A} x(a)\le_\mbb{I} y(a)
-    \tag{satisfaction order}
-  \end{align*}
-  \begin{tabular}{ll}
-  \end{tabular}
-  \caption{List of important (pre)order structures on algebras and spaces. The \emph{canonical} and \emph{behavioural} (pre)orders are defined on all $\mbb{I}$-algebras; the \emph{observational} preorder is defined on all types; and the \emph{satisfaction} preorder is defined just on spectra.}
-  \label{table:orders}
-\end{table}
+In this section, we describe several important local orderings on algebras and spaces.
 
 
 \subsection{Local ordering of algebras}
@@ -629,7 +531,7 @@ In addition to the canonical partial order, there is a local preordering of alge
 \end{definition}
 
 
-To relate the behavioural preorder to the canonical partial ordering, we first define a slight weakening of the quasi-coherence principle.
+To relate the behavioural preorder to the canonical partial ordering, we first define a slight weakening of the \gls{QC} principle.
 
 \begin{definition}
   We say that an $\mbb{I}$-algebra $A$ is \emph{pre-spatial} when the counit component $\iota_A\colon A\to \opens\spec{A}$ is an embedding.
@@ -640,14 +542,14 @@ To relate the behavioural preorder to the canonical partial ordering, we first d
 \end{proposition}
 
 \begin{proof}
-  For $a,b:A$ we have the following sequence of equivalences:
+  For $a,b\in A$ we have the following sequence of equivalences:
   \begin{align*}
-    a\le_A b 
-    &\eq \iota_A(a) \le_{\opens\spec{A}} \iota_A(a)
+    & a\le_A b \\
+    &\quad\eq \iota_A(a) \le_{\opens\spec{A}} \iota_A(a)
     \\ 
-    &\eq \fa{x}{\spec{A}} x(a) \le_{\mbb{I}} x(b)
+    &\quad\eq \fa{x}{\spec{A}} x(a) \le_{\mbb{I}} x(b)
     \\ 
-    &\eq a\behle[A]b
+    &\quad\eq a\behle[A]b
   \end{align*}
   The first equivalence requires that $A$ is pre-spatial.
 \end{proof}
@@ -658,7 +560,7 @@ To relate the behavioural preorder to the canonical partial ordering, we first d
 The \emph{observational preorder} is a classical notion in synthetic domain theory (cf.\ \citet{PhoaWesleyKym-Son1991DtiR,hyland_first_2006}):
 
 \begin{definition}[Observational preorder]\label{defn:specialisation}
-  For any type $X$, we define the \emph{observational preorder} on $X$ as follows:
+  For any set $X$, we define the \emph{observational preorder} on $X$ as follows:
   \begin{align*}
     x\obsle[X] y 
     &\eq \fa{U}{\opens{X}} U(x)\le_\mbb{I} U(x)
@@ -674,15 +576,14 @@ By definition, the observational preorder is reflexive and transitive. As alread
   This simply follows from compositionality of functions.
 \end{proof}
 
-We can very easily classify the observational preorder on a set with decidable equality.
-%% JMS: Removed "classical set", because maybe it could be argued that classical sets should also be projective?
+We can very easily classify the observational preorder on a decidable set.
 
 \begin{lemma}[\AxiomNT]\label{lem:obs-preord-on-set-with-decidable-equality}
-  If $M$ has decidable equality, then the observational preorder on $M$ is discrete, in the sense that for $n,m : M$,
+  If $M$ is decidable, then the observational preorder on $M$ is discrete, in the sense that for $n,m \in M$,
   \[ n \obsle[M] m \to n = m\text{.} \]
 \end{lemma}
 \begin{proof}
-  Since $M$ has decidable equality, we can define functions by case distinction. If $n \neq m$, we can construct a function $U : M \to \mbb{I}$ with $U(n) = 1,U(m) = 0$, contradicting with $n \obsle[M] m$. Hence, $\neg\neg (n=m)$, and with decidable equality this implies $n = m$.
+  Since $M$ has decidable equality, we can define functions by case distinction. If $n \neq m$, we can construct a function $U \colon M \to \mbb{I}$ with $U(n) = 1,U(m) = 0$, contradicting with $n \obsle[M] m$. Hence, $\neg\neg (n=m)$, and with decidable equality this implies $n = m$.
 \end{proof}
 
 
@@ -690,11 +591,7 @@ We can very easily classify the observational preorder on a set with decidable e
   If the observational preorder on $X$ has a least or greatest element, then $X$ is \emph{internally connected} in the sense that $X$ is right orthogonal to $M \to 1$ for any set $M$ with decidable equality.
 \end{corollary}
 \begin{proof}
-  Since $X$ is inhabited, the restriction map $M \to M^X$ is an embedding (here we use the fact that $M$ is a set). It suffices to show that this map is also surjective.
-  %% Since $M$ and $M^X$ are sets, it suffices to show this is also surjective, i.e.\ any $f \colon X \to M$ is a constant map. 
-  % In HoTT, embedding ++ surjection => equivalence holds regardless of h-level. But we **do** need $M$ to be a set in order to deduce that M -> M^X is an embedding.
-  %
-  Fixing $f\colon X\to M$, we must show that there exists $m:M$ such that $f(x) = m$ for all $x:X$. Let $x_0$ be the least element of $X$ in its observational preorder, so that we have $x_0\obsle[X] x$; by \zcref{lem:anymapmonotoneintriscorder} we have $f(x_0) \obsle f(x)$ which implies $f(x_0) = f(x)$ by \zcref{lem:obs-preord-on-set-with-decidable-equality}. Therefore, we may choose $m\coloneq f(x_0)$. The case for a maximal element is analogous.
+  Since $X$ is inhabited, the restriction map $M \to M^X$ is an embedding. It suffices to show that this map is also surjective. Fixing $f\colon X\to M$, we must show that there exists $m:M$ such that $f(x) = m$ for all $x\in X$. Let $x_0$ be the least element of $X$ in its observational preorder, so that we have $x_0\obsle[X] x$; by \zcref{lem:anymapmonotoneintriscorder} we have $f(x_0) \obsle f(x)$ which implies $f(x_0) = f(x)$ by \zcref{lem:obs-preord-on-set-with-decidable-equality}. Therefore, we may choose $m\coloneq f(x_0)$. The case for a maximal element is analogous.
 \end{proof}
 
 \begin{remark}
@@ -723,23 +620,23 @@ We can very easily classify the observational preorder on a set with decidable e
 \begin{proof}
   For any $x,y:\spec{A}$ we have the following chain of equivalences:
   \begin{align*}
-    x\obsle[\spec{A}] y 
-    &\eq 
+    &x\obsle[\spec{A}] y \\
+    &\quad\eq 
     \fa{U}{\opens\spec{A}} U(x) \le_{\mbb{I}} U(y)
     \\ 
-    &\eq 
+    &\quad\eq 
     \fa{a}{A} 
     \iota_A(a)(x)
     \le_\mbb{I}
     \iota_A(a)(y)
     \\ 
-    &\eq 
+    &\quad\eq 
     \fa{a}{A} 
     x(a)
     \le_\mbb{I}
     y(a)
     \\ 
-    &\eq 
+    &\quad\eq 
     x\satle[\spec{A}] y
     \qedhere
   \end{align*}
@@ -752,14 +649,14 @@ We can very easily classify the observational preorder on a set with decidable e
 In the above, $\opens{X}$ is playing two roles simultaneously: it is both a spectrum of $\mbb{I}[X]$ and the observational algebra of $X$.
 
 \begin{proof}
-  For any $u,v:\spec{\mbb{I}[X]}$ we have the following equivalences:
+  For any $u,v\in\spec{\mbb{I}[X]}$ we have the following equivalences:
   \begin{align*}
-    u \satle[\spec{\mbb{I}[X]}] v
-    &\eq \fa{p}{\mbb{I}[X]} u(p) \le_{\mbb{I}} v(p)
+    &u \satle[\spec{\mbb{I}[X]}] v\\
+    &\quad\eq \fa{p}{\mbb{I}[X]} u(p) \le_{\mbb{I}} v(p)
     \\ 
-    &\eq \fa{x}{X} u(x) \le_{\mbb{I}} v(x)
+    &\quad\eq \fa{x}{X} u(x) \le_{\mbb{I}} v(x)
     \\ 
-    &\eq (\ld{x}{X}u(x)) \le_{\opens{X}} (\ld{x}{X}v(x))
+    &\quad\eq (\ld{x}{X}u(x)) \le_{\opens{X}} (\ld{x}{X}v(x))
     \qedhere
   \end{align*}
 \end{proof}
@@ -770,42 +667,37 @@ In the above, $\opens{X}$ is playing two roles simultaneously: it is both a spec
 \end{lemma} 
 
 \begin{proof}
-  Let $x,x' : \spec A$. We have the following equivalences:
+  Let $x,x' \in \spec A$. We have the following equivalences:
   \begin{align*}
-    (\spec{q})(x)\satle[\spec{\mbb{I}[Y]}] (\spec{q})(x')
-    &\eq 
+    &(\spec{q})(x)\satle[\spec{\mbb{I}[Y]}] (\spec{q})(x') \\
+    &\quad\eq 
     \fa{p}{\mbb{I}[Y]}
     x(qp) \le_\mbb{I} x'(qp)
     \\ 
-    &\eq 
+    &\quad\eq 
     \fa{a}{A} x(a) \le_\mbb{I} x'(a) 
     \\ 
-    &\eq 
+    &\quad\eq 
     x\satle[\spec{A}] x'
   \end{align*}
 % 
   The second equivalence holds because $q\colon \mbb{I}[Y]\surj A$ is surjective.
 \end{proof}
 
-%% I don't think this one is too enlightening on its own.
-% \begin{corollary}\label{cor:satiscan}
-%   In particular, the satisfaction order on $\mbb{I}^n$ and $\Delta^n$ viewed as spectra coincides with their pointwise order.
-% \end{corollary}
 
-
-\section{Phoa's principle, finitary quasi-coherence, and homotopy}
+\section{Phoa's principle, finitary QC, and homotopy}
 
 The interval $\mbb{I}$ is playing multiple roles so far:
 \begin{enumerate}
-  \item Mapping a space $X$ into $\mbb{I}$ computes its algebra of observations $\opens{X} = \mbb{I}^X$.
-  \item Homomorphically mapping an algebra $A$ into $\mbb{I}$ computes its spectrum $\spec{A} = \mbb{I}\alg(A,\mbb{I})$.
+  \item Mapping a set $X$ into $\mbb{I}$ computes its algebra of observations $\opens{X} = \mbb{I}^X$.
+  \item Mapping an $\mbb I$-algebra $A$ into $\mbb{I}$ computes its spectrum $\spec{A} = \mbb{I}\alg(A,\mbb{I})$.
 \end{enumerate}
 
 In both cases above, $\mbb{I}$ is viewed as an algebra of observations and not as a geometrical figure. For the latter, we may consider mappings from $\mbb{I}$ into \emph{either} an algebra or a space as defining a notion of (directed) homotopy. In particular, the function space $X^\mbb{I}$ classifies \emph{paths} drawn in $X$; this geometrical role of $\mbb{I}$ as a figure shape for paths is the primary one in applications to synthetic category theory~\citep{riehl2017type}, and it is also upon the geometry of the interval that the notion of \emph{chain completeness} in synthetic domain theory is founded (cf.\ \zcref{sec:infdomain}).
 
 \subsection{The generalised Phoa principle and spatiality of polynomial algebras}
 
-As soon as we have path spaces $X^\mbb{I}$, we immediately wish to begin characterising them for specific $X$. For example, the path space of a function space $A\to B$ is given pointwise in terms of the path space of $B$, which follows immediately from the laws of exponentials. To characterise paths in spaces like $\mbb{I}^n$ and $\Delta^n$, however, we need additional axioms. The simplest such axiom asserts that the polynomial algebra $\mbb{I}[\ms{i}]$ is spatial---which, in the case of bounded distributive lattices, is equivalent to Phoa's principle.
+As soon as we have path spaces $X^\mbb{I}$, we immediately wish to begin characterising them for specific $X$. For example, the path space of a function space $A\to B$ is given pointwise in terms of the path space of $B$, which follows immediately from the laws of exponentials. To characterise paths in spaces like $\mbb{I}^n$ and $\Delta^n$, however, we need additional axioms. The simplest such axiom asserts that the polynomial algebra $\mbb{I}[\ms{i}]$ is spatial---which, in the case of distributive lattices, is equivalent to Phoa's principle.
 
 \begin{definition}\label{def:gen-phoa}
   We say that an $\mbb{I}$-algebra $A$ satisfies the \emph{generalised Phoa principle} when either of the following equivalent conditions hold:
@@ -825,7 +717,7 @@ As soon as we have path spaces $X^\mbb{I}$, we immediately wish to begin charact
   Conversely, suppose that every path $\alpha\colon \mbb{I}\to A$ is of the form $\alpha(i) = \alpha(0)\vee i \wedge \alpha(1)$. We must show that $a\le_A b$ holds if and only if there exists a unique path $\alpha\colon \mbb{I}\to A$ sending $0$ and $1$ to $a$ and $b$ respectively.
   \begin{enumerate}
     \item If $a\le_A b$ holds, we define $\alpha(i) \coloneq a\vee i \wedge b$; this path is unique with the required property by our assumption. 
-    \item If there exists a path $\alpha\colon\mbb{I}\to A$ from $a$ to $b$, we know that this takes the form $\alpha(i) = a \vee i \wedge b$. Therefore we have
+    \item If there exists a path $\alpha\colon\mbb{I}\to A$ from $a$ to $b$, we know that it has the form $\alpha(i) = a \vee i \wedge b$. Therefore we have
     \[ 
       b = \alpha(1) = a\vee 1\wedge b = a \vee b.
       \qedhere
@@ -842,7 +734,7 @@ The standard Phoa principle is the generalised Phoa principle for $\mbb{I}$ itse
 \begin{proof}
   Fixing $\alpha\colon \mbb{I}\to A[\ms{j}]$, we must check that $\alpha(i) = \alpha(0) \vee i \wedge \alpha(1)$. 
   %
-  The normal form theorem for polynomials of bounded distributive lattices~\citep[Ch.\ 1, Thm.\ 10.11]{lausch2000algebra} implies that any function $\alpha\colon \mbb{I}\to A[\ms{j}]$ must be determined by functions $\alpha_0,\alpha_1\colon \mbb{I}\to A$ such that $\alpha(i) = \alpha_0(i)\vee \ms{j} \wedge \alpha_1(i)$ in $A[\ms{j}]$. Meanwhile, Phoa's principle for $A$ characterises $\alpha_0$ and $\alpha_1$ as follows:
+  The normal form theorem for polynomials of distributive lattices~\citep[Ch.\ 1, Thm.\ 10.11]{lausch2000algebra} implies that any function $\alpha\colon \mbb{I}\to A[\ms{j}]$ must be determined by functions $\alpha_0,\alpha_1\colon \mbb{I}\to A$ such that in $A[\ms{j}]$ we have $\alpha(i) = \alpha_0(i)\vee \ms{j} \wedge \alpha_1(i)$. Meanwhile, Phoa's principle for $A$ characterises $\alpha_0$ and $\alpha_1$:
   \begin{align*}
     \alpha_0(i) &= \alpha_0(0) \vee i \wedge \alpha_0(1)
     \\ 
@@ -867,9 +759,9 @@ The standard Phoa principle is the generalised Phoa principle for $\mbb{I}$ itse
 \end{theorem}
 
 \begin{proof}
-  We note that $\spec{A[\ms{j}]} \cong \spec{A}\times \mbb{I}$ unconditionally, and so the algebra of observations $\opens\spec{A[\ms{j}]}$ is actually the path space of $\opens\spec{A}$; taking spatiality of $A$ into account, the counit component $A[\ms{j}]\to \opens\spec A[\ms{j}]$ is the evaluation map $A[\ms{j}] \to A^\mbb{I}$, and we wish to prove that the latter is an equivalence if and only if for each $\alpha\colon \mbb{I}\to A$ we have $\alpha(i)=\alpha(0)\vee i\wedge\alpha(1)$. 
+  We note that $\spec{A[\ms{j}]} \cong \spec{A}\times \mbb{I}$ unconditionally, and so the algebra of observations $\opens\spec{A[\ms{j}]}$ is actually the path space of $\opens\spec{A}$; taking spatiality of $A$ into account, the counit component $A[\ms{j}]\to \opens\spec A[\ms{j}]$ is the evaluation map $A[\ms{j}] \to A^\mbb{I}$, and we wish to prove that the latter is an equivalence if and only if for each $\alpha\colon \mbb{I}\to A$, $\alpha(i)=\alpha(0)\vee i\wedge\alpha(1)$. 
   %
-  This follows immediately from the normal form theorem for polynomials of bounded distributive lattices~\citep[Ch.\ 1, Thm.\ 10.11]{lausch2000algebra}: any polynomial $p:A[\ms{j}]$ is uniquely of the form $p = \ev_0(p) \vee \ms{j} \wedge \ev_1(p)$ with $\ev_0(p)\le_A \ev_1(p)$.
+  This follows immediately from the normal form for polynomials of distributive lattices~\citep[Ch.\ 1, Thm.\ 10.11]{lausch2000algebra}: any polynomial $p\in A[\ms{j}]$ is uniquely of the form $p = \ev_0(p) \vee \ms{j} \wedge \ev_1(p)$ with $\ev_0(p)\le_A \ev_1(p)$.
 \end{proof}
 
 
@@ -898,25 +790,7 @@ We therefore identify the axiom (\AxiomSQCP) below accordingly, which we have se
 \PrintAxiomSQCP
 
 
-The quasi-coherence axiom for polynomials in one variable is surprisingly strong:
-
-%% I think what follows is fine, but I haven't used it.
-% \begin{lemma}[\AxiomSQCP]
-%   For any type $K$, the path space $(\mbb{I}^K)^\mbb{I}$ classifies the canonical order on $\mbb{I}^K$.
-% \end{lemma}
-% \begin{proof}
-%   Let $f,g\colon K\to \mbb{I}$ be two functions. We must show that the type of paths from $f$ to $g$ is a proposition that is equivalent to the canonical order $f\le_{\mbb{I}^K}g$. We have the following sequence of equivalences:
-% %
-%   \[ 
-%     \mathsf{Path}_{\mbb{I}^K}(f,g) \cong 
-%     \prod_{k:K} \mathsf{Path}_{\mbb{I}}(f(k),g(k))
-%     \cong
-%     \prod_{k:K} f(k) \le_\mbb{I} g(k) 
-%     \cong f\le_{\mbb{I}^K} g
-%   \] 
-
-%   The first equivalence is immediate; the second equivalence follows from is Phoa's principle (\AxiomSQCP), which characterises paths in $\mbb{I}$ itself. The final equivalence is definitional.
-% \end{proof}
+The \gls{QC} axiom for polynomials in one variable is surprisingly strong:
 
 \begin{lemma}[\AxiomSQCP]\label{lem:fg-qc}
   Every finitely generated free $\mbb{I}$-algebra is spatial.
@@ -937,7 +811,7 @@ The quasi-coherence axiom for polynomials in one variable is surprisingly strong
   By the normalisation theorem for $\mbb{I}[\ms{i}]$, the pair of evaluation maps
   \[ \pair{\ev_0,\ev_1} \colon \mbb{I}[\ms{i}] \to \mbb{I} \times \mbb{I} \]
   classifies the canonical order on $\mbb{I}$.
-  Thus every homomorphism $h\colon A\to \mbb{I}[\ms{i}]$ is canonically induced by elements $h_0,h_1:\spec{A}$ with $h_0\satle[\spec{A}] h_1$ such that $h(a) = h_0(a) \vee \ms{i} \wedge h_1(a)$.
+  Thus every homomorphism $h\colon A\to \mbb{I}[\ms{i}]$ is canonically induced by elements $h_0,h_1\in\spec{A}$ with $h_0\satle[\spec{A}] h_1$ such that $h(a) = h_0(a) \vee \ms{i} \wedge h_1(a)$.
 \end{proof}
 
 
@@ -951,21 +825,21 @@ The quasi-coherence axiom for polynomials in one variable is surprisingly strong
 \end{proof}
 
 \begin{remark}[Algebraic properties in classifying topoi]\label{rem:normalalgebra}
-  We emphasise that the above proofs are purely the consequences of the algebraic fact that $A[\ms{i}]$ classifies the canonical order of any $\mbb{I}$-algebra $A$, plus quasi-coherence. This is a perfect example of how an algebraic property of a theory has a non-trivial effect on the internal logic of its classifying topos.
+  We emphasise that the above proofs are purely the consequences of the algebraic fact that $A[\ms{i}]$ classifies the canonical order of any $\mbb{I}$-algebra $A$, plus \gls{QC}. This is a perfect example of how an algebraic property of a theory has a non-trivial effect on the internal logic of its classifying topos.
 \end{remark}
 
 \begin{corollary}[\AxiomSQCP]\label{lem:cubes-are-sober}
   Each cube $\mbb{I}^n$ is sober.
 \end{corollary}
 \begin{proof}
-  The $n$-cube $\mbb{I}^n$ is the spectrum of the free $\mbb{I}$-algebra $\mbb{I}[n]$, which is spatial by \zcref{lem:fg-qc}.
+  $\mbb{I}^n$ is the spectrum of the free $\mbb{I}$-algebra $\mbb{I}[n]$, which is spatial by \zcref{lem:fg-qc}.
 \end{proof}
 
 \begin{corollary}[\AxiomNT, \AxiomSQCP]\label{cor:cubes-internally-connected}
   The $n$-cube $\mbb{I}^n$ is internally connected.
 \end{corollary}
 
-In particular, $\mbb{I}$ is not the boolean set $2$.
+In particular, $\mbb{I}$ is not the Boolean set $2$.
 
 \begin{proof}
    By \zcref{lem:specorderofsober,lem:cancoincide}, the observational preorder space $\mbb{I}^n$ is induced by the satisfaction order on $\spec\mbb{I}[n]$ because $\mbb{I}^n$ is sober (\zcref{lem:cubes-are-sober}); the satisfaction order is simply the pointwise order, so it has a top element. Thus by \zcref{cor:connectedpreservediscrete}, $\mbb{I}^n$ is internally connected. So are $\Delta^n$ because they are retracts of $\mbb{I}^n$.
@@ -976,7 +850,7 @@ In particular, $\mbb{I}$ is not the boolean set $2$.
 An immediate application of Phoa principle is to compare path structure with the observational preorder.
 
 \begin{observation}[\AxiomSQCP]
-  For any type $X$, the boundary evaluation map 
+  For any set $X$, the boundary evaluation map 
   \[ \pair{\ev_0,\ev_1}\colon X^\mbb{I}\to X\times X \] 
   factors through the observational preorder relation ${\obsle[X]}\hook X\times X$ as displayed below:
   \[ 
@@ -998,7 +872,7 @@ An immediate application of Phoa principle is to compare path structure with the
 \end{proof}
 
 \begin{definition}
-  A type $X$ for which $X^\mbb{I}\to {\obsle[X]}$ is an surjection is called \emph{linked} (following \citet{PhoaWesleyKym-Son1991DtiR}); when the map is an equivalence, $X$ is called \emph{strongly linked}.
+  A set $X$ for which $X^\mbb{I}\to {\obsle[X]}$ is an surjection is called \emph{linked} (following \citet{PhoaWesleyKym-Son1991DtiR}); when the map is an equivalence, $X$ is called \emph{strongly linked}.
 \end{definition}
 
 \begin{lemma}[\AxiomSQCP]\label{lem:sober-strongly-linked}
@@ -1023,7 +897,7 @@ An immediate application of Phoa principle is to compare path structure with the
 \end{lemma}
 
 \begin{proof}
-  \citet[Prop.\ 5.4.4]{PhoaWesleyKym-Son1991DtiR} implies that being linked is an exponential ideal, because an exponential is an internal limit. A type $X$ is strongly linked if and only if it is linked \emph{and} it is $\mbb{I}$-separated in the sense that $X^\mbb{I}\to X\times X$ is an embedding; but $\mbb{I}$-separated types also form an exponential ideal (in fact, a reflective exponential ideal).
+  \citet[Prop.\ 5.4.4]{PhoaWesleyKym-Son1991DtiR} implies that being linked is an exponential ideal, because an exponential is an internal limit. A set $X$ is strongly linked if and only if it is linked \emph{and} it is $\mbb{I}$-separated in the sense that $X^\mbb{I}\to X\times X$ is an embedding; but $\mbb{I}$-separated sets also form an exponential ideal (in fact, a reflective exponential ideal).
 \end{proof}
 
 \begin{lemma}[\AxiomSQCP]\label{lem:O-strongly-linked}
@@ -1040,7 +914,7 @@ An immediate application of Phoa principle is to compare path structure with the
 \end{corollary}
 
 \begin{proof}
-  Let $Y$ be strongly linked; by \zcref{lem:strong-link-exp-ideal}, so is $Y^X$. Thus $\obsle[Y^X]$ is precisely $(Y^X)^\mbb{I}\cong (Y^\mbb{I})^X\cong (\obsle[Y])^X$.
+  Let $Y$ be strongly linked; by \zcref{lem:strong-link-exp-ideal}, so is $Y^X$. Thus $\obsle[Y^X]$ is precisely given by $(Y^X)^\mbb{I}\cong (Y^\mbb{I})^X\cong (\obsle[Y])^X$.
 \end{proof}
 
 \begin{proposition}[\AxiomSQCP]\label{prop:specordopens}
@@ -1050,12 +924,12 @@ An immediate application of Phoa principle is to compare path structure with the
 \begin{proof}
   By Phoa's principle, $\mbb{I}$ is strongly linked; thus by \zcref{cor:strong-link-obs-pw}, the observational preorder on $\mbb{I}^X$ is pointwise induced by that of $\mbb{I}$. In particular, we have the following equivalences involving the function space $\opens{X}=\mbb{I}^X$:
   \begin{align*}
-    U\obsle[\mbb{I}^X]V 
-    &\eq \fa{x}{X} U(x)\obsle[\mbb{I}] V(x)
+    &U\obsle[\mbb{I}^X]V \\
+    &\quad\eq \fa{x}{X} U(x)\obsle[\mbb{I}] V(x)
     \\
-    &\eq \fa{x}{X} U(x)\le_{\mbb{I}} V(x)
+    &\quad\eq \fa{x}{X} U(x)\le_{\mbb{I}} V(x)
     \\
-    &\eq U\le_{\opens{X}} V \qedhere
+    &\quad\eq U\le_{\opens{X}} V \qedhere
   \end{align*}
   The second equivalence uses Phoa's principle and \zcref{lem:O-strongly-linked} to identify the canonical order on $\mbb{I}$ with its observational preorder.
 % 
@@ -1066,7 +940,9 @@ An immediate application of Phoa principle is to compare path structure with the
 \end{proposition}
 
 \begin{proof}
-  Because $A$ is spatial, the counit component $\iota_A$ gives us an order-isomorphism ${(A,\le_A)}\to (\opens\spec{A},\le_{\opens\spec{A}})$. By \zcref{prop:specordopens}, this is an order-isomorphism ${(A,\le_A)}\to {(\opens\spec{A},\obsle[\opens\spec{A}])}$. Meanwhile, any bijective function tracks an isomorphism of observational preorders, so the inverse function $\iota_A^{-1}\colon \opens\spec{A}\to A$ tracks an order-isomorphism  ${(\opens\spec{A},\obsle[\opens\spec{A}])}\to {(A,\obsle[A])}$. 
+  Because $A$ is spatial, the counit component $\iota_A$ gives us an order-isomorphism 
+  \[ {(A,\le_A)} \cong (\opens\spec{A},\le_{\opens\spec{A}}). \] 
+  By \zcref{prop:specordopens}, this is an order-isomorphism ${(A,\le_A)}\to {(\opens\spec{A},\obsle[\opens\spec{A}])}$. Meanwhile, any bijective function tracks an isomorphism of observational preorders, so the inverse $\iota_A^{-1}\colon \opens\spec{A}\to A$ tracks an order-isomorphism  ${(\opens\spec{A},\obsle[\opens\spec{A}])}\to {(A,\obsle[A])}$. 
 \end{proof}
 
 \begin{corollary}[\AxiomSQCP]
@@ -1080,13 +956,13 @@ An immediate application of Phoa principle is to compare path structure with the
 
 \subsection{Spatiality of finitely presented algebras}
 
-The (\AxiomSQCP) axiom does not imply that the simplices $\Delta^n$ are sober; for this, we need a stronger quasi-coherence principle that applies to all finitely \emph{presented} algebras.
+The (\AxiomSQCP) axiom does not imply that the simplices $\Delta^n$ are sober; for this, we need a stronger \gls{QC} principle that applies to all finitely \emph{presented} algebras.
 
 
 \PrintAxiomSQCF
 
 \begin{remark}
-  In particular, the axiom (\AxiomSQCF) implies all our previously mentioned quasi-coherence axioms, including (\AxiomSQCP) and (\AxiomSQCID) (hence also (\AxiomSQCI)).
+  In particular, the axiom (\AxiomSQCF) implies all our previously mentioned \gls{QC} axioms, including (\AxiomSQCP) and (\AxiomSQCID) (hence also (\AxiomSQCI)).
 \end{remark}
 
 It is immediate that $\Delta^n\cong \spec\mbb{I}[\ms{i}_1,\cdots,\ms{i}_n]/\ms{i}_1\geq \cdots \geq \ms{i}_n$ is sober under (\AxiomSQCF).
@@ -1104,37 +980,37 @@ It is immediate that $\Delta^n\cong \spec\mbb{I}[\ms{i}_1,\cdots,\ms{i}_n]/\ms{i
 At the end of this section, we describe another interesting perspective arising from the proof of \zcref{thm:phoa-spectrum}. We have seen that the dualising object $\mbb{I}$ has a double role: It is both an algebra and a spectrum. The mixture of algebraic and geometric object has also been observed in \zcref{rem:alggeoI}. The proof of \zcref{thm:phoa-spectrum} gives us many more such examples. For instance, $\mbb{I}[i]$ classifies the order on $\mbb{I}$, which by definition is the spectrum $\Delta_2$. In fact, \emph{all} the simplices are classified by some algebra.
 
 Just as we described $\Delta^n$ in terms of descending sequences in $\mbb{I}$, we can do the same replacing $\mbb{I}$ with another algebra $A$.
-For any $n : \N$ and $\mbb{I}$-algebra $A$, we define $\Delta[A]^{n}$ to be the type of lists of decreasing elements of length $n$ in $A$, namely
-\[ \Delta[A]^{n} \coloneq \scomp{a_1,\cdots,a_n : A}{a_1 \ge \cdots \ge a_n}\text{.} \]
+For any $n\in\N$ and $\mbb{I}$-algebra $A$, we define $\Delta[A]^{n}$ to be the set of lists of decreasing elements of length $n$ in $A$, namely
+\[ \Delta[A]^{n} \coloneq \scomp{a_1,\cdots,a_n \in A}{a_1 \ge \cdots \ge a_n}\text{.} \]
 Of course $\Delta[\mbb{I}]^n$ is simply $\Delta^n$. We have a general algebraic description of $\Delta[A]^n$.
 
 \begin{proposition}\label{prop:simplicesasalgebra}
-  For any $n : \N$ and $\mbb{I}$-algebra $A$, there is an equivalence 
+  For any $n\in\N$ and $\mbb{I}$-algebra $A$, there is an equivalence 
   \[ \Delta[A]^{n+1} \cong A[n]/\ms{i}_1 \le \cdots \le \ms{i}_n\text{,} \]
   sending any $a_0 \ge \cdots \ge a_n$ in $A$ to the polynomial 
   \[ a_0 \wedge \ms{i}_1 \vee a_1 \wedge \cdots \wedge \ms{i}_n \vee a_n\text{.} \]
 \end{proposition}
 
-We omit the proof here, which again follows from a general normal form for polynomials with finitely many variables for bounded distributive lattices; see \citet[Ch.\ 1, Thm.\ 10.21]{lausch2000algebra}. We only note here that the above polynomial is well-defined, in the sense that the expression is associative and its value does not depend on how one add parenthesises. The reason for this is that for any expression $a \vee b \wedge c$ to have a definite meaning in a distributive lattice, i.e.\ the two value $(a \vee b) \wedge c$ and $a \vee (b \wedge c)$ coincide, it suffices to have $a \le c$. Then the condition $a_0 \ge \cdots \ge a_n$ for the parameters, and the fact that $\ms{i}_1 \le \cdots \le \ms{i}_n$, makes sure the above polynomial has a definite meaning in the quotient.
+We omit the proof here, which again follows from a general normal form for polynomials with finitely many variables for distributive lattices; see \citet[Ch.\ 1, Thm.\ 10.21]{lausch2000algebra}. We only note here that the above polynomial is well-defined, in the sense that the expression is associative and its value does not depend on how one add parenthesises. The reason for this is that for any expression $a \vee b \wedge c$ to have a definite meaning in a distributive lattice, i.e.\ the two value $(a \vee b) \wedge c$ and $a \vee (b \wedge c)$ coincide, it suffices to have $a \le c$. Then the condition $a_0 \ge \cdots \ge a_n$ for the parameters, and the fact that $\ms{i}_1 \le \cdots \le \ms{i}_n$, makes sure the above polynomial has a definite meaning in the quotient.
 
 
 \section{Chain completeness and infinitary domain theory}\label{sec:infdomain}
 
-Until this point, we have seen that elementary axioms for synthetic domain theory follow from (SQCF) for bounded distributive lattices and thus $\sigma$-frames. In this section we show that the final axiom of synthetic domain theory, viz.\ chain completeness of the interval $\mbb{I}$, is also a consequence of quasi-coherence for $\sigma$-frames. In fact, it implies the main infinitary axiom of synthetic domain theory in~\citet{fiore-plotkin:1996}---the initial algebra $\omega$ for $L$ is inductive.
+Until this point, we have seen that elementary axioms for synthetic domain theory follow from (SQCF) for distributive lattices and thus $\sigma$-frames. In this section we show that the final axiom of synthetic domain theory, viz.\ chain completeness of the interval $\mbb{I}$, is also a consequence of \gls{QC} for $\sigma$-frames. In fact, it implies the main infinitary axiom of synthetic domain theory in~\citet{fiore-plotkin:1996}---the initial algebra $\omega$ for $L$ is inductive.
 
 \subsection{Chain completeness and inductivity of the initial algebra}
 
-Chain completeness is again specified as an orthogonality condition. Let $\omega,\ov\omega$ denote the initial algebra and final coalgebra for the partial map classifier $L$, respectively. Intuitively, $\omega$ behaves as an infinite chain, and $\ov\omega$ as an infinite chain with a top element. The chain completeness condition is thus intuitively stating a type has joins for infinite sequences internally:
+Chain completeness is again specified as an orthogonality condition. Let $\omega,\ov\omega$ denote the initial algebra and final coalgebra for the partial map classifier $L$, respectively. Intuitively, $\omega$ behaves as an infinite chain, and $\ov\omega$ as an infinite chain with a top element. The chain completeness condition is thus intuitively stating a set has joins for infinite sequences internally:
 
 \begin{definition}[Chain completeness]
-  A type $X$ is \emph{chain complete} if it is right orthogonal to the inclusion $\omega \hook \ov\omega$.
+  A set $X$ is \emph{chain complete} if it is right orthogonal to the inclusion $\omega \hook \ov\omega$.
 \end{definition}
 
 The importance for chain completeness of $\mbb{I}$ for domain theory is that, as observed in~\citet{hyland_first_2006}, it produces fixed points of endo-morphisms on a suitably defined class of objects, which could be viewed as \emph{domains}. 
 
 As $L$ by construction is a polynomial functor, it preserves connected limits. This implies the final coalgebra $\ov\omega$ can always be constructed as a sequential limit as follows, 
 \[\begin{tikzcd}
-	{\ov\omega\cong\lt_{n:\N}L^n1} \ar[r] & \cdots & {L^21} & L1 & 1
+	{\ov\omega\cong\lt_{n\in\N}L^n1} \ar[r] & \cdots & {L^21} & L1 & 1
 	\arrow[from=1-2, to=1-3]
 	\arrow["{{L!}}"', from=1-3, to=1-4]
 	\arrow["{{!}}"', from=1-4, to=1-5]
@@ -1150,12 +1026,12 @@ However, the dual statement fails for the initial algebra $\omega$, i.e.\ it is 
 \begin{definition}
   $\omega$ is \emph{inductive} if it is the sequential colimit above.
 \end{definition}
-The failure of inductivity of $\omega$ has been observed in various realisability models for synthetic domain theory~\citep{VANOOSTEN2000233}. As shown by \citet{fiore-plotkin:1996}, the inductivity of $\omega$ is indeed a desirable property: If it holds, then there will be a much closer correspondence between models for \emph{synthetic domain theory} and models for \emph{axiomatic domain theory}. Specifically, for a model of synthetic domain theory where $\omega$ is inductive, one can construct a corresponding model of axiomatic domain theory, where the domains are the \emph{well-complete types}\footnote{A type $X$ is well-complete if $LX$ is chain complete.}. The inductivity of $\omega$ makes $\ov\omega$ an \emph{inductive fixed point object} in the category of domains in the sense of \emph{loc.\ cit.}, which is part of their requirement for an axiomatic model of domain theory. 
+The failure of inductivity of $\omega$ has been observed in various realisability models for synthetic domain theory~\citep{VANOOSTEN2000233}. As shown by \citet{fiore-plotkin:1996}, the inductivity of $\omega$ is indeed a desirable property: If it holds, then there will be a much closer correspondence between models for \emph{synthetic domain theory} and models for \emph{axiomatic domain theory}. Specifically, for a model of synthetic domain theory where $\omega$ is inductive, one can construct a corresponding model of axiomatic domain theory, where the domains are the \emph{well-complete sets}\footnote{A set $X$ is well-complete if $LX$ is chain complete.}. The inductivity of $\omega$ makes $\ov\omega$ an \emph{inductive fixed point object} in the category of domains in the sense of \emph{loc.\ cit.}, which is part of their requirement for an axiomatic model of domain theory. 
 
-The remaining part of this section is dedicated to showing that under a suitable quasi-coherence assumption, we can indeed show that $\mbb{I}$ is chain complete (\zcref{thm:complete}) and $\omega$ is inductive (\zcref{prop:omegacolimit}). In fact, the proof of \zcref{thm:complete} is the only place we where have used the essential properties of $\sigma$-frames, and we will also indicate why it fails for bounded distributive lattices in \zcref{rem:whynotdis}.
+The remaining part of this section is dedicated to showing that under a suitable \gls{QC} assumption, we can indeed show that $\mbb{I}$ is chain complete (\zcref{thm:complete}) and $\omega$ is inductive (\zcref{prop:omegacolimit}). In fact, the proof of \zcref{thm:complete} is the only place we where have used the essential properties of $\sigma$-frames, and we will also indicate why it fails for distributive lattices in \zcref{rem:whynotdis}.
 
 \subsection{Spatiality of countably presented algebras and infinitary domain theory}
-The connection between the infinitary aspect of synthetic domain theory and quasi-coherence starts from the observation that the final coalgebra $\ov\omega$ for the functor $L$ can be described as a \emph{spectrum}:
+The connection between the infinitary aspect of synthetic domain theory and \gls{QC} starts from the observation that the final coalgebra $\ov\omega$ for the functor $L$ can be described as a \emph{spectrum}:
 
 \begin{example}[$\ov\omega$ is a spectrum]\label{exm:ovomegasober}
   As mentioned, the final coalgebra $\ov\omega$ can be characterised as the sequential limit,
@@ -1172,14 +1048,14 @@ The connection between the infinitary aspect of synthetic domain theory and quas
     \arrow["{L!}"', from=2-2, to=2-3]
     \arrow["{!}"', from=2-3, to=2-4]
   \end{tikzcd}\]
-  where under the isomorphisms, the transition map $\Delta^{n+1} \to \Delta^n$ takes the sequence $i_0 \ge \cdots \ge i_n$ to the final segment $i_1 \ge \cdots \ge i_n$. As observed by \citet[Sec.\ 5.2]{hyland_first_2006}, it also has an equivalent type-theoretic description as the object of infinite descending sequences in $\mbb{I}$,
+  where under the isomorphisms, the transition map $\Delta^{n+1} \to \Delta^n$ takes the sequence $i_0 \ge \cdots \ge i_n$ to the final segment $i_1 \ge \cdots \ge i_n$. As observed by \citet[Sec.\ 5.2]{hyland_first_2006}, it also has an equivalent set-theoretic description as the object of infinite descending sequences in $\mbb{I}$,
   \[ \ov\omega \cong \scomp{i : \N \to \mbb{I}}{\fa n\N i_n \ge i_{n+1}}\text{.} \]
   This way, we have a natural equivalence
-  \[ \ov\omega \cong \spec\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}\text{.} \]
-  Here now $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$ is a \emph{countably presented} $\mbb{I}$-algebra.
+  \[ \ov\omega \cong \spec\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}\text{.} \]
+  Here now $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$ is a \emph{countably presented} $\mbb{I}$-algebra.
 \end{example}
 
-In general, a countably presented $\mbb{I}$-algebra is of the form $\mbb{I}[\N]/\pair{s_n = t_n}_{n:\N}$ for some $\N$-indexed lists of terms $s,t \colon \N \to \mbb{I}[\N]$. In particular, all finitely presented $\mbb{I}$-algebras will also be countably presented. Motivated by the above characterisation of $\ov\omega$, we naturally consider the following stronger quasi-coherence principle:
+In general, a countably presented $\mbb{I}$-algebra is of the form $\mbb{I}[\N]/\pair{s_n = t_n}_{n\in\N}$ for some $\N$-indexed lists of terms $s,t \colon \N \to \mbb{I}[\N]$. In particular, all finitely presented $\mbb{I}$-algebras will also be countably presented. Motivated by the above characterisation of $\ov\omega$, we naturally consider the following stronger \gls{QC} principle:
 
 
 \PrintAxiomSQCC
@@ -1200,22 +1076,22 @@ In general, a countably presented $\mbb{I}$-algebra is of the form $\mbb{I}[\N]/
 Together with (\AxiomSQCC), this implies the following form of Markov's principle; a similar result is shown by \citet{cherubini2024foundation}:
 
 \begin{lemma}[\AxiomNT, \AxiomSQCC]\label{lem:markov}
-  For any $i : \ov\omega$, we have
+  For any $i \in \ov\omega$, we have
   \[ \neg\fa{n}{\N}\ist{i_n} \to \ex n\N\isf{i_n}\text{.} \]
 \end{lemma}
 \begin{proof}
-  Let $i : \ov\omega$. Note that similar to \zcref{lem:openpropsober}, the proposition $\fa n\N \ist{i_n}$ by construction is the following sober space, 
+  Let $i \in \ov\omega$. Note that similar to \zcref{lem:openpropsober}, the proposition $\fa n\N \ist{i_n}$ by construction is the following sober space, 
   \[ \spec\mbb{I}/i \cong \mbb{I}\alg(\mbb{I}/i,\mbb{I}) \cong \fa n\N \ist{i_n}\text{,} \]
-  where we have abbreviated the countably presented $\mbb{I}$-algebra $\mbb{I}/\pair{i_n=1}_{n:\N}$ as $\mbb{I}/i$. Now if we have $\neg\fa n\N \ist{i_n}$, then $\spec\mbb{I}/i \cong \emp$ which by \zcref{lem:nulls} implies $\mbb{I}/i$ is trivial. But this algebra is trivial iff $\ex n\N \isf{i_n}$.
+  where we have abbreviated the countably presented $\mbb{I}$-algebra $\mbb{I}/\pair{i_n=1}_{n\in\N}$ as $\mbb{I}/i$. Now if we have $\neg\fa n\N \ist{i_n}$, then $\spec\mbb{I}/i \cong \emp$ which by \zcref{lem:nulls} implies $\mbb{I}/i$ is trivial. But this algebra is trivial iff $\ex n\N \isf{i_n}$.
 \end{proof}
 
-Equipped with the above result, we can now proceed to study the initial algebra $\omega$ for $L$. \citet{JIBLADZE1997185} has given a beautiful formula for a type-theoretic description of $\omega$ as the following subset of $\ov\omega$, 
+Equipped with the above result, we can now proceed to study the initial algebra $\omega$ for $L$. \citet{JIBLADZE1997185} has given a beautiful formula for a set-theoretic description of $\omega$ as the following subset of $\ov\omega$, 
 \[ \omega \coloneq \scomp{i : \ov\omega}{\fa\phi{\pp} (\fa n{\N} (\ist{i_n} \to \phi) \to \phi) \to \phi}\text{.} \]
-For another proof, see e.g.\ that of \citet{VANOOSTEN2000233}. In the presence of \zcref{lem:markov}, this description can be greatly simplified:
+For another proof, see e.g.~\citet{VANOOSTEN2000233}. In the presence of \zcref{lem:markov}, this description can be greatly simplified:
 
 \begin{proposition}[\AxiomNT, \AxiomSQCC]\label{prop:omegacolimit}
   $\omega$ is equivalent to the following subset of $\ov\omega$,
-  \[ \omega \cong \scomp{i : \ov\omega}{\ex n{\N} \isf{i_n}}\text{.} \]
+  \[ \omega \cong \scomp{i \in \ov\omega}{\ex n{\N} \isf{i_n}}\text{.} \]
   In particular, $\omega$ is the colimit of the following sequence, thus is inductive:
   \[\begin{tikzcd}
     \emp & {\Delta^0} & {\Delta^1} & \cdots \\
@@ -1235,30 +1111,30 @@ For another proof, see e.g.\ that of \citet{VANOOSTEN2000233}. In the presence o
 The transition maps $\Delta^n\to \Delta^{n+1}$ above are given by appending $0$ to the end of a descending sequence. Under the identification $\Delta^{n+1}\cong T(\Delta^n)$, the corresponding map $\Delta^n\to T(\Delta^n)$ is the unit component $\eta_T\colon \Delta^n\to T(\Delta^{n})$.
 
 \begin{proof}
-  Let $i : \ov\omega$. It suffices to show that
+  Let $i \in \ov\omega$. It suffices to show that
   \[ \prth{\fa\phi{\pp} (\fa n{\N} (\ist{i_n} \to \phi) \to \phi) \to \phi} \to \ex{n}\N \isf{i_n}\text{.} \]
   Assume the premise. We can instantiate $\phi$ to $\emp$. By assumption, $\neg\fa n\N \neg\neg\ist{i_n}$, which by \zcref{cor:opendnegclose} is equivalent to $\neg\fa n\N \ist{i_n}$. Then \zcref{lem:markov} implies this is $\ex n\N \isf{i_n}$. The fact that this makes $\omega$ into the above sequential colimit follows from \citet[Cor.~1.10]{VANOOSTEN2000233}.
 \end{proof}
 
-Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sober, we can show $\mbb{I}$ is chain complete. This again crucially depends on a normal form result for a countably presented $\sigma$-frame, which generalises the finitary version for bounded distributive lattices given in \zcref{prop:simplicesasalgebra}:
+Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sober, we can show $\mbb{I}$ is chain complete. This again crucially depends on a normal form result for a countably presented $\sigma$-frame, which generalises the finitary version for distributive lattices given in \zcref{prop:simplicesasalgebra}:
 
 \begin{lemma}\label{app:normalsigma}
-  For the countably presented $\sigma$-frame $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$, an element $p$ can be uniquely written as 
-  \[ p = p_0 \vee \bigvee_{n:\N} p_{n+1} \wedge \ms{i}_n\text{,} \]
-  with $p_n \le p_{n+1}$ for all $n$. In other words, $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$ is isomorphic to the following $\sigma$-frame with the pointwise order induced by $\mbb{I}$,
+  For the countably presented $\sigma$-frame $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$, an element $p$ can be uniquely written as 
+  \[ p = p_0 \vee \bigvee_{n\in\N} p_{n+1} \wedge \ms{i}_n\text{,} \]
+  with $p_n \le p_{n+1}$ for all $n$. In other words, $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$ is isomorphic to the following $\sigma$-frame with the pointwise order induced by $\mbb{I}$,
   \[ \Delta_\infty \coloneq \scomp{i : \N \to \mbb{I}}{\fa n\N i_n \le i_{n+1}}\text{.} \]
 \end{lemma}
 \begin{proof}
-  We directly prove that $\Delta_\infty$ satisfies the universal property of the countably presented $\sigma$-frame $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$. We pick the generators in $\Delta_\infty$ as follows,
+  We directly prove that $\Delta_\infty$ satisfies the universal property of the countably presented $\sigma$-frame $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$. We pick the generators in $\Delta_\infty$ as follows,
   \[ i_n \coloneq (\underbrace{0,\cdots,0}_{n+1 \text{ times}},1,1,\cdots)\text{.} \]
-  For any $\sigma$-frame $A$ with $a_0 \ge a_1 \ge \cdots$, we define a map $f_a : \Delta_\infty \to A$ sending $j = (j^0,j^1,\cdots) : \Delta_\infty$ to
-  \[ f_a(i) \coloneq j_0 \vee \bigvee_{n:\N} j^{n+1} \wedge a_{n}\text{.} \]
-  By construction it is easy to see $f_a$ is a $\sigma$-frame morphism. Evidently for any $n : \N$, 
+  For any $\sigma$-frame $A$ with $a_0 \ge a_1 \ge \cdots$, we define a map $f_a \colon \Delta_\infty \to A$, which sends $j = (j^0,j^1,\cdots) \in \Delta_\infty$ to
+  \[ f_a(i) \coloneq j_0 \vee \bigvee_{n\in\N} j^{n+1} \wedge a_{n}\text{.} \]
+  By construction it is easy to see $f_a$ is a $\sigma$-frame morphism. Evidently for any $n\in\N$, 
   \[ f_a(i_n) = \bigvee_{m:\N} i_n^{m+1} \wedge a_m = a_n\text{.} \]
   Furthermore, for any $\sigma$-frame map $f \colon \Delta_\infty \to A$ with $f(i_n) = a_n$, we must have $f = f_a$ because any $j$ in $\Delta_\infty$ can be written as
-  \[ j = j^0 \vee \bigvee_{n:\N} j^{n+1} \wedge i_n\text{,} \]
+  \[ j = j^0 \vee \bigvee_{n\in\N} j^{n+1} \wedge i_n\text{,} \]
   which implies that
-  \[ f(j) = j^0 \vee \bigvee_{n:\N}j^{n+1} \wedge a_n = f_a(j)\text{.} \]
+  \[ f(j) = j^0 \vee \bigvee_{n\in\N}j^{n+1} \wedge a_n = f_a(j)\text{.} \]
   This completes the proof.
 \end{proof}
 
@@ -1267,20 +1143,20 @@ Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sobe
 \end{theorem}
 \begin{proof}
   Since $\ov\omega$ is now sober, we have
-  \[ \mbb{I}^{\ov\omega} \cong \mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}\text{.} \]
+  \[ \mbb{I}^{\ov\omega} \cong \mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}\text{.} \]
   On the other hand, since $\omega$ is the colimit of $\Delta^n$ and they are sober, we have
-  \[ \mbb{I}^\omega \cong \lt_{n:\N}\mbb{I}^{\Delta^n} \cong \lt_{n:\N}\mbb{I}[n]/\ms{i}_0\ge\cdots\ge \ms{i}_{n-1}\text{.} \]
-  Note that the transition maps induced by $\eta_T \colon \Delta^n \to T(\Delta^n)\cong \Delta^{n+1}$ under quasi-coherence gives us the following maps on algebras:
+  \[ \mbb{I}^\omega \cong \lt_{n\in\N}\mbb{I}^{\Delta^n} \cong \lt_{n\in\N}\mbb{I}[n]/\ms{i}_0\ge\cdots\ge \ms{i}_{n-1}\text{.} \]
+  Note that the transition maps induced by $\eta_T \colon \Delta^n \to T(\Delta^n)\cong \Delta^{n+1}$ under \gls{QC} gives us the following maps on algebras:
   \[
   \begin{tikzcd}
     \mbb{I}^{\Delta^{n+1}} \ar[r, "\mbb{I}^{\eta_T}"] & \mbb{I}^{\Delta^n} \\ 
     \mbb{I}[n\!+\!1]/\ms{i}_0 \ge \cdots \ge \ms{i}_{n} \ar[u, "\cong"] \ar[r, "\ms{i}_{n} \mapsto 0"'] & \mbb{I}[n]/\ms{i}_1 \ge \cdots \ge \ms{i}_{n-1} \ar[u, "\cong"']
   \end{tikzcd}
   \]
-  Hence, it suffices to show that $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$ is indeed the sequential limit of the above $\mbb{I}$-algebras,
+  Hence, it suffices to show that $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$ is indeed the sequential limit of the above $\mbb{I}$-algebras,
   \[\begin{tikzcd}
     \cdots & {\mbb{I}[n\!+\!1]/\ms{i}_0 \ge \cdots \ge \ms{i}_{n}} & {\mbb{I}[n]/\ms{i}_0 \ge \cdots \ge \ms{i}_{n-1}} & \cdots \\
-    & {\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}}
+    & {\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}}
     \arrow[from=1-1, to=1-2]
     \arrow["{i_{n} \mapsto 0}", from=1-2, to=1-3]
     \arrow[from=1-3, to=1-4]
@@ -1303,7 +1179,7 @@ Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sobe
     \arrow[from=2-3, to=2-4]
   \end{tikzcd}\]
   where $\pi_{n} : \Delta_{n+1} \to \Delta_{n+1}$ forgets the last entry, i.e.\ it takes $\ms{i}_0 \le \cdots \le \ms{i}_{n+1}$ to $\ms{i}_0 \le \cdots \le \ms{i}_{n}$. Hence, the sequential limit is given by
-  \[ \lt_{n:\N} \Delta_{n} \cong \Delta_\infty\text{.} \]
+  \[ \lt_{n\in\N} \Delta_{n} \cong \Delta_\infty\text{.} \]
   Now the desired result follows from \zcref{app:normalsigma}.
 \end{proof}
 
@@ -1315,19 +1191,19 @@ Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sobe
   $\mbb{I}^{\ov\omega} \cong \mbb{I}^\omega \cong \Delta_\infty$. In particular, $\omega$ is not sober.
 \end{corollary}
 \begin{proof}
-  By the above proof, we have $\mbb{I}^{\ov\omega} \cong \mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N} \cong \Delta_\infty$.
+  By the above proof, we have $\mbb{I}^{\ov\omega} \cong \mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N} \cong \Delta_\infty$.
 \end{proof}
 
-\begin{remark}[$\sigma$-frames vs.\ bounded distributive lattices]\label{rem:whynotdis}
-  Note that the inductivity of $\omega$ as shown in \zcref{prop:omegacolimit} is \emph{independent} of working with distributive lattices or $\sigma$-frames. The completeness result shown in \zcref{thm:complete} is the only one in this paper that works for $\sigma$-frames and not for bounded distributive lattices more generally. The reason is exactly because the normal form in \zcref{app:normalsigma} for the countably presented \emph{bounded distributive lattice} $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$ will \emph{not} be isomorphic to $\Delta_\infty$. More specifically, for the countably presented bounded distributive lattice $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$, since it is a sequential colimit of the following finitely presented bounded distributive lattices
+\begin{remark}[$\sigma$-frames vs.\ distributive lattices]\label{rem:whynotdis}
+  Note that the inductivity of $\omega$ as shown in \zcref{prop:omegacolimit} is \emph{independent} of working with distributive lattices or $\sigma$-frames. The completeness result shown in \zcref{thm:complete} is the only one in this paper that works for $\sigma$-frames and not for distributive lattices more generally. The reason is exactly because the normal form in \zcref{app:normalsigma} for the countably presented \emph{distributive lattice} $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$ will \emph{not} be isomorphic to $\Delta_\infty$. More specifically, for the countably presented distributive lattice $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$, since it is a sequential colimit of the following finitely presented distributive lattices
   \[ 
   \begin{tikzcd}
     \cdots \ar[r] & \mbb{I}[n]/\ms{i}_{0} \ge \cdots \ge \ms{i}_{n-1} \ar[r, hook] & \mbb{I}[n\!+\!1]/\ms{i}_0 \ge \cdots \ge \ms{i}_n \ar[r, hook] & \cdots
   \end{tikzcd}
   \]
-  and, due to the fact that the theory of bounded distributive lattices is \emph{finitary}, this sequential colimit of \emph{algebras} is computed the same as their \emph{underlying sets}. Via \zcref{prop:simplicesasalgebra}, the result can be identified as the subtype of $\Delta_\infty$,
-  \[ \Delta_\omega \coloneq \scomp{i : \Delta_\infty}{\ex n\N \ist{i_n}}\text{,} \]
-  where $\Delta_\omega \hook \Delta_\infty$ in some sense is the order-dual to the inclusion $\omega\hook\ov\omega$. The fact that we have \emph{all} infinite increasing sequences in the case for $\sigma$-frames is clearly due to the fact that we have countable disjunctions in $\sigma$-frames, as when identifying $p$ in $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n:\N}$ with $p = p_0 \vee \bigvee_{n:\N}p_{n+1}\wedge \ms{i}_n$.
+  and, due to the fact that the theory of distributive lattices is \emph{finitary}, this sequential colimit of \emph{algebras} is computed the same as their \emph{underlying sets}. Via \zcref{prop:simplicesasalgebra}, the result can be identified as the subset of $\Delta_\infty$,
+  \[ \Delta_\omega \coloneq \scomp{i \in \Delta_\infty}{\ex n\N \ist{i_n}}\text{,} \]
+  where $\Delta_\omega \hook \Delta_\infty$ in some sense is the order-dual to the inclusion $\omega\hook\ov\omega$. The fact that we have \emph{all} infinite increasing sequences in the case for $\sigma$-frames is clearly due to the fact that we have countable disjunctions in $\sigma$-frames, as when identifying $p$ in $\mbb{I}[\N]/\pair{\ms{i}_n \ge \ms{i}_{n+1}}_{n\in\N}$ with $p = p_0 \vee \bigvee_{n\in\N}p_{n+1}\wedge \ms{i}_n$.
 \end{remark}
 
 \begin{remark}[Limits of algebras induce locality for $\mbb{I}$]\label{rem:limofalgloc}
@@ -1337,7 +1213,11 @@ Using this colimit description of $\omega$ and the fact that $\ov\omega$ is sobe
 \section{Local properties for the interval}\label{sec:local}
 
 In this section we review some of the locality axioms we have introduced in \zcref{sec:locality}. As mentioned in the introduction, the observation is that even if we do not assume them to be true globally for the interval $\mbb{I}$, we can still show the maps representing the locality axiom to be \emph{left orthogonal} to $\mbb{I}$.  
-Unlike chain completeness in \zcref{thm:complete}, the local conditions in \zcref{sec:locality} are all induced by limits of \emph{f.p.} $\mbb{I}$-algebras. Thus in this section, it does not matter whether we work with bounded distributive lattices or $\sigma$-frames.
+Unlike chain completeness in \zcref{thm:complete}, the local conditions in \zcref{sec:locality} are all induced by limits of \emph{f.p.} $\mbb{I}$-algebras. Thus in this section, it does not matter whether we work with distributive lattices or $\sigma$-frames.
+
+\begin{remark}
+  Comment that though here we have formulated the results for ``sets'' to keep the foundation aligned with the remaining of this thesis, the same argument works in \gls{HoTT} for arbitrary types, thus this really has applications in synthetic higher category theory.
+\end{remark}
 
 Starting from the simplest example, let us recall the local property (\AxiomNT). In general it is \emph{not} necessarily $\emp$, if we do not assume (\AxiomNT). However, we can look at the localisation class that thinks this map is invertible. The following fact shows that, from the perspective of $\mbb{I}$, (\AxiomNT) indeed holds:
 
@@ -1359,11 +1239,11 @@ Starting from the simplest example, let us recall the local property (\AxiomNT).
 
 As another example, consider the simplicial axiom (\AxiomSL). We skip the discussion of (\AxiomL) and (\AxiomCL), because (\AxiomSL) is strictly stronger, and it has a better-known geometric meaning. Recall from \zcref{sec:linearity-and-coskeletality} that (\AxiomSL) can be represented geometrically as an embedding $\Delta^2\cup\Delta_2 \hook \mbb{I}^2$.
 
-\begin{definition}[Triangulated type]
-  A type $X$ is said to be \emph{triangulated} when it is right orthogonal to the inclusion $\Delta^2 \cup \Delta_2 \hook \mbb{I}^2$.
+\begin{definition}[Triangulated set]
+  A set $X$ is said to be \emph{triangulated} when it is right orthogonal to the inclusion $\Delta^2 \cup \Delta_2 \hook \mbb{I}^2$.
 \end{definition}
 
-Again, (\AxiomSL) holds globally iff the above embedding is an equivalence, thus every type in this case will be triangulated. When it does not hold globally, we can still show:
+Again, (\AxiomSL) holds globally iff the above embedding is an equivalence, thus every set in this case will be triangulated. When it does not hold globally, we can still show:
 
 \begin{proposition}[\AxiomSQCF]\label{specistriangulated}
   $\mbb{I}$ is triangulated.
@@ -1397,8 +1277,8 @@ Again, (\AxiomSL) holds globally iff the above embedding is an equivalence, thus
 
 Finally, we discuss the even stronger locality condition (\AxiomOneCS). As mentioned in \zcref{sec:linearity-and-coskeletality}, the additional property of (\AxiomOneCS) is characterised by the embedding $\partial\Delta_2 \hook \Delta_2$.
 
-\begin{definition}[1-coskeletal type]
-  A type $X$ is said to be \emph{1-coskeletal} when it is both triangulated and right orthogonal to the boundary inclusion $\partial\Delta_2 \hook \Delta_2$.
+\begin{definition}[1-coskeletal set]
+  A set $X$ is said to be \emph{1-coskeletal} when it is both triangulated and right orthogonal to the boundary inclusion $\partial\Delta_2 \hook \Delta_2$.
 \end{definition}
 
 \begin{proposition}[\AxiomSQCF]\label{specis1t}
@@ -1428,7 +1308,7 @@ Finally, we discuss the even stronger locality condition (\AxiomOneCS). As menti
 \end{proof}
 
 Besides the locality principles discussed in \zcref{sec:locality}, we also consider the orthogonality classes emerging from \emph{synthetic category theory}, as introduced by \citet{riehl2017type}. 
-A synthetic category will be a type that satisfies the internal orthogonality condition of being \emph{Segal complete}, \emph{Rezk complete}, and (according to some sources) \emph{simplicial}. Being simplicial is a sheaf condition that strengthens the triangulation property by stabilising the left class under pullback.
+A synthetic category will be a set that satisfies the internal orthogonality condition of being \emph{Segal complete}, \emph{Rezk complete}, and (according to some sources) \emph{simplicial}. Being simplicial is a sheaf condition that strengthens the triangulation property by stabilising the left class under pullback.
 
 We start with the Segal completeness condition. Besides the outer horn discussed in \zcref{exm:hornsober}, we can also define the inner horn $\Lambda^2_1$ as a pushout,
 \[
@@ -1438,9 +1318,9 @@ We start with the Segal completeness condition. Besides the outer horn discussed
     \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, draw=none, from=2-2, to=1-1]
   \end{tikzcd}
 \]
-As a subtype of $\Delta_2$, it can be identified as $\scomp{(i,j) : \Delta_2}{\isf{i} \vee \ist{j}}$.
+As a subset of $\Delta_2$, it can be identified as $\scomp{(i,j) \in \Delta_2}{\isf{i} \vee \ist{j}}$.
 
-\begin{definition}[Segal complete types]
+\begin{definition}[Segal complete sets]
   $X$ is called \emph{Segal complete} when it is right orthogonal to $\Lambda^2_1 \hook \Delta_2$.
 \end{definition}
 
@@ -1470,7 +1350,7 @@ As a subtype of $\Delta_2$, it can be identified as $\scomp{(i,j) : \Delta_2}{\i
   Hence, the above is again a pullback.
 \end{proof}
 
-Next we consider the Rezk completeness condition. Following \citet{buchholtz2021synthetic}, we can define the type $\mbb E$ classifying categorical equivalences as the colimit of the following diagram,
+Next we consider the Rezk completeness condition. Following \citet{buchholtz2021synthetic}, we can define the set $\mbb E$ classifying categorical equivalences as the colimit of the following diagram,
 \[
 \begin{tikzcd}
 	& \mbb{I} && \mbb{I} && \mbb{I} \\
@@ -1485,8 +1365,8 @@ Next we consider the Rezk completeness condition. Following \citet{buchholtz2021
 \]
 
 
-\begin{definition}[Rezk types]
-  We say that a type $X$ is \emph{Rezk complete} when it is right orthogonal to $\mbb E \to 1$.
+\begin{definition}[Rezk sets]
+  A set $X$ is \emph{Rezk complete} when it is right orthogonal to $\mbb E \to 1$.
 \end{definition}
 
 \begin{proposition}[\AxiomSQCP]
@@ -1505,7 +1385,7 @@ In fact, $\mbb{I}$ is not only a synthetic category but in fact a synthetic \emp
 \end{tikzcd}
 \]
 
-\begin{definition}[$\mbb{I}$-separated types]
+\begin{definition}[$\mbb{I}$-separated sets]
   $X$ is called \emph{$\mbb{I}$-separated} when it is right orthogonal to $\I_{\rightrightarrows} \to \mbb{I}$.
 \end{definition}
 
@@ -1514,7 +1394,7 @@ Equivalently, $X$ is $\mbb{I}$-separated iff $X^\mbb{I} \to X \times X$ is an em
 The notion of synthetic categories and synthetic posets are formulated as these orthogonality classes:
 
 \begin{definition}[Synthetic categories and synthetic posets]
-  A type $X$ is a \emph{synthetic category}, if it is Segal and Rezk complete. We say it is a \emph{synthetic poset}, if it is also $\mbb{I}$-separated.
+  A set $X$ is a \emph{synthetic category}, if it is Segal and Rezk complete. We say it is a \emph{synthetic poset}, if it is also $\mbb{I}$-separated.
 \end{definition}
 
 \begin{theorem}[\AxiomSQCF]\label{thm:soberposet}
@@ -1533,23 +1413,23 @@ At the end of this section, we also discuss the example of $\omega$, which as we
   The fact that $\omega\hook\ov\omega$ is an order embedding for the observational preorder follows from chain completeness of $\mbb{I}$ in \zcref{thm:complete}. The fact that the observational preorder on $\ov\omega$ coincides with its satisfaction order as a spectrum follows from \zcref{lem:specorderofsober} by the fact that it is sober under (\AxiomSQCC).
 \end{proof}
 
-Furthermore, we can show that $\omega$ also satisfies a version of the Phoa principle, i.e.\ the path space $\omega^\mbb{I}$ again classifies its pointwise order. For this we need to compute the path space $\omega^\mbb{I}$.
+Furthermore, we can show that $\omega$ also satisfies a version of the Phoa principle, i.e.\ the path space $\omega^\mbb{I}$ again classifies its pointwise order. For this we need to compute $\omega^\mbb{I}$.
 
-Recall from \zcref{prop:omegacolimit} that, under (\AxiomNT) and (\AxiomSQCC), $\omega$ is a colimit $\omega \cong \ct_{n:\N}\Delta^n$. As indicated in \zcref{rem:whynotdis}, this does not depend on working with bounded distributive lattices or $\sigma$-frames. Type-theoretically, we have also shown that $\omega$ can be realised as the following subspace of $\ov\omega$,
-\[ \omega \cong \scomp{i : \ov\omega}{\ex n\N \isf{i_n}}\text{.} \]
+Recall from \zcref{prop:omegacolimit} that, under (\AxiomNT) and (\AxiomSQCC), $\omega$ is a colimit $\omega \cong \ct_{n\in\N}\Delta^n$. As indicated in \zcref{rem:whynotdis}, this does not depend on working with distributive lattices or $\sigma$-frames. Type-theoretically, we have also shown that $\omega$ can be realised as the following subspace of $\ov\omega$,
+\[ \omega \cong \scomp{i \in \ov\omega}{\ex n\N \isf{i_n}}\text{.} \]
 This way, the inclusion $\Delta^n \hook \omega$ can be viewed as follows, 
-\[ \Delta^n \cong \scomp{i : \omega}{\isf{i_n}}\text{,} \]
+\[ \Delta^n \cong \scomp{i \in \omega}{\isf{i_n}}\text{,} \]
 which implies $\Delta^n \hook \omega$ is \emph{downward closed}. This allows us to directly compute $\omega^\mbb{I}$:
 
 \begin{proposition}[\AxiomNT, \AxiomSQCC]\label{lem:intervalcommuteomega}
-  We have a family of equivalences
-  \[ \omega^\mbb{I} \cong \big({\ct_{n:\N}\Delta^n}\big)^\mbb{I} \cong \ct_{n:\N}(\Delta^n)^\mbb{I}\text{,} \]
+  We have a family of isomorphisms
+  \[ \omega^\mbb{I} \cong \big({\ct_{n\in\N}\Delta^n}\big)^\mbb{I} \cong \ct_{n\in\N}(\Delta^n)^\mbb{I}\text{,} \]
   and similarly by replacing $\mbb{I}$ with $\mbb{I}^n$ or $\Delta^n$. In particular, $\omega^\mbb{I}$ classifies the pointwise order on $\omega$.
 \end{proposition}
 \begin{proof}
   We show the following canonical map is an equivalence,
-  \[ \ct_{n:\N}(\Delta^n)^\mbb{I} \to \big({\ct_{n:\N}\Delta^n}\big)^\mbb{I}\text{.} \]
-  It is evident this map is an embedding, hence it suffices to show it is surjective. Given $f \colon \mbb{I} \to \ct_{n:\N}\Delta^n$. By assumption, there merely exists $n:\N$ that $f(1)$ factors through $\Delta^n \hook \omega$. Now the claim is that the entire map $f$ factors through $\Delta^n$. This indeed holds, since we have shown in \zcref{speconomegaiscan} that the observational preorder on $\omega$ is pointwise. By monotonicity, for any $i:\mbb{I}$ we have $fi \obsle f1$, which implies $fi$ belongs to $\Delta^n$ as well, since $\Delta^n \hook \omega$ is a downward closed. The same holds for cubes or simplices since they all have a top element. This way, $\omega^\mbb{I}$ classifies the pointwise order on $\omega$ since all simplices $\Delta^n$ satisfy Phoa's principle as shown in \zcref{thm:phoa-spectrum}.
+  \[ \ct_{n\in\N}(\Delta^n)^\mbb{I} \to \big({\ct_{n\in\N}\Delta^n}\big)^\mbb{I}\text{.} \]
+  It is evident this map is an embedding, hence it suffices to show it is surjective. Given $f \colon \mbb{I} \to \ct_{n\in\N}\Delta^n$. By assumption, there merely exists $n\in\N$ that $f(1)$ factors through $\Delta^n \hook \omega$. Now the claim is that the entire map $f$ factors through $\Delta^n$. This indeed holds, since we have shown in \zcref{speconomegaiscan} that the observational preorder on $\omega$ is pointwise. By monotonicity, for any $i \in \mbb I$ we have $fi \obsle f1$, which implies $fi$ belongs to $\Delta^n$ as well, since $\Delta^n \hook \omega$ is a downward closed. The same holds for cubes or simplices since they all have a top element. This way, $\omega^\mbb{I}$ classifies the pointwise order on $\omega$ since all simplices $\Delta^n$ satisfy Phoa's principle as shown in \zcref{thm:phoa-spectrum}.
 \end{proof}
 
 As another consequence, we can also show the following general result establishing a large family of orthogonality conditions satisfied by $\omega$:
@@ -1559,83 +1439,50 @@ As another consequence, we can also show the following general result establishi
 \end{theorem}
 \begin{proof}
   Let $Y \cong \ct_{r}Y_r$ be a finite colimit with each $Y_r$ a simplex or a cube.
-  \[ \omega^Y \cong \lt_r\big({\ct_{n:\N}\Delta^n}\big)^{Y_r} \cong \lt_r\ct_{n:\N}(\Delta^n)^{Y_r} \cong \ct_{n:\N}\lt_r(\Delta^n)^{Y_r} \cong \ct_{n:\N}(\Delta^n)^Y \]
-  The second equivalence holds by \zcref{lem:intervalcommuteomega}; the third holds since finite limits commutes with sequential colimits. Thus, if each $\Delta^n$ is $f$-local, i.e.\ $(\Delta^n)^Y \cong (\Delta^n)^X$, then so is $\omega$.
+  \[ \omega^Y \cong \lt_r\big({\ct_{n\in\N}\Delta^n}\big)^{Y_r} \cong \lt_r\ct_{n\in\N}(\Delta^n)^{Y_r} \cong \ct_{n\in\N}\lt_r(\Delta^n)^{Y_r} \cong \ct_{n\in\N}(\Delta^n)^Y \]
+  The second isomorphism holds by \zcref{lem:intervalcommuteomega}; the third holds since finite limits commute with sequential colimits. Thus, if each $\Delta^n$ is $f$-local, then so is $\omega$.
 \end{proof}
 
 \begin{remark}[Localisation classes closed under sequential colimits]
-  Notice that in \zcref{lem:intervalcommuteomega} we do not need to use any form of choice principle to show the exponential $(-)^\mbb{I}$ commutes with the sequential colimit $\ct_{n:\N}\Delta^n$, exactly because $\Delta^n \hook \omega$ is downward closed. However, for general sequential colimits, the same proof still goes through if we assume:
-  \begin{axiom}[Choice principle for $\mbb{I}$]
-    For any type family $P$ over $\mbb{I}$, we have
-    \[ \prod_{i:\mbb{I}}\pss{P(i)} \to \big\lVert\prod_{i:\mbb{I}}P(i)\big\rVert\text{.} \]
+  Notice that in \zcref{lem:intervalcommuteomega} we do not need to use any form of choice principle to show the exponential $(-)^\mbb{I}$ commutes with the sequential colimit $\ct_{n\in\N}\Delta^n$, exactly because $\Delta^n \hook \omega$ is downward closed. However, for general sequential colimits, the same proof still goes through if we assume:
+  \begin{axiom}[Projectivity of $\mbb{I}$]
+    $\mbb I$ is a projective set.
   \end{axiom}
-  Furthermore, the same holds for cubes and simplices since the types satisfying the choice principle are closed under finite products and retracts. Assuming $\mbb{I}$ satisfies choice, following the proof of \zcref{thm:omegaortho}, one can show more generally that any orthogonality class specified by maps between finite colimits of simplices or cubes are always \emph{closed under sequential colimits}. However, not in every model of quasi-coherence $\mbb{I}$ will satisfy the above choice principle. Hence, we do not include this result in the main text, as we tend to keep our assumptions as minimalistic as possible.
+  Furthermore, the same holds for cubes and simplices since the sets satisfying the choice principle are closed under finite products and retracts. Assuming $\mbb{I}$ is projective, following the proof of \zcref{thm:omegaortho}, one can show more generally that any orthogonality class specified by maps between finite colimits of simplices or cubes are always \emph{closed under sequential colimits}. However, not in every model of \gls{QC} $\mbb{I}$ will be projective. Hence, we do not include this result in the main text, as we tend to keep our assumptions as minimalistic as possible.
 \end{remark}
 
-\begin{figure}[ht]
-  \textbf{Quasi-coherence axioms:}
-  \PrintAxiomSQCI
-  \PrintAxiomSQCID
-  \PrintAxiomSQCP
-  \PrintAxiomSQCF
-  \PrintAxiomSQCC
+% \begin{figure}[ht]
+%   \textbf{Quasi-coherence axioms:}
+%   \PrintAxiomSQCI
+%   \PrintAxiomSQCID
+%   \PrintAxiomSQCP
+%   \PrintAxiomSQCF
+%   \PrintAxiomSQCC
 
-  \medskip
-  \textbf{Locality axioms:}
-  \PrintAxiomNT
-  \PrintAxiomL
-  \PrintAxiomCL
-  \PrintAxiomSL
-  \PrintAxiomOneCS
-  \vspace{6ex}
+%   \medskip
+%   \textbf{Locality axioms:}
+%   \PrintAxiomNT
+%   \PrintAxiomL
+%   \PrintAxiomCL
+%   \PrintAxiomSL
+%   \PrintAxiomOneCS
+%   \vspace{6ex}
 
-  \caption{Summary of axioms considered in this paper. Unlike the usual axiom sets for synthetic domain theory~\citep{hyland_first_2006}, the goal of these axioms is not to modularly specify all the properties of the interval with minimal overlap but instead to identify a sequence of increasingly strong descriptions of intervals that may play a role in synthetic domain theory.}
-\end{figure}
+%   \caption{Summary of axioms considered in this paper. Unlike the usual axiom sets for synthetic domain theory~\citep{hyland_first_2006}, the goal of these axioms is not to modularly specify all the properties of the interval with minimal overlap but instead to identify a sequence of increasingly strong descriptions of intervals that may play a role in synthetic domain theory.}
+% \end{figure}
 
 \section{New models for synthetic domain theory}\label{sec:newmodelforsdt}
 
-It is now instructive to discuss models for the axioms we have used in the previous sections. For this purpose, we now work externally under the assumption that the base topos $\Set$ satisfies the axiom of choice. Our axioms for synthetic domain theory can be organised into two classes:
+It is now instructive to discuss models for the axioms we have used in the previous sections. For simplicity, we now work externally under the assumption that the base topos $\Set$ is the category of sets under (a model of) \gls{ZFC}. Our axioms for synthetic domain theory can be organised into two classes:
 
 \begin{enumerate}
-  \item The quasi-coherence principles (\AxiomSQCF), (\AxiomSQCC);
+  \item The \gls{QC} principles (\AxiomSQCF), (\AxiomSQCC);
   \item Various locality axioms discussed in \zcref{sec:locality}.
 \end{enumerate}
 
-For any Horn theory $\T$, we know from \citet{blechschmidt_general_2020,blechschmidt:2017} that the generic $\T$-model $U_\T\in\Set[\T]$ satisfies quasi-coherence for finitely presented $U_\T$-algebras, viz.\ (\AxiomSQCF). As mentioned in \zcref{subsec:qc}, the proof of quasi-coherence for finitely presented $U_\T$-algebras adapts readily to the countably presented case, provided we work with the larger site
-\[ \Set[\T]_\omega \coloneq [\mmod\T\cp,\Set]\text{,} \]
-where $\mmod\T\cp$ is the category of countably presented $\T$-models. The generic $\T$-model in $\Set[\T]_\omega$ is again defined to be the forgetful functor $\mmod\T\cp \to \Set$, and we also denote it as $U_\T$. In other words, (\AxiomSQCC) holds in the larger topos $\Set[\T]_\omega$. And in this case, we can also allow $\T$ to contain algebraic operations of countable arity. 
+By the developments in~\zcref{sec:qcforhorn}, we know that the strongest \gls{QC} principle (\AxiomSQCC) will be valid in the classifying $\omega_1$-topos of the $\omega_1$-Horn theory of $\sigma$-frames, and the various locality axioms will be valid in the corresponding subtopoi.
 
-These two topoi $\Set[\T]$ and $\Set[\T]_\omega$ are intimately related. There is a fully faithful and left exact inclusion of sites
-\[ \mmod\T\fp\op \hook \mmod\T\cp\op \]
-inducing an adjoint triple (cf.\ \citet[Thm.\ 7.20]{caramello2019denseness}),
-\[\begin{tikzcd}
-  {\Set[\T]_\omega} & {\Set[\T]}
-  \arrow[""{name=0, anchor=center, inner sep=0}, "\Gamma"{description}, from=1-1, to=1-2]
-  \arrow[""{name=1, anchor=center, inner sep=0}, "\Delta"', curve={height=18pt}, from=1-2, to=1-1]
-  \arrow[""{name=2, anchor=center, inner sep=0}, "\nabla", curve={height=-18pt}, from=1-2, to=1-1]
-  \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=2]
-  \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
-\end{tikzcd}\]
-equivalently, a \emph{local geometric morphism} $\Set[\T]_\omega \surj \Set[\T]$.
-
-More generally, it is already observed by \citet[Thm.\ 4.11]{blechschmidt_general_2020} that if we have a topology $J$ on $\mmod\T\fp\op$ where $U_\T$ is a $J$-sheaf, then (\AxiomSQCF) again holds in the sheaf subtopos $\sh(\mmod\T\fp\op,J)$. We refer to such a topology $J$ as \emph{$\T$-admissible}, or simply \emph{admissible} when no confusion could arise. 
-For instance, since $U_\T$ is representable, any subcanonical topology will in particular be admissible. In the same way we can define admissible topology $J$ for the larger presheaf topos $\mmod\T\cp\op$, which again is a topology making the generic model $U_\T$ a sheaf. In this case, the sheaf subtopos $\sh(\mmod\T\cp\op,J)$ also models (\AxiomSQCC). 
-As an example, this is the theoretical basis of the quasi-coherence principle for countably presented Boolean algebras in the topos of light condensed sets introduced by Clausen and Scholze, as shown by \citet{cherubini2024foundation}.
-
-An admissible topology $J$ on $\mmod\T\cp\op$ restricts to one on $\mmod\T\fp\op$. In this case, the adjoint triple mentioned above between the two presheaf topoi will restrict to the sheaf subtopoi,
-\[\begin{tikzcd}
-  {\sh(\mmod\T\cp\op,J)} & {\sh(\mmod\T\fp\op,J)}
-  \arrow[""{name=0, anchor=center, inner sep=0}, "\Gamma"{description}, from=1-1, to=1-2]
-  \arrow[""{name=1, anchor=center, inner sep=0}, "\Delta"', curve={height=18pt}, from=1-2, to=1-1]
-  \arrow[""{name=2, anchor=center, inner sep=0}, "\nabla", curve={height=-18pt}, from=1-2, to=1-1]
-  \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=0, to=2]
-  \arrow["\dashv"{anchor=center, rotate=-90}, draw=none, from=1, to=0]
-\end{tikzcd}\]
-which again identifies $\sh(\mmod\T\cp\op,J)$ as a local topos over $\sh(\mmod\T\fp\op,J)$. These admissible topologies on $\mmod\T\fp$ or $\mmod\T\cp$ are exactly the required data to validate various local properties of the generic model $U_\T$. 
-
-More specifically for us, let $\sFrm$ be the category of $\sigma$-frames, i.e.\ whose objects are posets with finite meets and countable joins, where binary meets distribute over countable joins. We will also use $\sFrm\cp$ to denote the full subcategory spanned by countably presented $\sigma$-frames, and $\sFrm\fp$ to denote the finitely presented ones. Since finitely presented $\sigma$-frames are simply finitely presented bounded distributive lattices, we have an isomorphism $\sFrm\fp \cong \DL\fp$.
-
-It is well-known the dual category of $\DL\fp \cong \sFrm\fp$ is the category $\Pos\fp$ of finite posets. In this case, we can also have a fairly explicit description of the larger dual category of $\sFrm\cp$. The first observation is that any countably presented $\sigma$-frame $A$ is indeed a \emph{frame}, i.e.\ it has \emph{all} joins and finite meets, which distributes with each other. This is clear for all finitely presented $\sigma$-frames, since they are simply finite bounded distributive lattices. To see this for the countable case, consider the countably generated free $\sigma$-frame $\Sigma[\N]$:
+Let $\sFrm$ be the category of $\sigma$-frames (cf.~\zcref{exa:pshsigmaframe}). It is well-known the dual category of $\DL\fp \cong \sFrm\fp$ is the category $\Pos\fp$ of finite posets. In this case, we can also have a fairly explicit description of the larger dual category of $\sFrm\cp$. The first observation is that any countably presented $\sigma$-frame $A$ is indeed a \emph{frame}, i.e.\ it has \emph{all} joins and finite meets, which distributes with each other. This is clear for all finitely presented $\sigma$-frames, since they are simply finite distributive lattices. To see this for the countable case, consider the countably generated free $\sigma$-frame $\Sigma[\N]$:
 
 \begin{lemma}\label{lem:cgfreesframe}
   We have an isomorphism of $\sigma$-frames
@@ -1648,9 +1495,9 @@ It is well-known the dual category of $\DL\fp \cong \sFrm\fp$ is the category $\
 \end{proof}
 
 \begin{corollary}\label{cor:dualsframe}
-  There is a fully faithful embedding
-  \[ \sFrm\cp \hook \Frm\text{,} \]
-  preserving all countable colimits. This is again fully faithful when composed with $\ms{pt} \colon \Frm\op \to \Topp$, where $\Topp$ is the category of topological spaces.
+  There is a fully faithful embedding that preserves all countable colimits,
+  \[ \sFrm\cp \hook \Frm\text{.} \]
+  This is also fully faithful when post composed with $\ms{pt} \colon \Frm\op \to \Topp$, where $\Topp$ is the category of topological spaces.
 \end{corollary}
 \begin{proof}
   Any countably presented $\sigma$-frame will be isomorphic to one of the form $\Sigma[\N]/R$ for some countably generated congruence $R$. By \zcref{lem:cgfreesframe}, $\Sigma[\N]$ is a frame, so is any of its quotient. By Theorem 6.2.4 of \citet{makkai1977first}, such frames are indeed \emph{spatial}, hence they fully faithfully embed into the category of topological spaces via the functor $\pt$.
@@ -1667,7 +1514,7 @@ This way, we can view $\sFrm\cp\op$ as a certain class of topological spaces. No
   Here $\pt(\Sigma[\ms{x}]) \cong \Sigma$ follows from a simple computation.
 \end{proof}
 
-This way, if we write $\wTop$ as the essential image of the fully faithful functor $\pt \colon \sFrm\cp\op \to \Topp$, its objects will all be subspaces of $G$. We would then have the following diagram,
+Write $\wTop$ as the essential image of the fully faithful functor $\pt \colon \sFrm\cp\op \to \Topp$, whose objects will all be subspaces of $G$. We would then have the following diagram,
 \[
 \begin{tikzcd}
   \sFrm\fp\op \ar[d, hook] \ar[r, "\simeq"] & \Pos\fp \ar[d, hook] \\
@@ -1684,8 +1531,8 @@ Below we discuss the corresponding admissible topologies on $\wTop$, modelling t
   To model (\AxiomNT), we would want the empty sieve on $\pt(\Sigma/0=1) \cong \emp$ to be a covering. Since $\emp$ is a strict initial object in $\wTop$, this is a subcanonical topology. Thus, this gives us a least topology $J_{\ms{NT}}$ that models (\AxiomNT), and we have
   \[ \sh(\wTop,J_{\ms{NT}}) \cong \psh(\wTop_+)\text{,} \]
   where $\wTop_+$ is the full subcategory of $\wTop$ excluding $\emp$. The induced local geometric morphism now is given by 
-  \[ \Gamma \colon \psh(\wTop_+) \surj \psh(\Pos_{\mr{f.p.,+}})\text{,} \]
-  where, again $\Pos_{\mr{f.p.,+}}$ is the full subcategory of $\Pos_{\mr{f.p.}}$ consisting of non-empty posets, and $\psh(\Pos_{\mr{f.,+}})$ is the classifying topos for bounded distributive lattices that are non-trivial.
+  \[ \Gamma \colon \psh(\wTop_+) \surj \psh(\Pos_{\mr{\omega,+}})\text{,} \]
+  where, again $\Pos_{\mr{\omega,+}}$ is the full subcategory of $\Pos_{\mr{\omega}}$ consisting of non-empty posets, and $\psh(\Pos_{\mr{\omega,+}})$ is the classifying topos for distributive lattices that are non-trivial.
 \end{example}
 
 \begin{example}[\AxiomL]
@@ -1701,11 +1548,11 @@ Below we discuss the corresponding admissible topologies on $\wTop$, modelling t
     \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, draw=none, from=2-2, to=1-1]    
   \end{tikzcd}
   \]
-  The least topology $J_{\ms L}$ is thus generated by the empty covering on $\emp$, and the covering $\set{l,r : \Sigma \to \Lambda^2_1}$. Since we have the pushout above, this topology is again subcanonical. 
+  The least topology $J_{\ms L}$ is thus generated by the empty covering on $\emp$, and the single covering family $\set{l,r \colon \Sigma \to \Lambda^2_1}$. Since we have the pushout above, this topology is again subcanonical. 
   
   In this case, it is not hard to give an explicit description of a covering family in $\Pos\fp$: a family of maps is a $\ms J_{\ms L}$-covering on $P \in \Pos\fp$ iff it contains a (finite) subfamily of \emph{upward closed subsets} $\set{P_i\subseteq P}_{i\in I}$, where $P \cong \bigcup_{i\in I}P_i$; see a similar calculation for commutative rings in \citet[VIII. 6]{maclane1992sheaves}. Following the terminology for algebraic geometry, this can be denoted as the \emph{Zariski topology}, and the local geometric morphism
   \[ \sh(\wTop,J_{\ms L}) \surj \sh(\Pos\fp,J_{\ms L}) \simeq \mb{Zar}(\mbb D)\text{,} \]
-  is over the \emph{Zariski topos} $\mb{Zar}(\mbb D)$ for bounded distributive lattices.
+  is over the \emph{Zariski topos} $\mb{Zar}(\mbb D)$ for distributive lattices.
 \end{example}
 
 \begin{example}[\AxiomSL]
@@ -1723,7 +1570,7 @@ Below we discuss the corresponding admissible topologies on $\wTop$, modelling t
     \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, draw=none, from=2-2, to=1-1]
   \end{tikzcd}
   \]
-  where $\partial : \Sigma \to \Sigma_2$ maps $\Sigma$ to the end points of $\Sigma_2$, and $l,r : \Sigma_2 \hook \Sigma^2$ is the two $\Sigma_2$-chains in $\Sigma^2$. The least topology $\ms J_{\ms{SL}}$ for the linearity axiom is thus generated by the empty covering on $\emp$, and $\set{l,r : \Sigma_2 \hook \Sigma^2}$. Similarly, given this pushout, $J_{\ms{SL}}$ will be subcanonical.
+  where $\partial \colon \Sigma \to \Sigma_2$ maps $\Sigma$ to the end points of $\Sigma_2$, and $l,r \colon \Sigma_2 \hook \Sigma^2$ is the two $\Sigma_2$-chains in $\Sigma^2$. The least topology $\ms J_{\ms{SL}}$ for the linearity axiom is thus generated by the empty covering on $\emp$, and $\set{l,r \colon \Sigma_2 \hook \Sigma^2}$. Similarly, given this pushout, $J_{\ms{SL}}$ will be subcanonical.
 
   The topos $\sh(\wTop,J_{\ms{SL}})$ is closely related to simplicial sets. This is due to Joyal's result that the category of simplicial sets is the classifying topos of strict bounded linear orders, and thus we have an equivalence 
   \[ \sh(\Pos\fp,J_{\ms{SL}}) \cong \psh(\Delta)\text{.} \]
@@ -1740,7 +1587,7 @@ Below we discuss the corresponding admissible topologies on $\wTop$, modelling t
     \arrow[two heads, from=1-2, to=2-3]
   \end{tikzcd}\]
   to be a covering, which translates to the fact that the three inclusions
-  \[ d_0,d_1,d_2 : \Sigma \hook \Sigma_2 \]
+  \[ d_0,d_1,d_2 \colon \Sigma \hook \Sigma_2 \]
   covers $\Sigma_2$. Again we have a colimit diagram as follows, 
   \[\begin{tikzcd}
     1 & 1 & 1 \\
@@ -1758,30 +1605,11 @@ Below we discuss the corresponding admissible topologies on $\wTop$, modelling t
   \end{tikzcd}\]
   which implies $J_{\ms{1cS}}$ is subcanonical.
   
-  Similar to the case of (\AxiomSL), $\sh(\wTop,J_{\ms{1cS}})$ is closely related to the topos of \emph{truncated simplicial sets} $\psh(\Delta_{\le 1})$. This is again induced by the fact that the classifying topos for 1-coskeletal bounded distributive lattices is given by 
+  Similar to the case of (\AxiomSL), $\sh(\wTop,J_{\ms{1cS}})$ is closely related to the topos of \emph{truncated simplicial sets} $\psh(\Delta_{\le 1})$. This is again induced by the fact that the classifying topos for 1-coskeletal distributive lattices is given by 
   \[ \sh(\Pos\fp,J_{\ms{1cS}}) \cong \psh(\Delta_{\le 1})\text{.} \]
   Hence, this again gives us a local geometric morphism
   \[ \sh(\wTop,J_{\ms{1cS}}) \surj \psh(\Delta_{\le 1})\text{.} \]
 \end{example}
-
-
-\section{Future directions}
-
-\subsection{Domain theory with quasi-coherence}
-
-In this paper we have explained the axioms of synthetic domain theory using the quasi-coherence principle for bounded distributive lattices and $\sigma$-frames. As we have seen from various examples (\zcref{prop:liftingofalgebra,prop:liftofsober}, \zcref{exm:2issober} etc.) the quasi-coherence principle moreover helps with the actual \emph{computation} for operations on domains. Thus, the natural step next is to further develop domain theory within this framework.
-
-% In particular, it will be extremely useful to investigate the orthogonality conditions satisfied by all spectra (sober spaces), some of which have been observed in \zcref{sec:infdomain,sec:local}. In particular, in this paper we haven't found any orthogonality condition satisfied by $\mbb{I}$ but not by general sober spaces. This allows us to conjecture that all (or at least some classes of) sober spaces will be \emph{replete}. This will be a non-trivial way of constructing new replete objects other than retracts of $\mbb{I}^X$ for some type $X$.
-
-\subsection{Relationship with Taylor's \emph{Abstract Stone Duality}}
-
-We would be remiss in failing to mention Taylor's framework of \emph{Abstract Stone Duality}~\citep{Taylor2011,TaylorP:insema,TaylorP:sobsc}, which is based on a similar duality between ``algebras'' and ``spaces''. One apparent difference in methodology is that in Taylor's case, the duality is of the form $\Sigma^{(-)} \dashv \Sigma^{(-)}$ and is moreover required to be monadic. In our setting, the spectrum of an algebra consists not in \emph{all} functions from the algebra into the dualising object but rather only the ones that preserve the structure of observational algebras—the \emph{primes} in Taylor's terminology.
-
-Our own adjunction $\opens\dashv\spec$ shall not be monadic, but a natural step toward understanding the relationship between abstract Stone duality and synthetic domain theory in the language of quasi-coherence might be to restrict $\opens\dashv\spec$ to an adjunction involving certain more well-behaved subuniverses of $\Set$. We leave this investigation for future work.
-
-\subsection{Quasi-coherence for related synthetic mathematics}
-
-Both synthetic topology~\citep{bauer2009dedekind} and synthetic computability theory~\citep{bauer_first_2006} involve similar structures as synthetic domain theory. In particular, an interval object $\mbb{I}$ consisting of a dominance seems to be crucial in all three cases. We have showcased in \zcref{sec:dominance} that quasi-coherence for a wide variety of theories will produce such a structure, and it will be interesting to see connections with quasi-coherence to these two types of synthetic mathematics as well.
 
 \subsection{Connection with existing models}\label{subsec:compare}
 
@@ -1791,18 +1619,27 @@ where $\mb P$ be the full subcategory of the category $\wCPO$ of $\omega$-cpos c
 
 Here we observe that the inclusion $\mb P \hook \wTop$ is \emph{fully faithful}, because
 \begin{align*}
-  \wCPO(G,G)
-  &\cong \Pos(P_f(\N),P(\N)) \\
-  &\cong \Pos(\N,\Pos(P_f(\N),\Sigma)) \\
-  &\cong \sFrm\cp(\Pos(P_f(\N),\Sigma),\Pos(P_f(\N),\Sigma)) \\ 
-  &\cong \wTop(G,G)
+  &\wCPO(G,G) \\
+  &\quad\cong \Pos(P_f(\N),P(\N)) \\
+  &\quad\cong \Pos(\N,\Pos(P_f(\N),\Sigma)) \\
+  &\quad\cong \sFrm\cp(\Pos(P_f(\N),\Sigma),\Pos(P_f(\N),\Sigma)) \\ 
+  &\quad\cong \wTop(G,G)
 \end{align*}
 The first isomorphism holds because $G$ is the \emph{free} $\omega$-cpo on $P_f(\N)$; the second holds by formal manipulation; the third is due to the fact that $\Pos(P_f(\N),\Sigma)$ is the free $\sigma$-frame over the discrete poset $\N$; the final one is given by the duality between countably presented $\sigma$-frames and $\wTop$. 
 
 This leads us to the question of the exact relationship between $\mc H$ and the sheaf model $\sh(\wTop,J_{\mr{can}})$ we have constructed. A detailed investigation requires us to better understand the categorical properties of $\wTop$, and we leave this for future work.
 
 
-\subsection*{Acknowledgements}
 
-We are grateful to Marcelo Fiore for alerting us to the connection between synthetic quasi-coherence and Blass's observations concerning functions on universal algebras~\citep{RN879}. We are also thankful to Jem Lord for suggestion some improvements on a lemma and a previously made conjecture.
- This work was funded by the United States Air Force Office of Scientific Research under grant FA9550-23-1-0728 (\emph{New Spaces for Denotational Semantics}; Dr.\ Tristan Nguyen, Program Manager). Views and opinions expressed are however those of the author only and do not necessarily reflect those of AFOSR.
+% \section{Future directions}
+
+% \subsection{Domain theory with QC}
+
+% In this paper we have explained the axioms of synthetic domain theory using the \gls{QC} principle for distributive lattices and $\sigma$-frames. As we have seen from various examples (\zcref{prop:liftingofalgebra,prop:liftofsober}, \zcref{exm:2issober} etc.) the \gls{QC} principle moreover helps with the actual \emph{computation} for operations on domains. Thus, the natural step next is to further develop domain theory within this framework.
+
+% \subsection{Relationship with Taylor's \emph{Abstract Stone Duality}}
+
+% We would be remiss in failing to mention Taylor's framework of \emph{Abstract Stone Duality}~\citep{Taylor2011,TaylorP:insema,TaylorP:sobsc}, which is based on a similar duality between ``algebras'' and ``spaces''. One apparent difference in methodology is that in Taylor's case, the duality is of the form $\Sigma^{(-)} \dashv \Sigma^{(-)}$ and is moreover required to be monadic. In our setting, the spectrum of an algebra consists not in \emph{all} functions from the algebra into the dualising object but rather only the ones that preserve the structure of observational algebras—the \emph{primes} in Taylor's terminology.
+
+% Our own adjunction $\opens\dashv\spec$ shall not be monadic, but a natural step toward understanding the relationship between abstract Stone duality and synthetic domain theory in the language of \gls{QC} might be to restrict $\opens\dashv\spec$ to an adjunction involving certain more well-behaved subuniverses of $\Set$. We leave this investigation for future work.
+

@@ -12,7 +12,7 @@ Though the theory of locally presentable categories is well-established, one of 
   A \emph{notion of size} $\kappa$ is a collection of sets such that:
   \begin{itemize}
     \item $\kappa$ is \emph{replete}, i.e.\ it is closed under isomorphisms of sets;
-    \item $\kappa$ contains all \emph{finite cardinals} $\mb n$ for $n\in\N$;
+    \item $\kappa$ contains all \emph{finite cardinals} $n$ for $n\in\N$;
     \item $\kappa$ is closed under \emph{dependent sums}: for any $A \in \kappa$ and a family $B \colon A \to \kappa$, the disjoint union $\sum_{a\in A}B(a)$ belongs to $\kappa$;
     \item sets in $\kappa$ are \emph{projective};
   \end{itemize}
@@ -41,16 +41,16 @@ For our purpose, we are exclusively interested in the following two notions of s
 
 \begin{example}[Finiteness as a notion of size]\label{exa:finitesize}
   We say a set $X$ is \emph{finite} if it is isomorphic to a finite cardinal,
-  \[ \ms{isFin}(X) \coloneq \ex n{\N} X \cong \mb n. \]
+  \[ \ms{isFin}(X) \coloneq \ex n{\N} X \cong n. \]
   Finite sets are \emph{decidable}, thus they are closed under identities. Finite sets are also closed under dependent sums, which can be shown by induction. By construction, finite sets are also projective. Furthermore, finite sets by definition has a classifier $\N$. Thus, finite sets form a separated and essentially small size in the sense of~\zcref{def:size}, and we denote this size as $\omega$. The full subcategory $\omega\hp\Set$ of finite sets will also be denoted as $\Fin$. 
 \end{example}
 
 \begin{example}[Countability as a notion of size]\label{exm:countablesize}
   A set $X$ is \emph{countable} if it is isomorphic to a complemented subset of the natural numbers,
-  \[ \ms{isCnt}(X) \coloneq \ex{I}{\mb 2^\N} X \cong \scomp{n\in\N}{I(n)}. \]
-  The collection of countable sets will be denoted as $\omega_1$. By construction, all countable sets are (isomorphic to) complemented subsets of $\N$, thus they are all decidable. This in particular means $\omega_1$ is closed under identities. By countable choice, $\N$ is projective, and thus by~\zcref{lem:projdecsubset} all countable sets are projective. Suppose $X$ is countable and $Y \colon X \to \omega_1$ is a countable family of countable sets. To show $\sum_{x:X}Y_x$ is countable, we may assume $X$ is isomorphic to $I$ for some complemented subset $I$ of $\N$. Then by assumption, 
-  \[ \fa{i}{I}\ex{J}{\mb 2^\N} Y_i \cong \scomp{n\in\N}{J(n)}. \] 
-  By $I$ being projective, there exists a family $J_i$ of complemented subsets of $\N$ such that $Y_i \cong J_i$. Thus, the dependent sum $\sum_{x:X}Y_x$ will be equivalent to $\sum_{i:I}J_i$, which is a complemented subset of $\N \times \N$. Via a bijection $\N \times \N \cong \N$, this shows $\sum_{x:X}Y_x$ is countable. Furthermore, again by construction $\omega_1$ has a classifier $\mb 2^\N$. This shows $\omega_1$ is also a separated essentially small size. We denote the category $\omega_1\hp\Set$ of countable sets also as $\Cnt$.
+  \[ \ms{isCnt}(X) \coloneq \ex{I}{2^\N} X \cong \scomp{n\in\N}{I(n)}. \]
+  The collection of countable sets will be denoted as $\omega_1$. By construction, all countable sets are (isomorphic to) complemented subsets of $\N$, thus they are all decidable. This in particular means $\omega_1$ is closed under identities. By countable choice, $\N$ is projective, and thus by~\zcref{lem:projdecsubset} all countable sets are projective. Suppose $X$ is countable and $Y \colon X \to \omega_1$ is a countable family of countable sets. To show $\sum_{x\in X}Y_x$ is countable, we may assume $X$ is isomorphic to $I$ for some complemented subset $I$ of $\N$. Then by assumption, 
+  \[ \fa{i}{I}\ex{J}{2^\N} Y_i \cong \scomp{n\in\N}{J(n)}. \] 
+  By $I$ being projective, there exists a family $J_i$ of complemented subsets of $\N$ such that $Y_i \cong J_i$. Thus, the dependent sum $\sum_{x\in X}Y_x$ will be equivalent to $\sum_{i\in I}J_i$, which is a complemented subset of $\N \times \N$. Via a bijection $\N \times \N \cong \N$, this shows $\sum_{x\in X}Y_x$ is countable. Furthermore, again by construction $\omega_1$ has a classifier $2^\N$. This shows $\omega_1$ is also a separated essentially small size. We denote the category $\omega_1\hp\Set$ of countable sets also as $\Cnt$.
 \end{example}
 
 \begin{remark}[Coequalisers of countable sets]\label{rem:coequalisercntandmarkov}
@@ -60,7 +60,7 @@ For our purpose, we are exclusively interested in the following two notions of s
 At the end of this section, we observe that any notion of size $\kappa$ induces a \emph{dominance} in the sense of~\citet{rosolini1986continuity}:
 
 \begin{definition}[Dominance]\label{def:dominance}
-  A dominance $\Sigma$ is a subuniverse of $\pp$ that is closed under dependent sums, i.e.\ $\mb 1\in\Sigma$, and for any $\varphi\in\Sigma$ together with a family $\psi \colon \varphi \to \Sigma$, the dependent sum $\sum_{x\in\varphi}\psi(x)$ also belongs to $\Sigma$.
+  A dominance $\Sigma$ is a subuniverse of $\pp$ that is closed under dependent sums, i.e.\ $1\in\Sigma$, and for any $\varphi\in\Sigma$ together with a family $\psi \colon \varphi \to \Sigma$, the dependent sum $\sum_{x\in\varphi}\psi(x)$ also belongs to $\Sigma$.
 \end{definition}
 
 \begin{definition}[$\kappa$-overt propositions]\label{def:kappaopen}
@@ -71,7 +71,7 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
   For any notion of size $\kappa$, $\mb{O}_\kappa$ will be a dominance closed under finite joins.
 \end{proposition}
 \begin{proof}
-  Note that $\mb 1\in\mb{O}_\kappa$. It is closed under finite joins because $\kappa$-small types are closed under finite coproduct (cf.~\zcref{rem:closurepropofkappa}). Now suppose we have $\varphi \in \mb{O}_\kappa$, and consider a family $\psi \colon \varphi \to \mb{O}_\kappa$ of $\kappa$-overt propositions indexed by $\varphi$. By definition, this means we have
+  Note that $1\in\mb{O}_\kappa$. It is closed under finite joins because $\kappa$-small types are closed under finite coproduct (cf.~\zcref{rem:closurepropofkappa}). Now suppose we have $\varphi \in \mb{O}_\kappa$, and consider a family $\psi \colon \varphi \to \mb{O}_\kappa$ of $\kappa$-overt propositions indexed by $\varphi$. By definition, this means we have
   \[ \fa{i}{\varphi}\ex{Y}{\kappa}\psi_i = \pss{Y}. \]
   To show the dependent sum $\sum_{i\in\varphi}\psi_i$ belongs to $\mb{O}_\kappa$, by assumption we may assume $\varphi$ is of the form $\pss X$ for some $X \in \kappa$. In particular, there is a surjection $q \colon X \surj \varphi$. Hence,
   \[ \fa{x}{X}\ex Y{\kappa} \psi_{qx} = \pss{Y}. \]
@@ -83,7 +83,7 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
 \begin{remark}[Relation to the dominance of semi-decidable propositions]
   It is shown by~\citet[Prop. 5.2.1]{rosolini1986continuity} (with the proof is attributed to Dana Scott) that the following subuniverse of \emph{semi-decidable propositions} is a dominance,
   \[ \Sigma_{\mr{s.d.}} \coloneq \scomp{p\in\pp}{\ex f{\N^\N} p = \ex{n}{\N}fn = 0}. \]
-  In fact, it is not hard to see that the universe $\mb O_{\omega_1}$ of $\omega_1$-overt propositions is identical to $\Sigma_{\mr{s.d.}}$. The proof in \emph{loc.\ cit.}\ also crucially relies on countable choice. In fact, the proof of~\zcref{prop:sizedominance} can be seen as a suitable generalisation of this proof that works for any notion of size. For $\omega$ we have $\mb O_\omega = \mb 2$, recovering the dominance of decidable propositions.
+  In fact, it is not hard to see that the universe $\mb O_{\omega_1}$ of $\omega_1$-overt propositions is identical to $\Sigma_{\mr{s.d.}}$. The proof in \emph{loc.\ cit.}\ also crucially relies on countable choice. In fact, the proof of~\zcref{prop:sizedominance} can be seen as a suitable generalisation of this proof that works for any notion of size. For $\omega$ we have $\mb O_\omega = 2$, recovering the dominance of decidable propositions.
 \end{remark}
 
 \section{Filtered diagrams}
@@ -91,7 +91,7 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
 In this section we fix a \emph{separated size} $\kappa$. We say a category $\mc A$ is \emph{$\kappa$-small} if its set of objects is $\kappa$-small, and for any $a,b \in \mc A$, the hom-set $\mc A(a,b)$ is $\kappa$-small. 
 
 \begin{example}[Discrete groupoids from $\kappa$-smalls sets are $\kappa$-small]\label{exa:discgroupoidkappasmall}
-  The requirement for $\kappa$ to be separated is to make $\kappa$-small sets also $\kappa$-small discrete groupoids. For any $X\in\kappa$, the hom-sets in the associated discrete groupoid is given by $X(x,y) \cong (x = y)$ for any $x,y\in X$. By assumption the identity proposition $x = y$ is $\kappa$-small since $\kappa$ is separated, hence $X$ as a discrete groupoid will be a $\kappa$-small category.
+  The requirement for $\kappa$ to be separated is to make $\kappa$-small sets also $\kappa$-small discrete groupoids. For any $X\in\kappa$, the hom-sets in the associated discrete groupoid is given by $X(x,y) \coloneq (x = y)$ for any $x,y\in X$. By assumption the identity proposition $x = y$ is $\kappa$-small since $\kappa$ is separated, hence $X$ as a discrete groupoid will be a $\kappa$-small category.
 \end{example}
 
 \begin{definition}[$\kappa$-(co)completeness]

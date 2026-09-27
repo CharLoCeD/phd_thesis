@@ -26,15 +26,41 @@ Another more extreme case is when the geometric theory in hand has a very strong
 
 However, the more difficult question is how to axiomatise the \emph{universe}. A step towards this is explained in~\citet{JazMyers_Liberating}. As for applications, for instance all the elementary axioms in~\citet{orton_axioms_2018} are consequence of \gls{QC} of a suitable algebraic theory (say of \emph{connection algebra}); while the last axiom states that the universe is somehow cofibrantly generated from the algebraic data of the interval. This would indeed provide some insight on how to obtain a general axiomatisation of the universe.
 
-\section{Intuition of quasi-coherence}
+\section{Quasi-coherence as an internal definability result}
 
-Explain that, from a logical perspective, \gls{QC} is a definability result, i.e. maps between objects in the site are definable from the site. Also include the external characterisation of the subobject classifier in a coherent topos and indicate how an axiomatisation for the universe of propositions might look like for a coherent theory.
+Explain that, from a logical perspective, \gls{QC} is a definability result, i.e. maps between objects in the site are definable from the site. For this, first explain the result by~\citet{RN879}, which states that for a finitary Horn theory $\T$, functions on the generic model $V_\T$ in the classifying topos $\Set[\T]$ are all internally definable by terms,
+\[ V_\T[\ms x] \cong V_{\T}^{V_\T}. \]
 
-Also explain that, from a categorical or geometrical perspective, \gls{QC} (at least for finitary theories) is nothing but the fibred Yoneda.
+Recently, the work of Blass has been greatly generalised by Blechschmidt in his PhD thesis~\citep{blechschmidt:2017} (also see the unpublished note~\citep{blechschmidt_general_2020} by the same author), which identifies a stronger property satisfied by the generic model $V_\T$ in $\Set[\T]$, termed \emph{(synthetic) quasi-coherence (\gls{QC})}. The terminology is motivated by its application in algebraic geometry.
+
+The main algebraic objects of study within the classifying topos $\Set[\T]$ will be the $V_\T$-algebras, i.e.\ $\T$-models $A$ equipped with a homomorphism $V_\T\to A$. Of course, the identity homomorphism exhibits $V_\T$ as a $V_\T$-algebra, and given any object $X$, we may define \[\opens X\coloneq V_\T^X\] to be the $X$-fold product $\prod_{x\in X}V_\T$ of $V_\T$-algebras. 
+
+Conversely, given any $V_\T$-algebra $A$ we may define its \emph{spectrum} to be the type of $V_\T$-algebra homomorphisms 
+\[ \spec A \coloneq V_\T\alg(A,V_\T)\text{.}\]
+
+The principle of \gls{QC} in $\Set[\T]$ proposed by \citet{blechschmidt:2017} is, then, that for any \emph{finitely presented} $V_\T$-algebra $A$, the canonical homomorphism
+\[
+  A\to \opens\spec A
+\]
+Here mention that this can in fact be viewed as an internal duality result (cf.~\zcref{rem:ageneralduality}), and say something more here perhaps.
+
+The appearance of finite presentation in the formulation of \gls{QC} above is perhaps misleading. Following the development of \citet{blechschmidt:2017,blechschmidt_general_2020}, it is at least conceivable that \gls{QC} with respect to finitely presented algebras can be generalised to larger cardinality, if we enlarge the site of the classifying topos $\Set[\T]$. For instance, one can consider
+\[ \Set[\T_{\omega_1}] \coloneq [\mmod\T\cp,\Set]\text{,} \]
+where $\mmod\T\cp$ denotes the category of \emph{countably presented} $\T$-models. In this case, \gls{QC} will hold also with respect to \emph{countably presented} $V_\T$-algebras. This is the theoretical basis in a recent approach for synthetic topology suggested by \citet{cherubini2024foundation}, who consider a variation on the quasi-coherence principle for \emph{countably} presented Boolean algebras. 
+
+Horn theories $\T$ whose operations have \emph{countable} arity can also be considered in this case, so long as the base topos $\Set$ satisfies countable choice. These examples will not fit directly into the discipline of classifying toposes because geometric theories cannot have infinitary operations; however, we will discuss a notion of \emph{$\kappa$-topos} for a size $\kappa$, such that there will be a \emph{classifying $\kappa$-topos} for such theories (cf.~\zcref{sec:classifyingtopforhorn}).
+
+Also include the external characterisation of the subobject classifier in a coherent topos and indicate how an axiomatisation for the universe of propositions might look like for a coherent theory. Also explain that, from a categorical or geometrical perspective, \gls{QC} (at least for finitary theories) is related to fibred Yoneda.
+
+Explain that, at the end of the day, \gls{QC} says the syntactic category of an internal theory fully faithful embeds into the internal category of sets of the classifying topos, via evaluating at the identity on the generic model. Hence, how powerful or useful the \gls{QC} principle is depends a lot on how effective we can compute the syntactic category. Then naturally leads to~\zcref{sec:logicandmath}.
 
 \section{On the connection of synthetic mathematics and logical theories}\label{sec:logicandmath}
 
-Here explain that, beyond the technical development, the more important insight of this thesis is that there is a deeper connection between a particular style of synthetic mathematics for some field, and an algebraic/logical structure behind. This differs a lot from previous styles of synthetic mathematics based on realisability models, and is a new way of doing synthetic mathematics that may provide new insights.
+Here explain that, beyond the technical development, the more important insight of this thesis is that there is a deeper connection between a particular style of synthetic mathematics for some field, and an algebraic/logical structure behind. This differs a lot from previous styles of synthetic mathematics based on realisability models, and is a new way of doing synthetic mathematics that may provide new insights. 
+
+Explain that for algebraic/Horn theories, the structure of the logical theory is equivalent to how \emph{finite/$\kappa$-presented algebras} are computed. The concrete computation of such algebras then connects to the structure of the resulting classifying topos, thus connecting to synthetic mathematics.
+
+For coherent theories, various classical techniques like \emph{quantifier elimination} allows us to compute the resulting syntactic category, and thus leading to structures in the classifying topos.
 
 And one of the main contributions of this thesis is to exemplify this claim by supplying many (surprising) examples. In particular, the seemingly different structures of domain theory and distributive lattices and $\sigma$-frames (cf.~\zcref{ch:domain}), of computability theory and arithmetic (cf.~\zcref{ch:coharith}), and of probability theory and atomless Boolean algebras (cf.~\zcref{ch:BAandprobability}), are intimately tied together. The classifying topoi of the latter theories in all cases provide \emph{models} for the synthetic development of the former field of mathematics, and \gls{QC} introduces new techniques in reasoning about the synthetic mathematics happening this way.
 
@@ -74,7 +100,7 @@ In addition to the usual constructive internal language of topoi, where every qu
 
 One reason we need a small dose of unbounded quantification in our development is to formulate constructively e.g.\ the notion of \emph{internal projectivity} in a topos. We thus also take the opportunity to mention that, throughout this document we will assume that \emph{countable choice} holds, i.e.\ the natural numbers object $\N$ is projective in the base category $\Set$ of sets. In many stream of constructive mathematics this is indeed considered as a valid principle, though its validity is also often debated in the literature; we refer the interested reader to the chapter by~\citet{richman_countable}. 
 
-In $\Set$ there is also a universe of \emph{propositions}, which we denote as $\pp$. We will identify a proposition with its \emph{extension}, viz.\ as a subset of the terminal set $\mb 1$. We do assume $\pp$ is \emph{impredicative}, in the sense that quantifying over all sets still produces a proposition in the universe $\pp$. Internally in an arbitrary topos, this form of impredicativity is indeed supported by the stack semantics. Similar to the case of $\Set$, when we work within the internal language of a topos, we will often write the universe of propositions as $\Omega$, which is the standard notation for the subobject classifier in a topos.
+In $\Set$ there is also a universe of \emph{propositions}, which we denote as $\pp$. We will identify a proposition with its \emph{extension}, viz.\ as a subset of the terminal set $1$. We do assume $\pp$ is \emph{impredicative}, in the sense that quantifying over all sets still produces a proposition in the universe $\pp$. Internally in an arbitrary topos, this form of impredicativity is indeed supported by the stack semantics. Similar to the case of $\Set$, when we work within the internal language of a topos, we will often write the universe of propositions as $\Omega$, which is the standard notation for the subobject classifier in a topos.
 
 Since we work in general in a constructive environment, propositions satisfying certain classical properties deserve additional attention:
 
@@ -83,7 +109,7 @@ Since we work in general in a constructive environment, propositions satisfying 
 \end{definition}
 
 \begin{remark}[The subuniverse of decidable and classical propositions]
-  Note that the set of decidable propositions is given by $\mb 2 = \set{\mb 0,\mb 1}$. We also denote the set of classical propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $\mb 2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
+  Note that the set of decidable propositions is given by $2 = \set{0,1}$. We also denote the set of classical propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
 \end{remark}
 
 \begin{definition}[Decidable and classical sets]\label{def:decidableset}
@@ -99,7 +125,7 @@ Since we work in general in a constructive environment, propositions satisfying 
 
 We will use fonts $\ms x,\ms y,\ms z,\cdots$ to denote \emph{formal variables}.
 
-For any $n\in\N$, we use $\mb n$ to denote the finite cardinal containing exactly $n$ elements. In particular, $\mb 0$ and $\mb 1$ will be identified with the proposition \emph{falsum} and \emph{verum}, respectively.
+For any $n\in\N$, we also use $n$ to denote the finite cardinal containing exactly $n$ elements. In particular, $0$ and $1$ will be identified with the proposition \emph{falsum} and \emph{verum}, respectively.
 
 For any set $X$, we write $\pss{X}$ for the proposition that $X$ is inhabited, viz.\ $\ex{x}{X}\top$.
 
