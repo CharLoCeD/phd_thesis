@@ -1,2 +1,583 @@
+\NewDocumentCommand\AxiomSQCA{}{SQCA}
+\NewDocumentCommand\PrintAxiomSQCA{}{
+  \begin{axiom}[\AxiomSQCA]
+    The evaluation functor $\ass- \colon \mb C[\NA] \to \mb S$ is \emph{fully faithful}. We say a set is \emph{definable} when it belongs to the essential image of this embedding.
+  \end{axiom}
+}
+
+\NewDocumentCommand\AxiomLC{}{LC}
+\NewDocumentCommand\PrintAxiomLC{}{
+  \begin{axiom}[\AxiomLC]
+    For any $\varphi\in\mb C[\NA]$, let $\ms{PU}(\varphi)$ denote the set of partition of unity, whose elements are finitely indexed families of formulas $\set{\psi_i \hook\varphi}_{i\in m}$ such that $\varphi = \bigvee_{i\in m}\psi_i$. Then for any family $P \colon \ass{\varphi} \to \mb S$, we have
+    \[ \prod_{x\in\ass{\varphi}}\pss{P(x)} \to \ex{\set{\psi_i}_{i\in m}}{\ms{PU}(\varphi)}\prod_{i\in m,x\in\ass{\psi_i}}P(x_i) \]
+  \end{axiom}
+}
+
 \chapter{Coherent arithmetic and synthetic computability}\label{ch:coharith}
+
+Explain the relation between computability and arithmetic, and the main idea that if one replace ``computability'' in the former by ``definability'' in the latter, one get a resulting universe of discourse that have strikingly parallel structures. In particular, as an example we show that for the coherent theory of arithmetic $\A$ defined in~\citet{ye_categorical_2026}, its classifying topos $\Set[\A]$ is very closed to a model of \emph{synthetic computability} in the sense of~\citet{bauer_first_2006}. For instance, $\Set[\A]$ satisfies a form of \emph{Church's thesis}, and has a dominance which is a Lawvere's fixed-point object. In fact, this is the first known example of a sheaf topos having a non-trivial Lawvere's fixed-point object (cf.~\citet{bauer2026laugh}).
+
+We want to make the case that there is indeed a deep connection between the structure of arithmetic and that of computability. Perhaps here we need to cite more references on why incompleteness leads to the beginning of computability theory.
+
+\section{Coherent arithmetic}
+
+Following~\citet{ye_categorical_2026}, here we present the \emph{coherent theory of arithmetic} $\A$. We first use mutual recursion to define a set \emph{PrimRec} of function descriptions of primitive recursive functions, together with an arity function $\mr{ar} \colon \textit{PrimRec} \to \N$, and a denotational semantics $\mathrm{ev}$, sending each function description to the function it denotes:
+
+\begin{definition}[Function description]\label{def:funcdesc}
+  The set \emph{PrimRec} of primitive recursive function descriptions, an arity function $\mr{ar} \colon \textit{PrimRec} \to \N$, and its denotational semantics $\mr{ev}$ are given mutually recursively as follows:
+  \begin{itemize}
+  \item $\mb z,\mb s$ and $\pi_n^k$ for all $1 \le k \le n$ belong to \emph{PrimRec}, with their arity being $1,1$ and $n$, respectively, and
+    \[ \mathrm{ev}(\mb z)(x) = 0, \quad \mathrm{ev}(\mb s)(x) = x+1, \quad \mathrm{ev}(\pi_n^k)(x_1,\cdots,x_n) = x_k. \]
+  \item If $\mb h$ and $\mb g_1,\cdots,\mb g_n$ are in \emph{PrimRec}, with
+    \[ \mr{ar}(\mb h) = n,\ \mathrm{ev}(\mb h) = h, \quad \forall i \le n.\ \mr{ar}(\mb g_i) = m,\ \mathrm{ev}(\mb g_i) = g_i, \]
+    then $\mb{Cn}[\mb h,\mb g_1,\cdots,\mb g_n] \in \textit{PrimRec}$, with $\mr{ar}(\mb{Cn}[\mb h,\mb g_1,\cdots,\mb g_n]) = m$, and its evaluation $f = \ev(\mb{Cn}[\mb h,\mb g_1,\cdots,\mb g_n])$ is defined by composition
+    \begin{align*}
+      f(x_1,\cdots,x_m) = h(g_1(x_1,\cdots,x_m),\cdots,g_n(x_1,\cdots,x_m)). 
+    \end{align*}
+  \item If $\mb g$ and $\mb h$ are in \emph{PrimRec}, with
+    \[ \mr{ar}(\mb g) = n,\ \mathrm{ev}(\mb g) = g, \quad \mr{ar}(\mb h) = n+2,\ \mathrm{ev}(\mb h) = h, \]
+    then $\mb{Pr}[\mb g,\mb h]\in$ \emph{PrimRec}, with $\mr{ar}(\mb{Pr}[\mb g,\mb h]) = n+1$, and $f = \ev(\mb{Pr}[\mb g,\mb h])$ is defined by primitive recursion
+    \begin{align*}
+      f(x_1,\cdots,x_n,y) =
+      \begin{cases}
+        g(x_1,\cdots,x_n) & y = 0 \\
+        h(x_1,\cdots,x_n,z,f(x_1,\cdots,x_n,z)) & y = z + 1
+      \end{cases}
+    \end{align*}
+  \end{itemize}
+\end{definition}
+
+For simplicity, we then add all the elements in \emph{PrimRec} as function symbols into our theory $\A$, together with their defining axioms:
+
+\begin{definition}[Coherent arithmetic $\A$]\label{def:coharith}
+  The theory of coherent arithmetic $\A$ has a constant $\mb 0$, a set \emph{PrimRec} of function symbols with their arity specified by $\mr{ar}$, and a binary predicate $<$ for the ``less than'' relation. $\A$ contains the following axioms:
+  \begin{itemize}
+  \item For $\mb z$ and $\pi_n^k$ for any $1 \le k \le n$, we have
+    \[ \top \vdash_{\ms x} \mb z\ms x = \mb 0, \quad \top \vdash_{\ms x_1,\cdots,\ms x_n} \pi_n^k(\ms x_1,\cdots,\ms x_n) = \ms x_k. \]
+  \item For $\mb s$ we have
+    \[ \mb s\ms x = \mb 0 \vdash_{\ms x} \bot, \quad \mb s\ms x = \mb s\ms y \vdash_{\ms x,\ms y} \ms x = \ms y. \]
+  \item If $\mb f$ is of the form $\mb{Cn}[\mb h,\mb g_1,\cdots,\mb g_n]$, then we have
+    \[ \top \vdash_{\ov{\ms x}} \mb f(\ov{\ms x}) = \mb h(\mb g_1(\ov{\ms x}),\cdots,\mb g_n(\ov{\ms x})). \]
+  \item If $\mb f$ is of the form $\mb{Pr}[\mb g,\mb h]$, then we have
+    \[ \top \vdash_{\ov{\ms x}} \mb f(\ov{\ms x},\mb 0) = \mb g(\ov{\ms x}), \quad \top \vdash_{\ov{\ms x},\ms y} \mb f(\ov{\ms x},\mb s\ms y) = \mb h(\ov{\ms x},\ms y,\mb f(\ov{\ms x},\ms y)). \]
+  \item For the binary predicate $<$, we have
+    \[ \ms x < \ms y \dashv\vdash_{\ms x,\ms y} \exists \ms z.\,\ms x + \mb s\ms z = \ms y, \]
+    where $+$ is the function symbol in \emph{PrimRec} corresponding to the usual primitive recursive definition of addition.
+  \end{itemize}
+  Besides the usual logical connectives and their axioms of coherent logic, we further equip $\A$ with the following additional structures:
+  \begin{itemize}
+  \item \emph{Bounded universal quantification}: for any $\A$-formula $\varphi(\ov{\ms x})$, $\buq z{t(\ov{\ms y})}\varphi$ is also an $\A$-formula for any $\A$-term $t$ that does not contain $\ms z$, with the following double rule:
+    \[
+      \begin{prooftree}
+        \hypo{\psi(\ov{\ms x},\ov{\ms y}) \vdash_{\ov{\ms x},\ov{\ms y}} \buq z{t}\varphi(\ov{\ms x},\ov{\ms y},\ms z)}
+        \infer[double]1{\psi(\ov{\ms x},\ov{\ms y}) \wedge \ms z < t \vdash_{\ov{\ms x},\ov{\ms y},\ms z} \varphi(\ov{\ms x},\ov{\ms y},\ms z)}
+      \end{prooftree}
+    \]
+    Note the context specifies $z$ must not occur in $\psi$ as a free variable.
+  \item \emph{Induction rule}: $\A$ has a right induction rule
+    \[
+      \begin{prooftree}
+        \hypo{\psi(\ov{\ms x}) \vdash_{\ov{\ms x}} \varphi(\ov{\ms x},\mb 0)}
+        \hypo{\psi(\ov{\ms x}) \wedge \varphi(\ov{\ms x},\ms y) \vdash_{\ov{\ms x},\ms y} \varphi(\ov{\ms x},\mb s\ms y)}
+        \infer 2[(IndR)]{\psi(\ov{\ms x}) \vdash_{\ov{\ms x},\ms y} \varphi(\ov{\ms x},\ms y)}
+      \end{prooftree}
+    \]
+  \end{itemize}
+\end{definition}
+
+Instead of recalling in detail the results in~\citet{ye_categorical_2026} about the coherent arithmetic $\A$, here we mention some of the crucial points.
+
+\begin{remark}[$\A$ is not a coherent theory \emph{a priori}]
+  From the above construction, $\A$ fails to be coherent: its syntax allows for a new constructor of formulas by bounded universal quantification, and it extends coherent logic by a new induction \emph{rule}. Formulas in $\A$ more precisely should be referred to as \emph{$\Sigma_1$-formulas}, rather than coherent formulas. However, adding these additional logical apparatus to the coherent theory $\A$ is justified by the semantic fact that any coherent category with a \emph{parametrised natural numbers object (\gls{PNNO})} indeed admits an interpretation of $\A$ and these structures are also \emph{preserved} by coherent functors preserving the \gls{PNNO} (cf.~\citet[\S 3]{ye_categorical_2026}).
+\end{remark}
+
+\begin{remark}[$\A$ is a coherent theory \emph{after all}]\label{rem:coherentT}
+  From another perspective, $\A$ can in fact be presented as an \emph{honest} coherent theory (cf.~\citet[Prop.~3]{ye_categorical_2026}). The crucial point here is that every $\Sigma_1$-formula, modulo $\A$, will be equivalent to a coherent formula. In particular, the application of bounded universal quantification to coherent formulas is indeed \emph{coherently definable}. Furthermore, instead of adding the induction rule, we can axiomatise $\A$ by the set of coherent sequents which are provable with the induction rule. This way, we get an equivalent coherent axiomatisation of $\A$. The reason that we favour our construction of $\A$ is for clarity and simplicity. 
+\end{remark}
+
+\begin{remark}[A normal form result for formulas in coherent arithmetic]\label{rem:normalformincoharith}
+  In fact, the proof of \citet[Prop.~3]{ye_categorical_2026} establishes a normal form theorem for formulas in $\A$: every formula $\varphi(\ov{\ms x})$ is equivalent to one of the form $\exists\ms y.\,\psi(\ov{\ms x},\ms y)$, where $\psi(\ov{\ms x},\ms y)$ is $\Delta_0$. A formula is $\Delta_0$ if all the appeared quantifiers are \emph{bounded} (cf.~\citet[Thm.~I.1.61]{Hájek_Pudlák_2017}); these formulas are in particular \emph{complemented} in the coherent arithmetic $\A$ (cf.~\citet[\S 3.4]{ye_categorical_2026}).
+\end{remark}
+
+\begin{remark}[Using fewer function symbols is possible]
+  The crucial step in showing all $\Sigma_1$-formulas with bounded universal quantifiers are provably equivalent to coherent formulas is to explicitly compute them by primitive recursive functions (cf.~\citet[\S 3]{ye_categorical_2026}), and thus for simplicity we have chosen to put all primitive recursive functions into the language. This is not necessary, since from the work of~\citet{godel_uber_1931} we know one can already \emph{define} all primitive recursive functions from successor, addition, and multiplication, with $\Sigma_1$-induction. However, this route requires a prior development on coding of functions, which are not immediately relevant to our purpose.
+\end{remark}
+
+\begin{remark}[A classical presentation of $\A$]\label{rem:classicalpresentationofcoharith}
+  \emph{A posteriori}, by~\citet[Cor.~5]{ye_categorical_2026}, $\A$ can also be equivalently presented as a \emph{fragment} of the well-studied classical arithmetic theory $I\Sigma_1$, which is the classical theory of arithmetic containing all Peano axioms but with the induction scheme restricted to $\Sigma_1$-formulas (cf.~\citet[\S I.1.(c)]{Hájek_Pudlák_2017}). To be precise, formulas in $\A$ are precisely the $\Sigma_1$-formulas, and provability of a sequent $\varphi\vdash_{\ov{\ms x}}\psi$ in $\A$ coincides with the provability of $\forall{\ov{\ms x}}.\, \varphi \to \psi$ in $I\Sigma_1$. This essentially follows from the fact that classical logic is \emph{conservative} over provability of sequents between $\Sigma_1$-formulas in $I\Sigma_1$ (cf.~\citet[\S 6]{ye_categorical_2026}), 
+\end{remark}
+
+\begin{remark}[A universal characterisation of $\A$]
+  The various descriptions of $\A$ above are completely syntactic. However, one of the main result of~\citet{ye_categorical_2026} is that $\A$ can also be characterised by a \emph{universal property}: the syntactic category $\mb C[\A]$ is the \emph{initial} (positive) coherent category with a \gls{PNNO}. Thus, the syntactic pretopos $\mb P[\A]$ will also be the initial pretopos with a \gls{PNNO}, since it is well-known that exact completions preserve \gls{PNNO}. In fact, similar characterisations would also be valid for the theory of Peano arithmetic $\mbb{PA}$ (resp.\ Heyting arithmetic $\mbb{HA}$), whose syntactic category presents the initial Boolean (resp.\ Heyting) category with a \gls{PNNO}.
+\end{remark}
+
+
+\section{The axiomatisation of the classifying topos of coherent arithmetic}
+
+Let $\Set[\A] \simeq \sh(\mb C[\A],J_{\mr{coh}})$ be the classifying topos of coherent arithmetic $\A$. Internally in $\Set[\A]$, there is a generic $\A$-model $\Nb$, which is the representable object $\yon_{\top(\ms x)}$ on the trivial formula $\top(\ms x)$ within the context of a single free variable in $\mb C[\A]$. As for before, we will write the internal category of sets in $\Set[\A]$ as $\mb S$.
+
+In $\mb S$ there is also the natural numbers object $\N$. We emphasis here that $\Nb$ and $\N$ are \emph{not} isomorphic. Since $\N \cong \coprod_{n\in\N}1$ in $\Set[\A]$, by taking the closed term 
+\[ \mb n \coloneq \underbrace{\mb s \cdots \mb s}_{n \text{ times}}(\mb 0) \]
+for each $n\in\N$, we indeed have an embedding $\N \hook \Nb$; the fact that this is an embedding is due to the fact that $\mb n \neq \mb m$, viz.\ the sequent $\mb n = \mb m \vdash \bot$, is provable in $\A$ for $n\neq m$. 
+
+\begin{proposition}\label{prop:genericNbisnotN}
+  The embedding $\N \hook \Nb$ is not an isomorphism in $\mb S$.
+\end{proposition}
+\begin{proof}
+  Note that $\Nb \cong \yon_{\top(\ms x)}$ is representable, thus we know that 
+  \[ \Set[\A](\Nb,\Nb) \cong \mb C[\A](\top(\ms x),\top(\ms x)), \]
+  where by construction morphisms in $\mb C[\A]$ are provably functional formulas in $\A$ up to provable equivalence (cf.~\zcref{sec:cohtheory}), thus are externally \emph{enumerable} by $\N$. On the other hand, since $\N \cong \coprod_{n\in\N}1$ is an infinite coproduct in $\Set[\A]$, we have 
+  \[ \Set[\A](\N,\N) \cong \prod_{n\in\N}\Gamma\N. \]
+  Since there is evidently an embedding $\N \hook \Gamma\N$, there is an embedding from the function space $\N^\N$ into the endomorphism monoid of $\N$ in $\Set[\A]$,
+  \[ \N^\N \cong \prod_{n\in\N}\N \hook \prod_{n\in\N}\Gamma\N \cong \Set[\A](\N,\N). \]
+  Now by the Cantor diagonal argument, there cannot be an isomorphism from an enumerable set to a set containing $\N^\N$, hence $\Nb$ and $\N$ cannot be isomorphic internally in $\Set[\A]$. 
+\end{proof}
+
+\begin{remark}
+  From this perspective, internally in $\Set[\A]$ one can see clearly the difference between a quantification in the theory $\A$, which corresponds in $\Set[\A]$ via the interpretation functor $\ass-$ to quantifying over elements in $\Nb$, and the quantification over the actual natural numbers $\N$ in $\Set[\A]$. We will come back to this when we discuss formal provability (cf.~\zcref{rem:provabilityandformalprovability}).
+\end{remark}
+
+We will also use $\NA$ to denote the diagram theory over $\Nb$ as in~\zcref{def:theoryofdiagram}. Let us write $\mb C[\NA]$ as the syntactic category of the internal coherent theory $\NA$. The corresponding \gls{QC} principle is then as follows:
+
+\PrintAxiomSQCA
+
+\begin{example}[Definable sets]\label{exa:definablesetsinA}
+  Note from~\zcref{def:theoryofdiagram}, a formula $\varphi(\ov{\ms x})$ in $\NA$ is simply a formula in $\A$ with possibly constants from $\Nb$. In this case, $\ass{\varphi(\ov{\ms x})}$ is the following set,
+  \[ \ass{\varphi(\ov{\ms x})} = \scomp{\ov{x}\in\Nb}{\Nb \models \varphi(\ov x)}. \]
+  As formulas in $\NA$ are by definition $\Sigma_1$-formulas, this means definable sets in $\mb S$ are simply $\Sigma_1$-definable subsets of powers of $\Nb$. More explicitly, it is the smallest collection of sets in $\mb S$ satisfying the following conditions:
+  \begin{itemize}
+    \item for any primitive recursive function description $\mb f \in \emph{PrimRec}$ with arity $n+m$ and any $\ov a \in \Nb^n$, the (restricted) graph $\scomp{\ov x\in\Nb^m}{\mb f(\ov a,\ov x) = \mb 0}$ is definable,
+    \item definable sets are closed under finite intersections and finite unions;
+    \item definable sets are closed under projections, i.e.\ if $S(\ov x,y) \subseteq \Nb^{n+1}$ is definable, then $\ex y{\Nb} S \subseteq \Nb^n$ is also definable.
+  \end{itemize}
+  One can also allow closure under bounded universal quantifications, but as mentioned in~\zcref{rem:coherentT} that every $\Sigma_1$-formula is provably equivalent in $\A$ to a coherent formula, this means every $\Sigma_1$-definable set in $\Nb$ is also coherently definable, since $\Nb$ as the generic model its validity coincides with provability in $\A$. Hence, this does not add new definable sets.
+\end{example}
+
+\begin{example}[Finite sets are definable]\label{exa:finitesetsdefinable}
+  We mention here that finite sets are definable. For any $n\in\N$, consider the following coherent formula $\varphi_n(\ms x)$,
+  \[ \varphi_n(\ms x) \coloneq \bigvee_{i\in n} \ms x = \mb i, \]
+  where recall that $\mb i$ denotes the closed term corresponding to the natural number $i$ in $\Nb$. The interpretation of $\varphi_n$ is exactly the finite set $n = \set{0,1,\cdots,n-1}$.
+\end{example}
+
+\begin{remark}[Syntactic category v.s.\ the syntactic pretopos]
+  Note that in our formulation of (\AxiomSQCA), we have used the syntactic category $\mb C[\NA]$ instead of its pretopos completion $\mb P[\NA]$. Though the latter provides a stronger \gls{QC} principle, for our purpose the former suffices. Furthermore, there is a very concrete syntactic description of the category $\mb C[\NA]$ (cf.~\zcref{sec:cohtheory}), which is also favourable in our concrete computation later.
+\end{remark}
+
+The only other axiom we are going to use is \emph{local choice} (cf.~\zcref{sec:localchoice}):
+
+\PrintAxiomLC
+
+What's surprising is that in this case, local choice of $\Nb$ indeed implies that $\Nb$ is projective. For this we first observe that any definable cover of $\Nb$ can be refined to a disjoint cover:
+
+\begin{proposition}\label{prop:refinecover}
+  Every finite definable cover $\Nb = \bigcup_{i\in n}X_i$ can be refined to a \emph{disjoint} definable cover $\Nb = \bigcup_{i\in n}Y_i$, where $Y_i \subseteq X_i$, and $Y_i \cap Y_j = 0$ for $i \neq j$.
+\end{proposition}
+\begin{proof}
+  By assumption, we may assume $X_i = \ass{\varphi_i(\ms x)}$ for any $i\in n$. By the normal form of formulas (cf.~\zcref{rem:normalformincoharith}), $\varphi_i(\ms x)$ is equivalent to one of the form $\exists\ms y.\,\psi_i(\ms x,\ms y)$, where $\psi_i(\ms x,\ms y)$ is $\Delta_0$; let us also write the complement of $\psi_i$ as $\qsi{\psi_i}$. We may then define $\varphi_i'$ as follows,
+  \[ \varphi_i'(\ms x) \coloneq \exists\ms y.\, \psi_i(\ms x,\ms y) \wedge \buq{\ms z}{\mb s\ms y}\bigwedge_{j\neq i}\qsi{\psi_i}(\ms x,\ms z). \]
+  By construction, $\varphi_i' \vdash_{\ms x} \varphi_i$, while $\varphi_i' \wedge \varphi_j' \vdash_{\ms x} \bot$ for $i \neq j$, and still we have $\top \vdash_{\ms x} \bigvee_{i\in n} \varphi_i'(\ms x)$. Thus, by taking $Y_i \coloneq \ass{\varphi_i'}$, we obtain a disjoint definable cover of $\Nb$.
+\end{proof}
+
+\begin{corollary}\label{cor:Nbisprojective}
+  Assuming (\AxiomLC), $\Nb$ is projective.
+\end{corollary}
+\begin{proof}
+  This is a direct consequence of (\AxiomLC) and~\zcref{prop:refinecover}. Given any surjection $R \surj \Nb$, by (\AxiomLC) there is a finite definable cover $\Nb = \bigcup_{i\in n}X_i$ where we can find local sections $s_i \colon X_i \hook R$. By~\zcref{prop:refinecover}, we can take a refined disjoint cover $\Nb = \coprod_{i\in n}Y_i$, where then the family of functions $\set{s_i|_{Y_i}}_{i\in n}$ defines a global section on $\Nb$.
+\end{proof}
+
+\begin{remark}
+  Notice that the projectivity of $\Nb$ is a completely finitary fact, in the sense that it does not depend on the countable choice in the external base topos $\Set$. 
+\end{remark}
+
+\begin{remark}[The use of local choice]
+  Throughout this chapter we are only going to use (\AxiomLC) once, when we show the subuniverse of definable propositions $\Sigma$, constructed in~\zcref{def:dominanceofdefinableprop}, forms a \emph{dominance} (cf.~\zcref{sec:dominanceofdefinable}). The situation here is similar to the use of local choice in~\citet{Cherubini_Coquand_Hutzler_2024} to establish a similar dominance property. We comment that it is quite interesting the construction of dominance in our development of \gls{SDT} via distributive lattices does \emph{not} require to use any choice principle; see the comments in~\zcref{rem:dominancewithoutchoice}.
+\end{remark}
+
+
+
+\section{Definability, coding, and the Church's thesis}
+
+Our goal in this section is to show, under (\AxiomSQCA), that the generic model $\Nb$ satisfies a version of \emph{Church's thesis} in $\Set[\A]$. To motivate our development, let us see some immediate consequences of (\AxiomSQCA).
+
+By~\zcref{exa:definablesetsinA}, evidently (the underlying set of) the generic model itself $\Nb$ is definable. Hence, part of the proof of~\zcref{prop:genericNbisnotN} can be worked out internally. In particular, by (\AxiomSQCA) we have that in $\mb S$,
+\[ \Nb^\Nb \cong \mb C[\NA](\top(\ms x),\top(\ms x)). \]
+In other words, in $\mb S$, endo-morphisms on $\Nb$ are all \emph{definable} by provably functional formulas in $\NA$. This observation at least makes it conceivable that $\Nb$ could satisfy the Church's thesis, since formulas in $\NA$ are \emph{syntactic objects}, thus can be \emph{coded} by $\Nb$ itself.
+
+Hence, to prove Church's thesis for $\Nb$, we need to develop some elementary theory of \emph{G\"odel coding} of the arithmetic theory $\NA$. Since this process is already well-understood in the literature, we here only briefly state the required ingredients we need; for more detailed information, we refer the reader to the classical text by~\citet{Hájek_Pudlák_2017}.
+
+\subsection{G\"odel coding of formulas}\label{subsec:godelcoding}
+
+We assume that there is a well-defined G\"odel coding function that takes any string $e$ in the language of $\NA$ to an element $\gn e$ in $\Nb$.\footnote{The reason the value of the G\"odel code lies in $\Nb$ instead of $\N$ is that the coding is obtained via the coding of sequences of elements in $\Nb$; since we have put all elements in $\Nb$ as constants in $\NA$, thus the coding produces an element in $\Nb$.} The operations on syntax then also extends to operations on codes. For instance, there will be a binary function $\dot{\wedge}$ on $\Nb$, such that for any strings $e,f$ in the language of $\NA$, we have
+\[ \gn{e \wedge f} = \gn e \dot\wedge \gn f. \]
+Similarly for other logical operations. 
+
+Another important operation is \emph{substitution}, where there exists a function $\subst$ on $\Nb$, such that for any strings $e,f,g$,
+\[ \subst(\gn e,\gn f,\gn g) = \gn{e[f/g]}, \]
+where $e[f/g]$ denotes the string obtained by replacing all appearances of $g$ in $e$ by $f$. Of course, when we substitute variables in formulas, we need to explicitly avoid variable caption. For simplicity, we assume all the substitution we perform on formulas are free for variable caption, which is always achievable by replacing bounded variables in the formula. 
+
+For any formula $\varphi(\ms x,\ov{\ms y})$, we will denote by $\gn{\varphi(\dot{\ms x},\ov{\ms y})}$ the following term having a \emph{free variable} $\ms x$,
+\[ \gn{\varphi(\dot{\ms x},\ov{\ms y})} \coloneq \subst(\gn{\varphi},\gn{\ms x},\ms x). \]
+
+For any context $V = \ov{\ms x}$, there is a definable subset $\Phi_V \subseteq \Nb$, enumerating the codes of well-formed formulas in context $V$: for any string $e$ of symbols in the language of $\NA$,
+\[ \gn e \in \Phi_V \eff e \text{ is a well-formed formula within the context } V. \]
+Furthermore, the set $\Phi_V$ can be defined by a \emph{$\Delta_0$-formula}, which implies that $\Phi_V$ is a \emph{complemented} subset of $\Nb$ (cf.~\zcref{rem:normalformincoharith}).
+
+\subsection{The truth predicate}\label{subsec:partialtruth}
+
+One crucial fact about coherent arithmetic is that it is possible to define a \emph{truth predicate} $\tau(\ms x)$, satisfying the following condition: for any $\NA$-formula $\varphi(\ov{\ms x}) = \varphi(\ms x_1,\cdots,\ms x_n)$, there is a provable equivalence in $\NA$ that
+\[ \varphi(\ms x_1,\cdots,\ms x_n) \dashv\vdash_{\ov{\ms x}} \tau(\gn{\varphi(\dot{\ms x_1},\cdots,\dot{\ms x_n})}). \]
+For more details, we refer the reader to~\citet[Thm.~I.1.75 \& Cor.~I.1.76]{Hájek_Pudlák_2017}.
+
+\begin{remark}\label{rem:truthpredTarski}
+  In fact, the truth predicate $\tau$ furthermore satisfies Tarski's truth definitions, in the sense that the following is provable in $\NA$,
+  \[ \tau(\ms x \dot\wedge \ms y) \dashv\vdash_{\ms x,\ms y} \tau(\ms x) \wedge \tau(\ms y), \]
+  and similarly for disjunction $\vee$. The case of existential quantifiers is slightly more involved since it involves evaluating free variables at some constants---this can be achieved by defining a more general \emph{satisfiability predicate}; see~\citet[\S I.1.(d)]{Hájek_Pudlák_2017} for more details.
+\end{remark}
+
+\begin{remark}[Partial truth predicates and Tarski's undefinability of truth]
+  It is a well-known fact by Tarski that if truth is \emph{definable} in a classical system of arithmetic, i.e.\ there exists a predicate $\tau(\ms x)$ satisfying $\tau(\gn{\varphi}) \eq \varphi$ for all classical (closed) formulas, then the system must be inconsistent. This is due to the fact that, by G\"odel's diagonal argument and the existence of complement, there exists a fixed-point $\theta$ of $\neg\tau(\ms x)$ satisfying $\theta \eq \neg\tau(\gn{\theta})$. By definition we also have $\theta \eq \tau(\gn{\theta})$, thus the system must be inconsistent.\footnote{Usually this result is formulated as \emph{undefinability of truth} in a consistent system, but the constructively valid direction is inference is that if truth were definable, then the system would be inconsistent.}
+
+  However, the existence of the truth predicate for the coherent arithmetic $\NA$ (or $\A$) does not contradict this, since formulas in $\NA$ are not closed under negations; in particular, by construction $\tau(\ms x)$ itself will be a $\Sigma_1$-formula, and $\Sigma_1$-formulas are not closed under negations. Hence, the argument above does not apply. 
+\end{remark}
+
+\subsection{Church's thesis in arithmetic}\label{subsec:churchthesis}
+
+With the G\"odel coding at hand, we can now finish our argument at the beginning of this section, showing that Church's thesis holds in $\Set[\A]$:
+
+\begin{theorem}[Church's thesis for arithmetic]\label{thm:church}
+  There exists a $\Sigma_1$-definable predicate $T$, such that the following is true internally in $\Set[\A]$:
+  \[ \fa f{\Nb^\Nb} \ex e{\Nb} \fa x{\Nb} T(e,x,fx). \]
+\end{theorem}
+\begin{proof}
+  We take $T(e,x,y)$ to be defined as follows,\footnote{Note here that we have treated $x,y\in\Nb$ as \emph{constants} in the theory $\NA$, thus $\gn{x}$ and $\gn{y}$ denote the G\"odel encoding of the constants $x,y$, respectively.}
+  \[ T(e,x,y) \coloneq \ass{\tau(\subst(\subst(e,\gn{\ms x},\gn x),\gn{\ms y},\gn y))}. \]
+  Intuitively, it treats $e$ as (the code of) a formula with two free variables $\ms x,\ms y$, and states $e(x,y)$ is true in $\Nb$. By construction, $T$ is $\Sigma_1$-definable. Now take an arbitrary function $f \colon \Nb \to \Nb$. By (\AxiomSQCA), it is defined by some provably functional formula $\varphi(\ms x,\ms y)$ in $\NA$, thus we have
+  \[ T(\gn{\varphi},x,y) \eff \ass{\tau(\gn{\varphi(x,y)})} \eff \ass{\varphi(x,y)} \eff fx = y. \]
+  In particular, the first equivalence holds by definition of $T$ and the substitution operator $\subst$. This shows indeed the Church's thesis holds.
+\end{proof}
+
+\begin{remark}[Comparison with the usual Church's thesis]
+  Here we can make a useful comparison with the content of the usual Church's thesis in computability: 
+  \begin{enumerate}
+    \item In computability, Church's thesis states that computable functions are computed by Turing machines; in synthetic setting all functions are computable, thus every function will be defined by a Turing machine. Here in the classifying topos $\Set[\A]$ of arithmetic, (\AxiomSQCA) implies that every function is \emph{definable} by a formula.
+    \item Both Turing machines and formulas are in some sense \emph{syntactic objects}: the former are specified by a finite number of states and a fixed set of rules; the latter are specified by a language and axioms. In particular, the crucial point here is that both Turing machines and formulas can be \emph{coded} by natural numbers, which, together with 1.\ above, implies that functions between natural numbers can be coded by numbers themselves.
+    \item In both cases there is a \emph{subquotient} involved. In the case of computability, an arbitrary Turing machine may not compute a total function, while two different Turing machines can compute the same function. In the case of arithmetic in $\Set[\A]$, not every formula is provably functional, and two different formulas may define the same function since by definition the set $\mb C[\NA](\top(\ms x),\top(\ms x))$ is defined up to \emph{provable equivalence} in $\NA$.
+  \end{enumerate}
+\end{remark}
+
+\section{Dominance of definability}\label{sec:dominanceofdefinable}
+
+In this section, we will construct a \emph{dominance} (cf.~\zcref{def:dominance}) in $\Set[\A]$, which intuitively classifies \emph{definable} propositions. 
+
+\begin{definition}[The dominance of definable propositions]\label{def:dominanceofdefinableprop}
+  Let $\Sigma \subseteq \Omega$ be defined as follows: for any $p\in\Omega$,
+  \[ p \in \Sigma \coloneq \ex e{\Phi_0} p = \ass{\tau(e)}. \]
+\end{definition}
+
+$\Sigma$ indeed deserves the name for the dominance of \emph{definable propositions}:
+
+\begin{lemma}\label{lem:definableareopen}
+  A proposition $p$ is $\Sigma$-open if and only if it is definable.
+\end{lemma}
+\begin{proof}
+  Suppose $p$ is definable, then there is a closed formula $\varphi$ in $\NA$ such that $p = \ass{\varphi}$. This way, since $\varphi \eq \tau(\gn\varphi)$ in $\NA$, it follows that $p = \ass{\tau(\gn\varphi)}$, which shows $p$ is $\Sigma$-open.
+
+  On the other hand, suppose $p$ is $\Sigma$-open, then there exists $e\in\Phi_0\subseteq\Nb$ such that $p = \ass{\tau(e)}$. This shows $p$ is defined by the closed formula $\tau(e)$ in $\NA$, thus is definable.
+\end{proof}
+
+Our first goal is to show that $\Sigma$ forms a dominance. By construction $\Sigma$ is closed under both finite meets and finite joins in $\Omega$, since $\Phi_0$ has the operators $\dot\wedge$ and $\dot{\vee}$, and they are preserved by the truth predicate $\tau$ (cf.~\zcref{rem:truthpredTarski}). Hence, it suffices to show $\Sigma$ is closed under dependent sums. For this task, we provide a more general classification of $\Sigma$-open subsets; recall from~\zcref{rem:openinclusion} that a subset is $\Sigma$-open if it is classified by $\Sigma$:
+
+\begin{proposition}\label{belongsigmadefnable}
+  Let $X$ be a definable subset of $\Nb$. A subset $S \subseteq X$ is $\Sigma$-open if and only if $S$ is a definable subset of $X$.
+\end{proposition}
+\begin{proof}
+  By assumption, $X \cong \ass{\varphi}$ for some formula $\varphi(\ms x)$ in $\NA$. 
+  
+  If $S$ is a definable subset of $X$, then there exists some formula $\psi(\ms x)$ in $\NA$ such that $\psi \vdash_{\ms x}\varphi$ is provable in $\NA$. Thus we may construct a map $c_S \colon X \to \Sigma$ by stipulating 
+  \[ c_S(x) \coloneq \ass{\psi(x)}. \]
+  Note that $c_S$ lands in $\Sigma$ by~\zcref{lem:definableareopen}, and $c_S$ classifies the inclusion $S \subseteq X$ by construction. Thus, this shows $S \subseteq X$ is $\Sigma$-open.
+  
+  On the other hand, suppose $S \subseteq X$ is $\Sigma$-open. This means that 
+  \[ \fa xX \ex{e}{\Phi_0} x\in S \eff \ass{\tau(e)}. \]
+  Since $X$ is definable, by (LC) we can find a partition $\set{X_i = \ass{\varphi_i}}_{i\in m}$ of definable subsets such that $X = \bigcup_{i\in m}X_i$; and over each $X_i$, we can assume there is a function $f_i \colon X_i \to \Phi_0$ that 
+  \[ \fa x{X_i} x\in S \eff \ass{\tau(f_ix)}. \]
+  By (\AxiomSQCA), since both $X_i$ and $\Phi_0$ are definable, the function $f_i$ is furthermore definable by a provably functional relation $\theta_i$. Then we claim we can define $S$ as follows in $\NA$,
+  \[ \bigvee_{i\in m} \varphi_i(\ms x) \wedge \exists \ms y.\,\theta_i(\ms x,\ms y) \wedge \tau(\ms y). \]
+  Indeed, by construction for any $x\in X$,
+  \begin{align*}
+    &x \in \ass{\bigvee_{i\in m} \varphi_i(\ms x) \wedge \exists \ms y.\,\theta_i(\ms x,\ms y) \wedge \tau(\ms y)} \\
+    &\quad\eff \bigvee_{i\in m} x\in X_i \wedge \ass{\tau(f_ix)} \\
+    &\quad\eff x \in S
+  \end{align*}
+  This shows that $S$ is a definable subset of $X$.
+\end{proof}
+
+\begin{corollary}\label{cor:defdominance}
+  $\Sigma$ forms a dominance closed under finite joins.
+\end{corollary}
+\begin{proof}
+  We have mentioned that $\Sigma$ is closed under finite joins. \zcref{belongsigmadefnable} implies that $\Sigma$-open subsets of $\Nb$ (or $1$) are transitive, which implies that $\Sigma$ forms a dominance.
+\end{proof}
+
+Hence, $\Sigma$ is indeed justified to be called the \emph{dominance of definable propositions}. To move closer to the setting of~\citet{bauer_first_2006}, we end this section by showing that $\Sigma$-open subsets of $\Nb$ are enumerated by $\Nb$ itself, which implies $\Sigma$ is a \emph{Lawvere's fixed-point object}; as mentioned, this is the first known non-trivial example in a sheaf topos (cf.~\citet{bauer2026laugh}).
+
+\begin{theorem}[Definable subsets of $\Nb$ is $\Nb$-enumerable]\label{thm:sigmalawverefixedpoint}
+  There is a surjection $\Nb \surj \Sigma^\Nb$.
+\end{theorem}
+\begin{proof}
+  Recall $\Phi_1$ is the definable set of codes of formulas with a free variable $\ms x$. We construct a surjection $q \colon \Phi_1 \surj \Sigma^\Nb$ as below,
+  \[ q(e) \coloneq \ld x{\Nb} \ass{\tau(\subst(e,\gn{\ms x},\gn{x}))}. \]
+  By~\zcref{belongsigmadefnable}, a $\Sigma$-open subset $S \subseteq \Nb$ is definable by some $\varphi(\ms x)$, such that for $x\in \Nb$, 
+  \[ x\in S \eff \ass{\varphi(x)}. \]
+  By construction, $\gn{\varphi(\ms x)}\in\Phi_1$, and for any $x\in \Nb$ we have
+  \[ q(\gn{\varphi(\ms x)})(x) = \ass{\tau(\subst(\gn{\varphi},\gn{\ms x},\gn x))} = \ass{\tau(\gn{\varphi(x)})} = \ass{\varphi(x)} = x\in S. \]
+  This shows $S$ lies in the image of $q$. Furthermore, as mentioned in~\zcref{subsec:godelcoding}, $\Phi_1$ is a complemented subset of $\Nb$, hence is a retract of $\Nb$. Thus there is a quotient $\Nb \surj \Sigma^\Nb$. 
+\end{proof}
+
+\begin{corollary}[Diagonalisation]\label{cor:sigmafixedpoint}
+  $\Sigma$ has the fixed-point property. In particular, $2 \subsetneq \Sigma \subsetneq \Omega$.
+\end{corollary}
+\begin{proof}
+  The surjection $\Nb \surj \Sigma^{\Nb}$ makes $\Sigma$ a \emph{Lawvere's fixed-point object} (cf.~\citet{lawvere_diagonal_1969}), thus $\Sigma$ has the fixed-point property. Since both $2$ and $\Omega$ do not have the fixed-point property, the inclusions $2 \subseteq \Sigma \subseteq \Omega$ cannot be isomorphisms.
+\end{proof}
+
+\begin{remark}[Enumerability from \gls{QC}]
+  Notice that the $\Nb$-enumerability of $\Sigma^\Nb$ is \emph{provable} from (\AxiomSQCA)! In synthetic computability, this is often taken as an \emph{axiom} (cf.~\citet{bauer_first_2006}).
+\end{remark}
+
+\begin{corollary}[Connectivity of the dominance]
+  $\Sigma$ is connected, in the sense that any map $\Sigma \to 2$ is constant.
+\end{corollary}
+\begin{proof}
+  Suppose we have a map $f \colon \Sigma \to 2$. To show $f$ is constant, take $p,q\in\Sigma$, and define a function $g \colon \Sigma \to \Sigma$ as follows,
+  \[ g(r) \coloneq
+  \begin{cases}
+    q & f(r) = f(p) \\
+    p & f(r) \neq f(p)
+  \end{cases}
+  \]
+  This is well-defined since $f$ lands in $2$. Now by~\zcref{cor:sigmafixedpoint}, $g$ has a fixed-point, which we may denote as $r$. If $f(r) = f(p)$, then $r = g(r) = q$, implying that $f(q) = f(r) = f(p)$. On the other hand, if $f(r) \neq f(p)$, then $r = p$, contradiction. Hence, we must have $f(p) = f(q)$, i.e.\ $f$ is constant.
+\end{proof}
+
+At the end of this section, we will compare our construction of the dominance of definable propositions with the dominance used in synthetic computability. Recall from~\cite{bauer_first_2006}, in the latter context one takes the dominance $\Sigma_{\mr{s.d.}}$ of semi-decidable propositions, which is of the following form (cf.~\zcref{rem:dominanceofsemidecidable}), 
+\[ \Sigma_{\mr{s.d.}} \coloneq \scomp{p\in\Omega}{\ex f{2^\N} p = \ex{n}{\N}fn = 0}. \]
+In fact, the dominance $\Sigma$ of definable propositions here in the context of arithmetic is of the \emph{same form}, with the natural numbers $\N$ replaced by the generic $\A$-model $\Nb$:
+
+\begin{proposition}[Definable propositions are $\Nb$-semi-decidable]\label{prop:definablearesemi-decidale}
+  $p\in\Sigma$ if and only if
+  \[  \ex{f}{2^{\Nb}} p \eff \ex x{\Nb} fx = 0. \]
+\end{proposition}
+\begin{proof}
+  For the only if direction, suppose $p = \ass{\varphi}$ is definable. By the normal form mentioned in~\zcref{rem:normalformincoharith}, we may assume $\varphi$ to be of the form $\exists\ms x.\,\psi(\ms x)$, where $\psi(\ms x)$ is $\Delta_0$, hence complemented. This way, we may construct the function $f \colon \Nb \to 2$ as 
+  \[ f(x) \coloneq \ass{\qsi{\psi}(x)}, \]
+  where $\qsi{\psi}$ is the complement of $\psi$. By construction $f$ lands in $2$, and indeed we have 
+  \[ p \eff \ass{\exists\ms x.\,\psi(\ms x)} \eff \ex{x}{\Nb} \ass{\psi(\ms x)} \eff \ex{x}{\Nb} fx = 0. \]
+  This shows that $p$ is $\Nb$-semi-decidable.
+
+  For the if direction, note from~\zcref{exa:finitesetsdefinable} that any finite set is definable. In particular, a function $f \colon \Nb \to 2$ by (\AxiomSQCA) is defined by a provably functional formula $\theta(\ms x,\ms y)$, which by the construction in~\zcref{exa:finitesetsdefinable} is equivalently a complemented formula $\varphi(\ms x)$, where we may define 
+  \[ \varphi(\ms x) \coloneq \theta(\ms x,\mb 0). \]
+  Now it suffices to observe that 
+  \[ p \eff \ex x{\Nb} fx = 0 \eff \ex x{\Nb} \ass{\varphi(x)} \eff \ass{\exists\ms x.\,\varphi(\ms x)}. \]
+  Hence, $p$ is definable and belongs to $\Sigma$.
+\end{proof}
+
+\begin{remark}
+  From~\zcref{prop:definablearesemi-decidale}, one may alternatively show that $\Sigma$ forms a dominance by applying the same argument as in~\citet[Prop.~5.2.1]{rosolini1986continuity}; recall that this proof uses countable choice, which we have shown for $\Nb$ in~\zcref{cor:Nbisprojective}. 
+\end{remark}
+
+With this in mind, we can show that $\Sigma$ is closed under joins indexed by $\Nb$:
+
+\begin{proposition}[Definable propositions are closed under $\Nb$-enumerable joins]\label{prop:Nbjoinclosure}
+  $\Sigma$ are closed under joins in $\Nb$, in the sense that for any $p \colon \Nb \to \Sigma$, the join $\bigvee_{x\in\Nb}p_x$ belongs to $\Sigma$.
+\end{proposition}
+\begin{proof}
+  By~\zcref{cor:Nbisprojective}, $\Nb$ is projective, thus given $p \colon \Nb \to \Sigma$ we can find a function $f \colon \Nb \to 2^\Nb$, or equivalently $f \colon \Nb \times \Nb \to 2$, such that for any $x\in\Nb$,
+  \[ p_x \eff \ex{y}{\Nb} f(x,y) = 0. \]
+  Notice that the usual pairing functions are primitive recursive, thus we have an isomorphism $\pair{\mb{fst},\mb{snd}} \colon \Nb \cong \Nb \times \Nb$. This then implies that
+  \begin{align*}
+    &\bigvee_{x\in\Nb} p_x \\
+    &\quad\eff \ex{x}{\Nb} \ex{y}{\Nb} f(x,y) = 0 \\
+    &\quad\eff \ex{z}{\Nb} f(\mb{fst}z,\mb{snd}z) = 0
+  \end{align*}
+  which by~\zcref{prop:definablearesemi-decidale} shows the join $\bigvee_{x\in\Nb}p_x$ belongs to $\Sigma$.
+\end{proof}
+
+\begin{remark}[Dominances in arithmetic and in computability]\label{rem:dominanceinariandcomp}
+  It should be clear now from~\zcref{prop:definablearesemi-decidale} that the dominance of definable propositions, though appearing to be quite distant from the dominance of semi-decidable propositions in synthetic computability, are indeed quite intimately related. Even without~\zcref{prop:definablearesemi-decidale}, we may also observe that, in the context of computability, a subset is semi-decidable if and only if it is the projection set of a decidable set, i.e.\ it is equivalent to the existential quantification of a complemented subset (cf.~\citet[Thm.~3.12 \& Prop.~3.13]{bauer_first_2006}). On the other hand, definability in $\NA$ is of a similar form: by the normal form result (cf.~\zcref{rem:normalformincoharith}), every formula in $\NA$ is equivalent to one of the form $\exists\ms x.\,\varphi$, where $\varphi$ is $\Delta_0$, hence \emph{complemented}. Thus definable subsets will also be projections of a complemented subset, and this is essentially reflected in the proof of~\zcref{prop:definablearesemi-decidale}. 
+  
+  The only difference here is that, \emph{a priori}, not all complemented subsets of $\Nb$ are \emph{$\Delta_0$-definable}. Since $2$ is definable, by (\AxiomSQCA) a complemented subset $S\in 2^\Nb$ is indeed definable by some formula $\varphi(\ms x)$, which has a complement $\qsi{\varphi}(\ms x)$ in $\NA$. However, such a formula $\varphi(\ms x)$, with itself and its complement both belong to $\Sigma_1$, is called $\Delta_1$, which is a much larger class than $\Delta_0$-formulas.
+\end{remark}
+
+
+\section{Formalised provability and L\"ob induction}
+
+At this stage, it should be clear now that many developments of synthetic computability can be similarly developed in our context of arithmetic, with the natural numbers object $\N$ replaced by the generic model $\Nb$. 
+
+However, another perspective of arithmetic, which is that of \emph{formal provability}, has no obvious counterpart in computability. In this section we will develop formal provability in our framework and deliver a \emph{L\"ob induction principle} on the dominance $\Sigma$. These results will later be used in~\zcref{sec:ariandcomp} to show some of the differences between the framework of synthetic computability and our context of arithmetic.
+
+One of the main technical construction of G\"odel for his famous incompleteness result in~\citet{godel_uber_1931} is the formalisation of \emph{provability}. This results in a \emph{provability predicate} $\rho(\ms x)$, which states that there exists (the code of) a formal proof of some formula. For our purpose we will use a binary variant on this, since the notion of provability in a coherent theory is on \emph{sequents}. In particular, we assume a standard formalisation of the provability predicate $\rho(\ms x,\ms y)$ in $\NA$, where intuitively it states that the sequent $\ms x \vdash \ms y$ is provable in $\NA$. 
+
+\begin{remark}[Construction of the provability predicate]\label{rem:formalisationofaxioms}
+  We remark that the construction of the provability predicate $\rho$ for the theory $\NA$ is completely standard. The crucial point is that we can formalise the set of \emph{axioms} of $\NA$. By construction (cf.~\zcref{def:theoryofdiagram}), axioms in $\NA$ have two parts: those from $\A$ and the \emph{true} sentences of $\NA$ in $\Nb$. The first part has a standard formalisation, since the axioms of $\A$ is primitive recursive. However, the formalisation of the second part does relies on the existence of the truth predicate. Hence, axioms in $\NA$ can be formalised as the following conjunction,
+  \[ \alpha_{\Nb \ltimes \A}(\ms x) \coloneq \alpha_{\A}(\ms x) \wedge \tau(\ms x), \]
+  where $\alpha_{\A}(\ms x)$ is the standard formalisation of axioms in $\A$. From this, the remaining formalisation of the truth predicate $\rho$ is standard; for more details we refer the reader to~\citet[\S I.4.(a)]{Hájek_Pudlák_2017}
+\end{remark}
+
+\begin{remark}[The difference between provability and formalised provability]\label{rem:provabilityandformalprovability}
+  Take any formulas $\varphi,\psi$ in $\NA$. The difference between the statement that $\NA \vdash (\varphi \vdash \psi)$, i.e.\ the sequent $\varphi \vdash \psi$ is provable in $\NA$, and the formalised provability $\rho(\gn{\varphi},\gn{\psi})$, or more precisely, its interpretation $\ass{\rho(\gn{\varphi},\gn{\psi})}$, is that the former can be seen as built by an external quantification over the actual natural numbers $\N$, since any actual proof has finite length; on the other hand, by construction the formalised provability predicate $\rho$ is obtained by an existential quantifier in the language of $\NA$, thus its interpretation is then quantifying over the model $\Nb$. Hence, by~\zcref{prop:genericNbisnotN} we can see that the latter potentially contains more formal proofs than actual proofs. This makes working in $\Set[\A]$ provide a cleaner explanation of the usual difference between provability and formal provability in meta-mathematics. Indeed, we will consistently refer to \emph{formal provability} when we intend to use the formalised provability predicate $\rho$.
+\end{remark}
+
+Our first observation is that the provability predicate induces a \emph{bi-modality} on the dominance of definable propositions. Recall from~\zcref{lem:definableareopen} that there is a surjection $\Phi_0 \surj \Sigma$ that enumerates definable propositions. Then the provability predicate on sequents induces a binary operation on $\Sigma$ as well:
+
+\begin{proposition}[Formalised provability on the dominance of definable propositions]\label{prop:sequentderivabilityoperator}
+  The following map $\mu \colon \Sigma \times \Sigma \to \Sigma$ is well-defined,
+  \[
+  \begin{tikzcd}[column sep = large]
+    \Phi_0 \times \Phi_0 \ar[d, two heads] \ar[r, "{\pair{\varphi,\psi} \mapsto \rho(\gn{\varphi},\gn{\psi})}"] & \Phi_0 \ar[d, two heads] \\
+    \Sigma \times \Sigma \ar[r, dashed, "\mu"'] & \Sigma
+  \end{tikzcd}
+  \]
+\end{proposition}
+\begin{proof}
+  Take $p,q\in\Sigma$, and assume $p = \ass{\varphi}$ and $q = \ass{\psi}$ for some $\varphi,\psi\in\Phi_0$. The intended definition of $\mu(p,q)$ is then $\ass{\rho(\gn{\varphi},\gn{\psi})}$. We claim this is indeed independent from the choice of $\varphi$ and $\psi$. Indeed, suppose $p = \ass{\varphi'}$, then by (\AxiomSQCA), $\varphi$ and $\varphi'$ will be provably equivalent in $\NA$, thus $\rho(\gn{\varphi},\gn{\psi})$ will be provably equivalent to $\rho(\gn{\varphi'},\gn{\psi})$ as well, hence has the same interpretation. Similarly for $\psi$. This shows $\mu$ is well-defined.
+\end{proof}
+
+We may then define a \emph{provability modality} $\bx \colon \Sigma \to \Sigma$ as follows: for any $p\in\Sigma$,
+\[ \bx p \coloneq \mu(1,p). \]
+On any $p = \ass{\varphi}$, $\bx p$ computes to $\ass{\rho(\gn\top,\gn{\varphi})}$, which is the statement that $\varphi$ is formally provable in $\NA$. The main goal of this section is to show that the modality $\bx$ on $\Sigma$ satisfies \emph{strong L\"ob induction}. For this we first observe some elementary properties of the map $\mu$:
+
+\begin{lemma}\label{lem:derivability}
+  The operation $\mu \colon \Sigma \times \Sigma \to \Sigma$ satisfies the following properties:
+  \begin{enumerate}
+    \item\label{item:dc1} For any $p,q\in\Sigma$, $p \to q$ implies $\mu(p,q)$; in particular, $q \to \bx q$.
+    \item\label{item:dc2} For any $p,q,r\in\Sigma$, $\mu(p,q) \wedge \mu(q,r)$ implies $\mu(p,r)$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  For (1), let $p = \ass{\varphi}$ and $q = \ass{\psi}$. If $p \to q$, then by (\AxiomSQCA) it means that the sequent $\varphi \vdash \psi$ is provable in $\NA$, hence there is also a formalised proof. This shows $\mu(p,q)$ holds. The proof for (2) uses the fact that one can formally compose formal proofs in $\NA$ (cf.~\citet[Lem.~III.2.17]{Hájek_Pudlák_2017}).
+\end{proof}
+
+\begin{theorem}[L\"ob induction]\label{thm:lob}
+  $\bx$ on $\Sigma$ satisfies the strong L\"ob induction,
+  \[ \fa p\Sigma (\bx p \to p) \to p. \]
+\end{theorem}
+\begin{proof}
+  Let $p\in\Sigma$ satisfy $\bx p \to p$. By~\zcref{cor:sigmafixedpoint} $\Sigma$ has the fixed-point property, thus we may find a fixed-point of the map $q \mapsto \mu(q,p)$ on $\Sigma$, satisfying $q = \mu(q,p)$. We first observe that $q \to p$. Assume $q$, by \ref{item:dc1} in~\zcref{lem:derivability} we in particular have $\bx q$. Since $q = \mu(q,p)$, by \ref{item:dc2} in~\zcref{lem:derivability} we also have $\bx p $. By assumption $\bx p  \to p$, thus indeed $p$ holds. This shows $q \to p$, then by \ref{item:dc1} in~\zcref{lem:derivability} we know have $\mu(q,p)$, which by construction of $q$ means we have $q$. This shows $p$ holds.
+\end{proof}
+
+\begin{remark}[Derivability conditions]\label{rem:derivabilityconditions}
+  Remark on the relationship between~\zcref{lem:derivability} and the \emph{derivability conditions} for the usual provability logic (cf.~\citet[Def.~III.2.16]{Hájek_Pudlák_2017}); also the relationship between the strong L\"ob induction in~\zcref{thm:lob} and the usual L\"ob's theorem in classical arithmetic. Consult the corresponding paragraph on the rejected paper.
+\end{remark}
+
+\begin{corollary}[The second incompleteness theorem]\label{cor:secondincomp}
+  $\bx 0$ is \emph{dense}, and $0 < \bx 0$. 
+\end{corollary}
+\begin{proof}
+  The fact that $\bx 0$ is dense is a direct consequence of~\zcref{thm:lob} by taking $p\in\Sigma$ to be $0$. This in particular implies $0 \neq \bx 0$, hence $0 < \bx 0$. 
+\end{proof}
+
+\begin{remark}[First incompleteness from the second incompleteness]\label{rem:firstfromsecond}
+  Notice that since $\A$ is not closed under negation, the usual technique of proving G\"odel's first incompleteness theorem, viz.\ by finding a fixed-point of the negated provability predicate $\neg\rho(\ms x)$, does not apply here (cf.~\zcref{rem:truthpredTarski}). Instead, here we present an argument based on the second incompleteness theorem: we can infer from~\zcref{cor:secondincomp} the strict inequalities $0 < \bx 0 < 1$ \emph{in the subobject lattice of $\Set[\A]$}: we have seen $0 < \bx 0$ holds internally in $\Set[\A]$, thus must also be true externally since $\Set[\A]$ is non-degenerate; $\bx 0 < 1$ is due to the fact that if $\bx 0 = 1$, viz.\ $\rho(\gn{\top},\gn{\bot})$ is provable, then as $\N$ is a model of $\A$ this would generate an actual proof of $\bot$ in $\A$, contradicting to the fact that $\A$ is consistent. This way, we have also deduced the first incompleteness theorem, i.e.\ in $\A$ there is a sentence neither provable nor refutable.
+
+  We emphasis here that though $0 < \bx 0$ holds internally in $\Set[\A]$ as seen in~\zcref{cor:secondincomp}, $\bx 0 < 1$, or equivalently $\bx 0 \neq 1$, \emph{cannot} hold internally in $\Set[\A]$; in fact, $\Set[\A]$ \emph{refutes} it: the internal statement $\bx 0 \neq 1$ is equivalent to $\neg\bx 0$, which as we have seen is equivalent to $0$. This more clearly shows that the second incompleteness theorem is an \emph{internal} fact, while the first incompleteness theorem is an \emph{external} fact; for more philosophical texts on the distinction between the two results, we refer the reader to the introductions of~\citet{feferman_arithmetization_1960}, of~\citet{halbach2014self}, and of~\citet{grabmayr_varieties_2023}. 
+\end{remark}
+
+\begin{remark}[A refined understanding of the first incompleteness theorem]
+  However, notice that the sentence $\bx 0$ we have constructed as a sentence not provable nor refutable in $\A$ does not fit into the usual formulation of the first incompleteness theorem, i.e.\ there exists a true but unprovable sentence.
+
+  In fact, it is shown in~\citet{ye_categorical_2026} via the initiality of $\mb C[\A]$ and a glueing argument that \emph{provability of sentence} in $\A$ coincides with \emph{truth} in $\Set$, i.e.\ a sentence (closed formula) $\varphi$ in $\A$ is provable if and only if it is valid in the external natural numbers $\N$. Hence, in this sense, there is no true but unprovable formula in $\A$. This is also well-known in classical meta-theory on arithmetic, and it is called \emph{$\Sigma_1$-completeness} (cf.~\citet[Thm.~I.1.8]{Hájek_Pudlák_2017}). The example $\bx 0$ we have found is of course not true; indeed, it is \emph{false}. Hence, the more appropriate formulation of first incompleteness result for the coherent arithmetic $\A$ should be that there exists a \emph{false but non-refutable sentence}.
+\end{remark}
+
+\begin{remark}[A refined understanding of the second incompleteness theorem]
+  From another perspective, we can also say that the second incompleteness theorem states the unprovability of a true but unprovable \emph{sequent}, viz.\ $\rho(\gn{\top},\gn{\bot}) \vdash \bot$, which can be seen as the formalisation of the consistency of $\A$. Assuming $\A$ is consistent, this sequent is indeed true, since there is no actual proof of the sequent $\top \vdash \bot$ in $\A$. However, the unprovability of this sequent can be understood as that $\A$ sees the possibility of a \emph{formal proof} of $\bot$: internally in $\Set[\A]$ it should see the consistency of both $\A$ and $\NA$, since $\Nb$ is a model of both theories; however, we have mentioned in~\zcref{rem:provabilityandformalprovability} that the formalisation $\rho$ of provability quantifies over not the actual natural numbers $\N$ but the generic $\A$-model $\Nb$, thus the second incompleteness essentially states that it is possible to have a formal proof of the false $\bot$, without affecting the consistency of $\A$.
+\end{remark}
+
+\section{The difference of computability and arithmetic}\label{sec:ariandcomp}
+
+In this section we also discuss some of the main differences between the set up of synthetic computability and our context of arithmetic. We start by considering the \emph{Markov principle}.
+
+\subsection{Markov principle and Post's theorem}\label{subsec:post}
+
+In classical computability theory, Post's theorem states that if both a subset and its complement of natural numbers are semi-decidable, then they are in fact decidable. This depends on the \emph{Markov principle} (cf.~\citet[\S3.5]{bauer_first_2006}), and in the synthetic context, via the characterisation of definable propositions as $\Nb$-semi-decidable ones, the following are equivalent (cf.~\citet[Prop.~3.17]{bauer_first_2006}):
+\begin{enumerate}
+  \item \emph{Markov principle} for $\Nb$: for any $f \colon \Nb \to 2$,
+  \[ \neg(\fa x{\Nb} fx = 0) \to \ex x{\Nb} fx = 1. \]
+  \item Definable propositions are $\dneg$-closed, viz.\ $\Sigma \subseteq \Omega_{\dneg}$.
+\end{enumerate}
+In particular, the two equivalent conditions implies \emph{Post's theorem}: for any $p\in\Omega$,
+\[ p \in \Sigma \wedge \neg p \in \Sigma \to p \in 2. \]
+However, this \emph{fails} in our example of arithmetic, essentially due to the second incompleteness theorem:
+
+\begin{proposition}[Failure of Post's theorem]\label{prop:failureofpost}
+  Post's theorem does not hold in $\Set[\A]$:
+  \[ \Set[\A] \not\models \fa p{\Omega} p \in \Sigma \wedge \neg p \in \Sigma \to p \in 2. \]
+\end{proposition}
+\begin{proof}
+  By the Kripke-Joyal semantics, it suffices to find an object in the site $\mb C[\A]$, which we choose to be the terminal object 1, and a proposition $\varphi\in\Omega(1) \cong \sub_{\Set[\A]}(1)$ such that $\varphi\in\Sigma(1)$ and $\neg\varphi\in\Sigma(1)$, while $\varphi\not\in 2(1)$. Consider $\bx 0$ as an example. By construction $\bx 0 \in \Sigma$, and since it is dense (cf.~\zcref{cor:secondincomp}), $\neg\bx 0 = 0\in\Sigma$ as well. Hence, it suffices to show $\bx 0 \not\in 2(1)$. Note that by construction,
+  \[ 2(1) \cong \mb C[\A](1,2) \cong \set{\text{complemented subobjects of 1 in $\mb C[\A]$}}. \]
+  However, $\bx 0$ cannot be complemented since it is dense in $\Set[\A]$ and that $\bx 0 \neq 1$ as a subterminal objects in $\Set[\A]$ (cf.~\zcref{rem:firstfromsecond}).
+\end{proof}
+
+\begin{remark}[Failure of the Markov principle]\label{rem:failureofmarkov}
+  \zcref{prop:failureofpost} in particular implies that the Markov principle cannot hold in $\Set[\A]$. Intuitively, as we have mentioned in the proof of~\zcref{prop:definablearesemi-decidale}, a map $f \colon \Nb \to 2$ corresponds to a complemented, definable subset $X = \ass{\varphi(\ms x)}$ of $\Nb$. However, the Markov principle asks to compute the \emph{unbounded} universal quantifier $\fa x{X}$, which cannot be reduced by (\AxiomSQCA) since $\forall\ms x.\,\varphi(\ms x)$ is \emph{not} a formula in $\NA$. However, one might wonder what will happen if we work in the classifying topos of a \emph{classical} arithmetic theory, say Peano arithmetic $\mbb{PA}$. We will briefly talk about this possibility in~\zcref{sec:classicalarithmetic}.
+\end{remark}
+
+\subsection{Phoa's principle}
+
+Another important technical tool in both synthetic computability and synthetic domain theory is the Phoa's principle (also cf.\ our discussion in~\zcref{sec:phoaandhomotopy}), which states that every endo-morphism on $\Sigma$ is \emph{monotone}. However, this turns out not to be the case:
+
+\begin{proposition}[Failure of the Phoa's principle]\label{prop:failofphoa}
+  Phoa's principle does not hold in $\Set[\A]$.
+\end{proposition}
+\begin{proof}
+  Recall from~\zcref{prop:sequentderivabilityoperator} there is a binary operator $\mu \colon \Sigma \times \Sigma \to \Sigma$, representing the formal provability of a sequent in $\NA$. Now consider the map $f \colon \Sigma \to \Sigma$ defined by 
+  \[ f(p) \coloneq \mu(p,0). \]
+  By construction, $f(0) = \mu(0,0) = 1$, since $\mu(0,0)$ is the definable proposition $\ass{\rho(\gn\bot,\gn\bot)}$, and the sequent $\bot \vdash \bot$ is (formally) provable. On the other hand, by construction $f(1) = \bx 0$, which by~\zcref{rem:firstfromsecond} externally is strictly smaller than $1$ in the subobject lattice of $\Set[\A]$. This shows that $f$ is not monotone.
+\end{proof}
+
+\section{Working with a classical arithmetic theory}\label{sec:classicalarithmetic}
+
+Recall from~\zcref{rem:classicalpresentationofcoharith} that the coherent arithmetic $\A$ can be equivalently viewed as the $\Sigma_1$-fragment of $I\Sigma_1$. In fact, from a structural perspective, the development in this chapter so far works also if we work with the coherent theory $\A_n$, which can be viewed as the $\Sigma_n$-fragment of $I\Sigma_n$ (or even of $I\Sigma_1$). This is mainly due to the fact that the development of G\"odel coding only requires the $\Sigma_1$-fragment of $I\Sigma_1$; and for any $n$, the truth predicates $\tau_n$ for $\Sigma_n$-formulas for any $n$ is $\Sigma_n$-definable, and their properties are in fact provable already in $I\Sigma_1$ (cf.~\citet[\S I.1.(d)]{Hájek_Pudlák_2017}). Hence, essentially nothing will change, except that we will see more complex complemented subsets of the generic model $\Nb$. 
+
+However, things will go through a phase change when we work with a fully fledged classical theory of arithmetic, say Peano arithmetic $\PA$. Notice that even though $\PA$ is a classical theory, this does \emph{not} imply its classifying topos $\Set[\PA]$ is \emph{Boolean}.\footnote{In fact, the classifying topos $\Set[\T]$ of a geometric theory being Boolean is a \emph{very strong} condition of $\T$ (cf.~\citet{blass_boolean_1983}).} Hence, we will still be working with a constructive meta-theory when we develop internally in $\Set[\PA]$. 
+
+The first difference we are going to notice is that there is now \emph{no truth predicate} for $\PA$ or $\NPA$, due to Tarski's undefinability of truth (cf.~\zcref{rem:truthpredTarski}). However, what we have is a \emph{family} of truth predicate $\tau_n(\ms x)$ for each $n\in\N$, that acts as partial truth predicates for $\Sigma_n$-formulas. Every formula in $\PA$ is provably equivalent to a $\Sigma_n$-formula for some $n\in\N$, thus this parametrised family eventually covers all possible formulas. In this case, the Church's thesis will look slightly different:
+
+\begin{theorem}[Church's thesis for $\PA$]\label{thm:churchforPA}
+  In $\Set[\PA]$, there is a family of \emph{complemented} predicates $\set{T_n}_{n\in\N}$ such that 
+  \[ \fa f{\Nb^\Nb} \ex e{\Nb} \fa x{\Nb} \ex{n}{\N} T_n(e,x,fx). \]
+\end{theorem}
+\begin{proof}
+  The construction of $T_n$ is similar to the proof of~\zcref{thm:church}, which replaces $\tau$ by $\tau_n$. Since each $\tau_n$ is a formula in $\NPA$, it has a complement, thus $T_n$ will be complemented. The claim now holds by (\AxiomSQCA) for $\PA$, since every map $f \colon \Nb \to \Nb$ is definable by some formula in $\NPA$, which is $\Sigma_n$ for some $n\in\N$. 
+\end{proof}
+
+\begin{remark}[The difference between the two versions of Church's thesis]\label{rem:parametriesdtruthpredicate}
+  Recall from~\zcref{thm:church} that for $\A$, the predicate $T$ appearing in the Church's thesis is $\Sigma_1$-definable, thus it is of the form $\ex{x}{\Nb} T_0$ for some complemented predicate $T_0$. However, in~\zcref{thm:churchforPA} the Church's thesis uses a predicate $\ex n{\N} T_n$ where each $T_n$ is complemented, hence the difference is that the former existential quantifier is over the generic model $\Nb$, while in the case for $\PA$ the quantification is over the actual natural numbers $\N$. 
+  
+  We remark that it is \emph{not} possible to make this existential quantification over the generic model $\Nb$ instead. One may wonder whether it is possible to define a \emph{parametrised} version of truth predicate $\tau(\ms y,\ms x)$ in $\PA$ such that for any closed term $\mb n$, $\tau(\mb n,\ms x) \eq \tau_n(\ms x)$. If such a parametrised truth predicate exists, then we may replace the existential quantification over $\N$ by one over $\Nb$. However, such a parametrised version of truth predicate cannot exists in $\PA$: any partial truth predicate $\tau_n$ is strictly $\Sigma_n$, in the sense that it does not belong to $\Sigma_{n-1}$. Hence, a single formula $\tau$, having a \emph{bounded} logical complexity, cannot (after substitution of terms) be provably equivalent to a formula of arbitrarily high logical complexity. 
+\end{remark}
+
+On the other hand, since every formula in $\NPA$ is \emph{complemented}, the dominance of definable propositions will simply be $2$ in this case. In particular, this means for $\PA$, $2^\Nb$ \emph{fails} to be $\Nb$-enumerable, since $2$ cannot be a Lawvere's fixed-point object. This may appears to be surprising given our current development, since by construction the exponential $2^\Nb$ still intuitively defines the set of definable subsets of $\Nb$, which should be coded by $\NPA$ formulas. However, looking back at the proof of~\zcref{thm:sigmalawverefixedpoint}, we realise that to define the surjection $\Phi_1 \surj \Sigma^\Nb$ that takes the code of a formula to the subset it defines, the use of the \emph{truth predicate} is indispensable! Thus, without a truth predicate for $\NPA$, there is no way to transform the code of a formula to the subset it defines.
+
+The non-existence of a truth predicate has more severe consequences. There cannot be a provability predicate \emph{internally} in $\Set[\PA]$. In particular, there cannot be an internal modality $\bx \colon 2 \to 2$ on the dominance of definable propositions in $\Set[\PA]$ satisfying the usual properties of provability! This is not hard to see from the outset: a provability predicate must preserve the top element, and by L\"ob's theorem $\bx 0$ cannot be $0$ itself, hence must be $1$. This shows that such a provability predicate, if exists, must be the constant function on $1$, which is absurd. 
+
+To pinpoint precisely where it fails to internalise a provability predicate, let us recall from~\zcref{rem:formalisationofaxioms} that, to even construct the provability predicate $\rho$ on the level of formulas, we need to formalise the \emph{axioms of $\NPA$}, for which again a truth predicate is needed. 
+
+\begin{remark}[Failure of internalisation from a semantic perspective]
+  Semantically, the failure of internalisation of the provability predicate for the classical theory $\PA$ is due to the fact that its syntactic formalisation of provability is not \emph{uniformly pointed}; note from~\zcref{lem:derivability} that the provability predicate for $\A$ is indeed pointed. Let $\rho$ be the classical provability predicate of $\PA$. In this case, we only have the necessitation \emph{rule}
+  \[
+  \begin{prooftree}
+    \hypo{\PA \vdash \varphi}
+    \infer1{\PA \vdash \rho(\gn{\varphi})}
+  \end{prooftree}
+  \]
+  instead of the scheme 
+  \[
+  \begin{prooftree}
+    \hypo{}
+    \infer1{\PA \vdash \varphi \to \rho(\gn{\varphi})}
+  \end{prooftree}
+  \]
+  It is well-known that the latter is contradictory to the second incompleteness theorem for $\PA$: let $\gamma \coloneq \neg\rho(\gn\bot)$ be the consistency statement; if $\PA \vdash \gamma \to \rho(\gn{\gamma})$, then $\N \models \gamma \to \rho(\gn{\gamma})$; since $\PA$ is consistent, $\N \models \gamma$, thus $\N \models \rho(\gn{\gamma})$, which implies that $\gamma$ is provable in $\PA$. To properly explain the relationship between the failure of pointedness and the failure of internalisation of the provability predicate, we refer the reader to ??.
+\end{remark}
 

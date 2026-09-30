@@ -12,33 +12,35 @@ Ultimately, we will understand this by viewing \gls{QC} as the \emph{fibred Yone
 
 \section{A test study for the generic proposition in the Sierpi\'nski topos}\label{sec:testcasesierpinski}
 
-In this section, assume \gls{LEM} in the external universe of sets.\footnote{Constructively, the correct definition of the Sierpi\'nski topos appears to be more subtle~\cite{5085280}.} Let $\mc I$ be the \emph{Sierpi\'nski topos}. As a category it is equivalent to the arrow category on $\Set$,
+Let $\mc I$ be the \emph{Sierpi\'nski topos}. As a category it is equivalent to the arrow category on $\Set$,
 \[ \mc I \coloneq [\mbb 2, \Set], \]
 where $\mbb 2 = \set{0 < 1}$ is the Sierpi\'nski poset. It is well-known that $\mc I$ is the classifying topos of the \emph{generic proposition}, viz.\ the coherent theory $\mbb S$ whose signature contains a single 0-ary predicate $\ms p$, with no axioms. The fact that $\mc I \simeq \Set[\mbb S]$ then can be seen via the universal property of $\mc I$: given any topos $\mc E$, there is a natural equivalence 
 \[ \Top(\mc E,\mc I) \simeq \sub_{\mc E}(1), \]
 which exactly states that $\mc I$ classifies propositions in $\mc E$. 
 
-The above equivalence is of course realised by a generic proposition $\mbb p$ in $\mc I$, which corresponds to the arrow $0 \to 1$. It is then straightforward to observe the following non-geometric property of the generic proposition $\mbb p$:
+The above equivalence is of course realised by a generic proposition $\mbb p$ in $\mc I$, which corresponds to the arrow $0 \to 1$ in $\Set$. It is then straightforward to observe the following non-geometric property of the generic proposition $\mbb p$:
 
 \begin{proposition}\label{prop:genericpropnegneg}
   The generic proposition $\mbb p$ in dense (cf.~\zcref{def:propertiesofpropositions}).
 \end{proposition}
 \begin{proof}
-  By direct computation, $\sub_{\mc J}(1) \cong \set{\bot < \mbb p < \top}$, where externally $\bot,\top$ corresponds to the identity arrow on $0,1$, respectively. Thus, $\neg\mbb p = \bot$, and $\neg\neg\mbb p = \top$.
+  Note that a presheaf $A\in\mc I$ as an arrow $p \to q$ in $\Set$ is a subterminal object if and only if both $p,q$ are propositions in $\Set$, and that $p \le q$. Furthermore,
+  \[ A \wedge \mbb p = 0 \eff q = 0, \]
+  since $A \wedge \mbb p$ by construction is given by the arrow $0 \to q$. Thus, it follows that $A \wedge \mbb p = 0$ iff $A = 0$, i.e.\ $A$ is the identity arrow on $0$. Hence, $\neg\mbb p = 0$, and $\neg\neg\mbb p = 1$.
 \end{proof}
 
 It would then be expected that the simple non-geometric property of $\mbb p$ should be implied by a corresponding \gls{QC} principle. Indeed, by applying \gls{QC} for the coherent theory $\mbb S$, \zcref{prop:genericpropnegneg} follows as a simple consequence; see~\zcref{exa:qcinsierpinskitopos} for more details.
 
 However, $\mc I$ is also the classifying topos of a finitary \emph{algebraic} theory $\mbb S_a$, while \gls{QC} for this algebraic theory $\mbb S_a$ fails to establish~\zcref{prop:genericpropnegneg}. Concretely, we may view $\mbb S_a$ is a 1-sorted algebraic theory with no function symbols. It has a single equational axiom,
 \[ \top \vdash_{\ms x,\ms y} \ms x = \ms y. \]
-This axiom states that any two elements in a model of $\mbb S_a$ are identical, thus with \gls{LEM} there are only two possible models of $\mbb S_H$, viz.\ the empty set $0$ and the singleton set $1$. It is then easy to see that 
-\[ \mmod{\mbb S_a} \simeq \mmod{\mbb S_a}_\omega \simeq \mbb 2. \]
+This axiom states that any two elements in a model of $\mbb S_a$ are identical. It is then easy to see that the only finitely presented models of $\mbb S_a$ are either the empty set $0$, which is the free algebra on 0 generators, or the singleton set $1$, which is the free algebra on $n$ generators for any $n \ge 1$. The reason that there are no more quotient algebras is due to the fact that by axiomatisation, models of $\mbb S_a$ will be exactly propositions, and any proposition already satisfies all possible equations, since every two element are already equal in a subsingleton set. Hence, we have
+\[ \mmod{\mbb S_a}_\omega \simeq \mbb 2. \]
 Thus by~\zcref{thm:classtoposofkappahorn}, indeed we have 
 \[ \mc I = [\mbb 2,\Set] \simeq [\mmod{\mbb S_a}_\omega,\Set] \simeq \Set[\mbb S_a]. \]
 
 As stated in~\zcref{sec:qcforhorn}, the generic $\mbb S_a$-model $V_{\mbb S_a}$ in $\mc I$ is the representable functor on the category of models, which corresponds exactly to the arrow $0 \to 1$. In other words, $V_{\mbb S_a}$ is indeed the generic proposition in $\mc I$. Hence, for now it seems promising that~\zcref{prop:genericpropnegneg} might follow from \gls{QC} for $\mbb S_a$.
 
-However, a slightly more detailed analysis shows this is impossible. In particular, let us look at what are the finitely presented $V_{\mbb S_a}$-algebras in $\mc I$. By construction, $V_{\mbb S_a}[0] \cong V_{\mbb S_a}$, while $V_{\mbb S_a}[n] \cong 1$ for any $n \ge 1$. This is due to the fact that to be an $\mbb S_a$-algebra, once it has an element, it is the unique element the algebra has by the axiomatisation of $\mbb S_a$. In particular, among the finitely presented $\mbb S_a$ algebras we do not find the initial object $0$. Hence, \gls{QC} for $\mbb S_a$ provides us essentially \emph{no} information on how to compute the exponential $V_{\mbb S_a} \to 0$, which is required to establish~\zcref{prop:genericpropnegneg}. However, this is only a heuristic argument. The following formally establishes that~\zcref{prop:genericpropnegneg} cannot be a consequence of \gls{QC} for $\mbb S_a$:
+However, a slightly more detailed analysis shows this is impossible. In particular, let us look at what are the finitely presented $V_{\mbb S_a}$-algebras in $\mc I$. By construction, by a similar argument as before, $V_{\mbb S_a}[0] \cong V_{\mbb S_a}$, while $V_{\mbb S_a}[n] \cong 1$ for any $n \ge 1$, and there are no more finitely presented $V_{\mbb S_a}$-algebras. In particular, among the finitely presented $\mbb S_a$ algebras we do not find the initial object $0$ in $\Set[\mbb S_a] \simeq \mc I$. Hence, \gls{QC} for $\mbb S_a$ provides us essentially \emph{no} information on how to compute the exponential $V_{\mbb S_a} \to 0$, which is required to establish~\zcref{prop:genericpropnegneg}. However, this is only a heuristic argument. The following formally establishes that~\zcref{prop:genericpropnegneg} cannot be a consequence of \gls{QC} for $\mbb S_a$:
 
 \begin{proposition}\label{prop:algebraicnotsufficefordense}
   The fact that the generic proposition is dense in $\mc I$ cannot be a consequence of \gls{QC} for the algebraic theory $\mbb S_a$.
@@ -95,7 +97,7 @@ In particular, $M \cong M^*V_\T$.
 
 Following~\zcref{ch:sqchorn}, what will play an important role for \gls{QC} is the internal theory of ``$V_\T$-algebras'' in $\Set[\T]$. For first-order logic, this is better-known in model theory as the \emph{theory of diagrams} of a model:
 
-\begin{definition}[Theory of diagram]
+\begin{definition}[Theory of diagram]\label{def:theoryofdiagram}
   Let $\T$ be any coherent theory and let $M$ be a $\T$-model. Then the coherent theory of \emph{diagram of $M$}, denoted as $M\!\ltimes\!\T$, is defined as follows:
   \begin{itemize}
     \item it extends the language of $\T$ with constants $c_m$ of sort $s$ for any element $m\in M_s$;
@@ -261,3 +263,6 @@ For the remaining of this section, we show how \gls{QC} for coherent theories \e
   It should now be clear from~\zcref{thm:qccohgeneraliseqchorn} that, for a Horn theory $\T$, by viewing it as a coherent theory, the corresponding principle of \gls{QC} in $\Set[\T]$ is strictly \emph{stronger} than \gls{QC} for the Horn theory $\T$. This is due to the fact that the pretopos site $\mb P[\VT]$ contains more objects than $\mmod{\VT}_\omega\op$. As explained in the concrete example of the Sierpi\'nski topos $\mc I$ in~\zcref{sec:testcasesierpinski}, the corresponding cartesian site $\mmod{\VT}_\omega\op$ only contains the generic proposition $\mbb p$ and the terminal object $1$, while the coherent site $\mb P[\VT]$ also contains the initial object $0$. This way, the exponential $\neg\mbb p = \mbb p \to 0$ can be computed via \gls{QC} for the coherent theory $\T$ classifying $\mc I$, but cannot be computed via \gls{QC} for the corresponding Horn theory.
 \end{remark}
 
+\section{On a local choice principle}\label{sec:localchoice}
+
+Here explain why we can have local choice in $\Set[\T]$ for definable sets.

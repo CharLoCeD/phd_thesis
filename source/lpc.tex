@@ -63,6 +63,16 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
   A dominance $\Sigma$ is a subuniverse of $\pp$ that is closed under dependent sums, i.e.\ $1\in\Sigma$, and for any $\varphi\in\Sigma$ together with a family $\psi \colon \varphi \to \Sigma$, the dependent sum $\sum_{x\in\varphi}\psi(x)$ also belongs to $\Sigma$.
 \end{definition}
 
+\begin{remark}[Open inclusions for a dominance]\label{rem:openinclusion}
+  Given a dominance $\Sigma$, an inclusion $S \hook X$ of sets is \emph{$\Sigma$-open} if it is classified by $\Sigma$, in the sense that for any $x\in X$, $x\in S$ is a proposition in $\Sigma$. Categorically, this means that the characteristic function $c_S \colon X \to \pp$ of $S$ factors through $\Sigma$, making the square below a pullback,
+  \[
+  \begin{tikzcd}
+    S \ar[d, hook] \ar[dr, pullback] \ar[r] & 1 \ar[d, "1"] \\
+    X \ar[r, "c_S"'] & \Sigma
+  \end{tikzcd}
+  \]
+\end{remark}
+
 \begin{definition}[$\kappa$-overt propositions]\label{def:kappaopen}
   A proposition is \emph{$\kappa$-overt}, if it is of the form $\pss X$ for some $\kappa$-small set $X$. The subuniverse of $\kappa$-overt propositions will be denoted as $\mb{O}_\kappa$. 
 \end{definition}
@@ -80,9 +90,9 @@ At the end of this section, we observe that any notion of size $\kappa$ induces 
   Hence, $\mb{O}_\kappa$ is closed under dependent sums, and forms a dominance.
 \end{proof}
 
-\begin{remark}[Relation to the dominance of semi-decidable propositions]
+\begin{remark}[Relation to the dominance of semi-decidable propositions]\label{rem:dominanceofsemidecidable}
   It is shown by~\citet[Prop. 5.2.1]{rosolini1986continuity} (with the proof is attributed to Dana Scott) that the following subuniverse of \emph{semi-decidable propositions} is a dominance,
-  \[ \Sigma_{\mr{s.d.}} \coloneq \scomp{p\in\pp}{\ex f{\N^\N} p = \ex{n}{\N}fn = 0}. \]
+  \[ \Sigma_{\mr{s.d.}} \coloneq \scomp{p\in\pp}{\ex f{2^\N} p = \ex{n}{\N}fn = 0}. \]
   In fact, it is not hard to see that the universe $\mb O_{\omega_1}$ of $\omega_1$-overt propositions is identical to $\Sigma_{\mr{s.d.}}$. The proof in \emph{loc.\ cit.}\ also crucially relies on countable choice. In fact, the proof of~\zcref{prop:sizedominance} can be seen as a suitable generalisation of this proof that works for any notion of size. For $\omega$ we have $\mb O_\omega = 2$, recovering the dominance of decidable propositions.
 \end{remark}
 

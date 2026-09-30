@@ -105,15 +105,15 @@ In $\Set$ there is also a universe of \emph{propositions}, which we denote as $\
 Since we work in general in a constructive environment, propositions satisfying certain classical properties deserve additional attention:
 
 \begin{definition}[Classical properties of propositions]\label{def:propertiesofpropositions}
-  We say a proposition $p \in \pp$ is \emph{decidable}, if $p = 0 \vee p = 1$. We say $p$ is \emph{classical}, if $\neg\neg p = p$. We say $p$ is \emph{dense}, if $\neg\neg p = 1$. 
+  We say a proposition $p \in \pp$ is \emph{decidable}, if $p = 0 \vee p = 1$. We say $p$ is \emph{closed}, if $\neg\neg p = p$. We say $p$ is \emph{dense}, if $\neg\neg p = 1$. 
 \end{definition}
 
-\begin{remark}[The subuniverse of decidable and classical propositions]
-  Note that the set of decidable propositions is given by $2 = \set{0,1}$. We also denote the set of classical propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
+\begin{remark}[The subuniverse of decidable and closed propositions]
+  Note that the set of decidable propositions is given by $2 = \set{0,1}$. We also denote the set of closed propositions as $\pp_{\dneg}$, and it is evident that there are inclusions $2 \subseteq \pp_{\dneg} \subseteq \pp$. These are both \emph{dominances} as in~\zcref{def:dominance}.
 \end{remark}
 
-\begin{definition}[Decidable and classical sets]\label{def:decidableset}
-  For a set $X$, we say it is \emph{decidable} (resp.\ \emph{classical}) if its equalities are decidable (resp.\ classical), i.e.\ for any $x,y\in X$, the proposition $x = y$ is decidable (resp.\ classical).
+\begin{definition}[Decidable sets]\label{def:decidableset}
+  For a set $X$, we say it is \emph{decidable} if its equalities are decidable, i.e.\ for any $x,y\in X$, the proposition $x = y$ is decidable.
 \end{definition}
 
 \begin{remark}[Caveat on complemented subsets]\label{rem:complementedsubtype}
