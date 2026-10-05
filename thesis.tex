@@ -68,7 +68,7 @@
 \newcommand{\qsi}[1]{\tilde{#1}}
 \newcommand{\cob}{\vartriangleleft}
 \newcommand{\other}{\mathrm{otherwise}}
-\newcommand{\geo}[1]{|#1|}
+\newcommand{\geo}[1]{\left|#1\right|}
 \newcommand{\ov}[1]{\overline{#1}}
 \newcommand{\set}[1]{\{\,#1\,\}}
 \newcommand{\eff}{\Leftrightarrow}
@@ -78,7 +78,7 @@
 \newcommand{\ev}{\mathrm{ev}}
 \newcommand{\elem}{\int\!\!}
 \newcommand{\nt}{\Rightarrow}
-\newcommand{\scomp}[2]{\{\,#1\mid#2\,\}}
+\newcommand{\scomp}[2]{\left\{\,#1\,\middle|\,#2\,\right\}}
 \newcommand{\surj}{\twoheadrightarrow}
 \newcommand{\inj}{\rightarrowtail}
 \newcommand{\hook}{\hookrightarrow}
@@ -125,7 +125,9 @@
 \newcommand{\dom}{\operatorname{dom}}
 \newcommand{\cod}{\operatorname{cod}}
 \newcommand{\bx}{\mdwhtsquare}
+\newcommand{\bbx}{\mdblksquare}
 \renewcommand{\models}{\vDash}
+\newcommand{\plo}{\!+\!1}
 
 \newcommand{\buq}[2]{\forall #1\!\!<\!\!#2.\,}
 \newcommand{\beq}[2]{\exists #1\!\!<\!\!#2.\,}
@@ -168,6 +170,13 @@
 \newcommand{\subst}{\mb{subst}}
 \newcommand{\PA}{\mbb{PA}}
 \newcommand{\NPA}{\Nb\hspace{-.4ex}\ltimes\hspace{-.4ex}\PA}
+\newcommand{\PB}{\mbb{PB}}
+\newcommand{\BPB}{\mb B\hspace{-.4ex}\ltimes\hspace{-.4ex}\PB}
+\newcommand{\vneg}{\mathord{\sim}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\form}{\mr{Form}}
+\newcommand{\ovs}[1]{\ov{\ms{#1}}}
+\newcommand{\ovob}{\N_\bot}
 
 \NewDocumentCommand\obsle{o}{\sqsubseteq_{\ms{obs}}\IfValueT{#1}{^{#1}}}
 \NewDocumentCommand\satle{o}{\le_{\ms{sat}}\IfValueT{#1}{^{#1}}}
@@ -255,6 +264,13 @@
     Name-pl = Observations,
     name-pl = observations,
 }
+\zcLanguageSetup{english}{
+  type = construction,
+    Name-sg = Construction,
+    name-sg = construction,
+    Name-pl = Constructions,
+    name-pl = constructions,
+}
 
 \AddToHook{env/lemma/begin}{\zcsetup{countertype={theorem=lemma}}}
 \AddToHook{env/corollary/begin}{\zcsetup{countertype={theorem=corollary}}}
@@ -339,7 +355,11 @@
 }
 \newglossaryentry{LEM}{
     name=LEM,
-    description={the Law of Excluded Middle}
+    description={Law of Excluded Middle}
+}
+\newglossaryentry{LPO}{
+    name=LPO,
+    description={Limited Principle of Omniscience}
 }
 \newglossaryentry{PNNO}{
     name=PNNO,
@@ -384,6 +404,7 @@
 \include{source/lpc}
 \include{source/sqc_horn}
 \include{source/sqc_coh}
+\include{source/sqc_omega}
 \part{The applications of synthetic quasi-coherence}\label{prt:appl}
 \include{source/app_domain}
 \include{source/app_arith}

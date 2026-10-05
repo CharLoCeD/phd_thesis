@@ -1,0 +1,377 @@
+\NewDocumentCommand\AxiomGR{}{GR}
+\NewDocumentCommand\PrintAxiomGR{}{
+  \begin{axiom}[\AxiomGR]
+    Every proposition is definable: $\fa p\Omega \ex{n}{\ovob} p = \mbb p_n$.
+  \end{axiom}
+}
+
+
+\chapter{Quasi-coherence for the propositional universe}\label{ch:sqcforomega}
+
+In this chapter we explore the possibility of a general theory of quasi-coherence that characterises the propositional universe $\Omega$ in the classifying topos of a restrictive class of geometric theories, which we call \emph{countably generated} (cf.~\zcref{def:countablyseparated}). We believe this is an initial step towards a general theory of quasi-coherence that works for arbitrary geometric theories, but we restrict ourselves to the special case this time.
+
+We comment that interestingly, the \emph{Nullstellensatz} result holds \emph{constructively}, while the full \gls{QC} principle we obtain for the propositional universe $\Omega$ does \emph{not} --- we will discuss a counterexample at~\zcref{rem:roleofexcludedmiddle}. In particular, some of the results in this chapter requires \gls{LEM} in the meta-theory, in which cases we will indicate explicitly. 
+
+\section{Nullstellensatz for countably generated geometric theories}
+
+Recall the notion of a countable set in~\zcref{exm:countablesize}. We say a set $A$ is \emph{enumerable} if there exists a surjection $\N \surj 1 + A$. All countable sets are thus enumerable.
+
+Let $\T$ be a geometric theory. By a \emph{primitive} $\T$-formula we mean one of the form 
+\[ \exists\ov{\ms y}.\,\bigwedge_{i\in n}\varphi_i(\ov{\ms x},\ov{\ms y}), \]
+where each $\varphi_i$ is atomic; notice that we count $\bot$ as an atomic formula. The set of primitive formulas in $\T$ in context $\ov{\ms x}$ will be denoted as $\form^p_\T(\ov{\ms x})$. We will use $\form^\N_\T(\ov{\ms x})$ to denote the set of geometric formulas in $\T$ that are $\N$-disjunctions of formulas in $\form^p_\T(\ov{\ms x})$. Equivalently, an element in $\form^\N_\T(\ovs x)$ corresponds to an infinite sequence $\varphi \in \form^p_\T(\ovs x)^\N$, where we view $\varphi = \bigvee_{i\in\N}\varphi_i$ as an infinite disjunction of primitive formulas. 
+
+\begin{remark}[Normal forms of geometric formulas]\label{rem:normalformofgeometric}
+  It is well-known that geometric formulas has a normal form, where every geometric formula can be written as a disjunction of primitive formulas. This can be achieved by continually commute existential quantifiers past (infinite) disjunctions, and take the disjunctive normal forms of quantifier free formulas.
+\end{remark}
+
+\begin{definition}[Countably generated geometric theories]\label{def:countablyseparated}
+  We say a geometric theory $\T$ is \emph{countably generated} if the following holds:
+  \begin{itemize}
+    \item it has a countable signature, i.e.\ its set of sorts, function symbols, and relation symbols are all countable;
+    \item every axiom of $\T$ is of the form $\varphi \vdash_{\ovs x} \psi$, where $\varphi$ is atomic and $\psi \in \form^\N_\T(\ovs x)$.\footnote{Note that the requirement of $\varphi$ being atomic can be weakened by it being in $\form^\N_\T(\ovs x)$ as well, since the appearance of disjunctions and existential quantifiers on the left can always be reduced in geometric logic.}
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  By~\zcref{rem:normalformofgeometric}, if we assume \gls{LEM}, then every geometric formula in a countably generated theory $\T$ will be equivalent to one in $\form^\N_\T$.
+\end{remark}
+
+\begin{example}[The theory of filters on $\N$]\label{exa:toposoftrees}
+  Recall that $\N$ under the canonical order is a linear poset. The theory $\mbb F_{\N}$ of a \emph{filter on $\N$} is a propositional theory defined as follows:
+  \begin{itemize}
+    \item it has countably many propositional variables $\ms p_0,\ms p_1,\cdots$, where each $\ms p_i$ intuitively states that $i$ belongs to the filter;
+    \item for any $i \le j$, a propositional axiom $\ms p_i \vdash \ms p_j$, stating the filter is upward closed;
+    \item a single axiom $\top \vdash \bigvee_{i\in n}\ms p_i$, stating the filter is inhabited.
+  \end{itemize}
+  By construction, this theory $\mbb F_{\N}$ is countably generated. Its classifying topos is the presheaf topos $\psh(\N)$ on the poset $\N$, and is often called the \emph{topos of trees}.
+\end{example}
+
+\begin{example}[The theory of local, locally finite, algebraically closed Heyting algebras]
+  Following~\citet[\S 7.3]{ghilardi2013sheaves}, the theory $\mbb K$ extends the algebraic theory $\mbb H$ of Heyting algebras with additional axioms. For an finite conjunction of equations $\varphi(\ov{\ms x})$ in the language of Heyting algebras, we say it is \emph{finite} if the corresponding finitely presented Heyting algebra $H[\ov{\ms x}]/\varphi(\ov{\ms x})$ is \emph{finite}.\footnote{By the presentation of finitely presented Heyting algebras, whether a formula $\varphi(\ov{\ms x})$ is finite is \emph{decidable}.} The set of finite formulas with $n$ free variables will be denoted as $F_n$. $\mbb K$ then has the following axioms:
+  \begin{itemize}
+    \item $\top \vdash \bigvee\scomp{\varphi(\ov{\ms x})}{\varphi(\ov{\ms x})\in F_n}$, for any $n\in\N$;
+    \item for any $\varphi(\ov{\ms x})$ and $\psi(\ov{\ms y})$ such that the induced map $H[\ov{\ms x}]/\varphi(\ov{\ms x}) \to H[\ov{\ms x},\ov{\ms y}]/\psi(\ov{\ms x},\ov{\ms y})$ is an injection, an axiom $\varphi(\ov{\ms x}) \vdash_{\ov{\ms x}} \exists\ov{\ms y}.\,\psi(\ov{\ms x},\ov{\ms y})$;
+    \item locality axioms $\top \vdash 0 \neq 1$ and $\ms x \vee \ms y = 1 \vdash_{\ms x,\ms y} \ms x = 1 \vee \ms y = 1$.
+  \end{itemize}
+  By construction, $\mbb K$ is countably generated. Its classifying topos is constructed in~\citet{ghilardi2013sheaves}, and is called the K-topos in~\citet{ye2026coexact}. 
+\end{example}
+
+We end this section by mentioning the \emph{Nullstellensatz} specifically for a countably generated geometric theory $\T$. Let $\Set[\T]$ be its classifying topos with the generic model $V_\T$. For any geometric formula $\varphi(\ovs x)$, let $\ass{\varphi(\ovs x)}$ denote its interpretation in $V_\T$.
+
+Similar to the construction of~\zcref{def:theoryofdiagram}, we have an internal theory of diagrams $\VT$ in $\Set[\T]$. Thus, we can similarly define the internal sets $\form^p_{V_\T\ltimes\T}$ and $\form^\N_{V_\T\ltimes\T}$ of primitive formulas and their countable disjunctions in $\VT$, respectively. In particular, by definition $\form^\N_{V_\T\ltimes\T}(\ovs x) \cong \form^p_{V_\T \ltimes \T}(\ovs x)^\N$ internally in $\Set[\T]$. 
+
+\begin{theorem}[Nullstellensatz]\label{thm:Nullstellensatz}
+  The following holds internally in $\Set[\T]$,
+  \[ \fa{\varphi,\psi}{\form^\N_{V_\T \ltimes \T}(\ovs x)} V_\T \models (\varphi \vdash_{\ovs x} \psi) \eff \VT \vdash (\varphi \vdash_{\ovs x} \psi). \]
+\end{theorem}
+\begin{proof}
+  The proof of~\citet[Thm.~3.7]{blechschmidt_general_2020} holds here, especially because we have restricted the internal geometric formulas to those having disjunctions indexed by $\N$, which is locally constant in the sense of \emph{loc.\ cit.}
+\end{proof}
+
+
+\section{Axiomatising the propositional universe}
+
+\zcref{thm:Nullstellensatz} is a \emph{conservativity} result, which states that for sequents in $\form^\N_{V_\T\ltimes\T}$ internally in $\Set[\T]$, it is provable if and only if it is true at the generic $\T$-model $V_\T$. In particular, this implies that we have an \emph{embedding} internally in $\Set[\T]$, that
+\[ \form^\N_{V_\T\ltimes\T}(\ovs x)/\vneg \hook \mc P\ass{\top(\ovs x)}, \]
+where $\mc P(-) \coloneq \Omega^-$ denotes the internal power construction, and $\sim$ is the equivalence relation generated by $\VT$-provability. 
+
+Our goal in this section is to show that the above map is an \emph{isomorphism}. However, our chosen formulation only holds when we assume \gls{LEM} in the external meta-theory, which we will freely do so from now on and indicate its use explicitly. We will comment on the use of \gls{LEM} in~\zcref{rem:differentdefinability}. We first observe that we have an external definability result:
+
+\begin{lemma}[External definability of subobjects of the generic model]\label{lem:externaldef}
+  Any subobject $S \hook \ass{\top(\ovs x)}$ is defined by an external geometric formula $\beta_S(\ovs x)$, where concretely we have 
+  \[ \beta_S(\ovs x) \coloneq \bigvee\scomp{\gamma(\ovs x)}{\gamma(\ovs x) \in \form^p_\T(\ovs x) \conjt \ass{\rho(\ovs x)} \le S}. \]
+\end{lemma}
+\begin{proof}
+  As mentioned in~\zcref{rem:normalformofgeometric}, every geometric formula is a disjunction of formulas in $\form^p_\T(\ovs x)$. This then follows from the definability result in~\citet[Thm.~2.4]{caramello2012universal}. 
+\end{proof}
+
+\begin{remark}\label{rem:subcomlem}
+  Assuming \gls{LEM}, every $\beta_S(\ovs x)$ indeed belongs to $\form^\N_\T(\ovs x)$, since by construction $\form^p_\T(\ovs x)$ itself will be countable since $\T$ is countably generated.
+\end{remark}
+
+\begin{theorem}[Definability of the propositional universe for countably generated theories]\label{thm:omegadefinable}
+  Assuming \gls{LEM} in the meta-theory, for any countably generated theory $\T$, the map obtained by interpreting a $\VT$-formula in the generic $\T$-model $V_\T$ induces an isomorphism
+  \[ \form^\N_{V_\T\ltimes\T}(\ovs x)/\vneg \cong \mc P\ass{\top(\ovs x)}. \]
+\end{theorem}
+\begin{proof}
+  We have mentioned that by~\zcref{thm:Nullstellensatz}, this map is an embedding, thus it suffices to show it is a surjection. By Kripke-Joyal semantics, consider any $A \coloneq \alpha(\ovs y) \in \mb C[\Sigma]$, and consider an object $S \in \mc P\ass{\top(\ovs x)}(A) \cong \sub(\yon_A \times \ass{\top(\ovs x)})$. Now by construction, canonically we have that 
+  \[ a \colon \yon_A \cong \ass{\alpha(\ovs y)} \hook \ass{\top(\ovs y)}, \] 
+  which we may view as the generic $A$-element of sorts $\ovs y$. Thus, we may then view $S$ as a subobject of $\ass{\top(\ovs y)} \times \ass{\top(\ovs x)} \cong \ass{\top(\ovs y,\ovs x)}$. By~\zcref{lem:externaldef} and~\zcref{rem:subcomlem}, assuming \gls{LEM} we can find an external formula $\beta_S \in \form^\N_\T(\ovs y,\ovs x)$ such that $\ass{\beta_S} = S$. By substituting the generic term $a$ into $\beta_S$, we obtain an internal formula $\beta_S(a,\ovs x) \in \form^\N_{V_\T\ltimes\T}(\ovs x)$, such that by construction $\ass{\beta_S(a,\ovs x)} \cong S$. Hence, this map is also surjective.
+\end{proof}
+
+\begin{remark}[The difference with~\citet{blechschmidt_general_2020}]\label{rem:differentdefinability}
+  It is already mentioned in~\citet[Rem.~3.8]{blechschmidt_general_2020} that the Nullstellensatz result as stated in~\zcref{thm:Nullstellensatz} cannot hold for internal geometric formulas with disjunctions indexed by arbitrary internal sets in $\Set[\T]$, thus \emph{loc.\ cit.}\ tries to fix this by introducing the notion of \emph{locally constant} indexing sets. However, to our best knowledge this notion, though externally makes sense, is \emph{not internally definable}, at least not obviously so. Thus, we have restricted Nullstellensatz to the case for formulas in $\form^\N_{V_\T\ltimes\T}$, whose disjunctions are indexed by $\N$, which is indeed a globally \emph{constant} object in any sheaf topos.
+
+  However, the definability result we have obtained in~\zcref{thm:omegadefinable} becomes \emph{stronger} than that of Thm.~5.2 in \emph{loc.\ cit.}, which states that $\mc P\ass{\top(\ovs x)}$ can be internally defined by geometric formulas in $\VT$ with locally constant disjunctions. Instead, our definability result only uses \emph{countably indexed disjunctions}, which is a stronger statement \emph{a priori}. However, this restriction is related to why we need to assume \gls{LEM} in the meta-theory when establishing~\zcref{thm:omegadefinable}, which we comment in~\zcref{rem:roleofexcludedmiddle}.
+\end{remark}
+
+\begin{remark}[The role of excluded middle]\label{rem:roleofexcludedmiddle}
+  It is very interesting that we need \gls{LEM} in the external meta-theory for~\zcref{thm:omegadefinable} to hold. By inspecting its proof, we have mainly used \gls{LEM} to transform an arbitrary subset of $\N$ into a countable subset, thus can be lifted to an internal formula in $\form^\N_{V_\T\ltimes\T}$ in $\Set[\T]$. As a comparison, the corresponding internal definability result in~\citet{blechschmidt_general_2020}, using all locally constant sheaves as indexing sets for disjunctions, though not fully formal, is obtained constructively.
+
+  However, the simplest example would indicate why \gls{LEM} is necessary for our stronger definability result. Take the simplest geometric theory $\mbb 1$ of a \emph{singleton}, which has a single sort, no relation or function symbols, and two axioms 
+  \[ \top \vdash \exists \ms x.\,\ms x \quad \top \vdash_{\ms x,\ms y} \ms x = \ms y, \]
+  stating that there is exactly one object. By construction, its classifying topos is the terminal topos $\Set[\mbb 1] \simeq \Set$, since it classifies the terminal object in a topos. The diagram theory $V_{\mbb 1} \!\ltimes\! \mbb 1$ this time is simply $\mbb 1$ extended by a single constant $\ms c$, denoting the unique element. It is then easy to observe that any primitive sentence in $V_{\mbb 1} \!\ltimes\! \mbb 1$ is provably equivalent to either $\top$ or $\bot$. If the definability result in~\zcref{thm:omegadefinable} holds, then we would have a diagram 
+  \[
+  \begin{tikzcd}
+    \form^\N_{V_{\mbb 1} \ltimes \mbb 1}(\emp) \cong \form^p_{V_{\mbb 1}\ltimes\mbb 1}(\emp)^\N \ar[r, two heads] \ar[dr, two heads] & 2^\N \ar[d, dashed, two heads, "q"] \\
+    & \Omega \cong \pp
+  \end{tikzcd}
+  \]
+  where by construction, $q$ is the map 
+  \[ q(f) = \ex n{\N} f(n) = 1. \]
+  In particular, this implies that all propositions in $\Set \simeq \Set[\mbb 1]$ is \emph{semi-decidable} (cf.~\zcref{rem:dominanceofsemidecidable}), which of course is \emph{not} necessarily true without \gls{LEM}!
+\end{remark}
+
+In the remaining of this chapter we mention two applications of \gls{QC} for the propositional universe as established in~\zcref{thm:omegadefinable}. We haven't put this into~\zcref{prt:appl} of this thesis because they are relatively small, instead of developing a whole field of synthetic mathematics. However, we do find them useful and interesting, thus they are included here.
+
+\section{Application I: the topos of trees}
+
+Recall from~\zcref{exa:toposoftrees} that we have a countably generated geometric theory $\mbb F_\N$ of filters on the linear order $\N$, whose classifying topos is given by the topos of trees 
+\[ \Set[\mbb F_\N] \simeq \psh(\N). \]
+This topos is used in~\citet{birkedal_first_2012} to model \emph{synthetic guarded domain theory (\gls{SGDT})}, and one crucial fact is that there is a \emph{modality} on the universe of propositions in $\psh(\N)$ which satisfies \emph{L\"ob induction}. We will see that these structures and their properties can be \emph{defined} and \emph{proved} completely by the internal definability result of \gls{QC} for the coherent theory $\mbb F_\N$.
+
+Recall that $\set{\ms p_n}_{n\in\N}$ is the family of propositional predicates in $\mbb F_{\N}$. We also write $\mbb p_n$ for the interpretation $\ass{\ms p_n}$ internally in $\psh(\N)$, and we write $\mbb p$ as the generic model. Since a presheaf topos is \emph{locally connected} (cf.~\citet[C3.3]{johnstone2002sketches}), by assuming \gls{LEM} in the meta-theory, internally the \emph{Limited Principle of Omniscience (\gls{LPO})} holds,
+\[ \psh(\N) \models \fa f{2^\N} (\ex n\N fn = 0) \vee (\fa n\N fn = 1). \]
+
+\begin{proposition}\label{prop:qcforFN}
+  The following holds internally in $\psh(\N)$ by \gls{QC} for the propositional universe $\Omega$ (under \gls{LPO}):
+  \[ \fa p\Omega p = 0 \vee \ex n{\N} p = \mbb p_n. \]
+\end{proposition}
+\begin{proof}
+  Notice that since $\mbb F_\N$ is a propositional theory having no sorts, there are no additional constants added in $\mbb F_\N$. This shows that primitive formulas of $\mbb p \ltimes \mbb F_\N$ coincides with that in $\mbb F_\N$, which are simply finite conjunctions and disjunctions of $\set{\ms p_i}_{i\in\N} \cup \set{\bot,\top}$. In fact, up to provability in $\mbb p \ltimes \mbb F_\N$, we can choose the primitive formulas in $\mbb p\ltimes\mbb F_\N$ to be $P \coloneq \set{\ms p_i}_{i\in\N} \cup \set{\bot}$, since by the axiomatisation in $\mbb F_\N$, $\top$ can be defined by a countable disjunction $\bigvee_{i\in\N}\mbb p_i$. Hence, by~\zcref{thm:omegadefinable} we have
+  \[ \fa p{\Omega} \ex {f}{P^\N} p = \bigvee_{i\in\N} \ass{f_i}. \]
+  Notice that $P$ is naturally a linear order isomorphic to $\N$. Under \gls{LPO}, we can decide whether a sequence $f\in P^\N$ is bounded or not. In the former case, there exists a maximal element in the image of $f$, which is either $\bot$ or some $\ms p_n$. Hence, $\bigvee_{i\in\N}\ass{f_i} = \mbb p_n$. In the latter case, $p = \bigvee_{i\in\N}\ass{f_i} = \bigvee_{i\in\N}\mbb p_n$. Hence, it also holds that $\ex n{\N} p = \mbb p_n$.
+\end{proof}
+
+\begin{remark}[The use of \gls{LPO}]
+  Notice that there is no way we can avoid the use of \gls{LPO} (or some other similar principle) in $\psh(\N)$ in the proof of~\zcref{prop:qcforFN}. From an external perspective, this does \emph{not} hold for $\psh(\N)$ in an arbitrary constructive meta-theory. By Kripke-Joyal semantics, it is easy to see that its validity depends on the fact that every upward closed subset of $\set{\ms p_0<\cdots<\ms p_n}$ is either empty or the principle upset $\dv \ms p_i$ for some $i\le n$, which only holds if we assume \gls{LEM} (or some other similar classical principle) in the meta-theory. The original work of~\citet{birkedal_first_2012} indeed uses classical reasoning in the meta-theory. It is interesting that in the work of~\citet{palombi_classifying_2023} a fully constructive development of the L\"ob induction for the topos of trees is developed. As we will see in~\zcref{subsec:lobindfortree}, the L\"ob induction in $\psh(\N)$ is indeed a consequence of~\zcref{prop:qcforFN}; however, this statement must be stronger, since it does not hold in an arbitrary constructive meta-theory. 
+\end{remark}
+
+\subsection{Elementary properties in the topos of trees}
+
+In this section we work fully in the constructive internal logic of $\psh(\N)$. We assume it has a generic model $\mbb p = \set{\mbb p_n}_{n\in\N}$ of $\mbb F_\N$. We may also define $\ovob \coloneq \set{-1} \cup \N$, and define $\mbb p_{-1} \coloneq 0$. It turns our that for all our purpose, the following single axiom which corresponds to~\zcref{prop:qcforFN} suffices:
+
+\PrintAxiomGR
+
+We first see some other elementary consequences of (\AxiomGR) in $\psh(\N)$.
+
+\begin{lemma}\label{lem:elementaryqcforFN}
+  $\Omega$ is \emph{linear}, in the sense that 
+  \[ \fa {p,q}\Omega (p \to q) \vee (q \to p). \]
+  In particular, for any $n,m\in\ovob$,
+  \[
+  \mbb p_n \to \mbb p_m = 
+  \begin{cases}
+    1 & n \le m \\
+    \mbb p_m & \other
+  \end{cases} 
+  \]
+\end{lemma}
+\begin{proof}
+  Linearity is a trivial consequence of (\AxiomGR). The remaining holds by linearity and the fact that $\mbb p$ is a model of $\mbb F_\N$.
+\end{proof}
+
+\begin{remark}
+  Notice that the second half of the statement in~\zcref{lem:elementaryqcforFN} can also be seen as a consequence of the \gls{QC} principle for a multi-sorted \emph{Horn theory} as in~\zcref{thm:qc}. Though the geometric theory $\mbb F_\N$ is not a Horn theory, it can indeed be presented as a \emph{quotient} of a Horn theory. Semantically, we could view $\psh(\N)$ as a subtopos of the presheaf topos $\psh(\N \cup \set{\infty})$. As the poset $\N \cup \set{\infty}$ has finite meets, $\psh(\N \cup \set{\infty})$ will indeed be the classifying topos of a multi-sorted Horn theory, and by~\zcref{thm:qcdescent} the corresponding \gls{QC} principle for this Horn theory will also hold in $\psh(\N)$, which governs the internal function spaces between definable sets.
+\end{remark}
+
+\begin{lemma}\label{lem:doublenegcontinuous}
+  $\neg\neg \colon \Omega \to \Omega$ is equal to $p \mapsto 0 \to p$. In particular, it is continuous.
+\end{lemma}
+\begin{proof}
+  By (\AxiomGR), it suffices to show this for all $\mbb p_n$ for $n\in\ovob$. When $n = -1$ this is trivial. When $n \ge 0$, by~\zcref{lem:elementaryqcforFN} we indeed have $\neg\neg\mbb p_n = \neg 0 = 1$, and $0 \to \mbb p_n = 1$. Hence, in both cases $\neg\neg$ coincides with $0 \to (-)$, and by function extensionality they coincides. 
+\end{proof}
+
+\begin{remark}\label{rem:empdecidable}
+  From the computation in~\zcref{lem:doublenegcontinuous} we also see that $\Omega \cong 1 + \Omega_{\dneg}$, where $\Omega_{\dneg} \subseteq \Omega$ can be identified as the following set,
+  \[ \Omega_{\dneg} = \scomp{p\in\Omega}{\ex n\N p = \mbb p_n}. \]
+  The remaining truth value is simply $0 = \mbb p_{-1}$, and in particular, whether a proposition is false is \emph{decidable}.
+\end{remark}
+
+\begin{corollary}\label{Kuroda}
+  The Kuroda principle holds: for any $p \colon X \to \Omega$, 
+  \[ \fa xX \neg\neg p(x) \to \neg\neg \fa xX p(x). \]
+\end{corollary}
+\begin{proof}
+  By~\zcref{lem:doublenegcontinuous}, $\neg\neg = 0 \to (-)$ which is a \emph{right adjoint}, hence preserves all limits.
+\end{proof}
+
+\begin{corollary}\label{negnegBoo}
+  The double negation of \gls{LEM} holds: $\neg\neg\fa p{\Omega}p \vee \neg p$.
+\end{corollary}
+\begin{proof}
+  By~\zcref{Kuroda}, it suffices to show for any $p\in\Omega$, $\neg\neg(p \vee \neg p)$, or equivalently, $\neg\neg p \vee \neg p$. This holds by linearity of $\Omega$ as shown in~\zcref{lem:elementaryqcforFN}.
+\end{proof}
+
+\begin{remark}\label{scatterlogic}
+  \cite{ESAKIA200097} introduced the notion of \emph{$\bot$-scattered} and \emph{scattered} topos, and shows that the statements in \zcref{Kuroda} and~\zcref{negnegBoo} are in fact equivalent, in which case the topos is called $\bot$-scattered. As a consequence of~\zcref{canonicallob} and~\zcref{canonicalneg} later, we can in fact show internally that we are working with a \emph{scattered} topos.
+\end{remark}
+
+\begin{lemma}\label{internallyconnected}
+  For any $n\in\N$, $\mbb p_n$ is connected, i.e.\ $2 \cong 2^{\mbb p_n}$. 
+\end{lemma}
+\begin{proof}
+  Given any map $\mbb p_n \to 2$, this is equivalent to two propositions $p,q$ that $p \vee q = \mbb p_n$ and $p \wedge q = 0$. By (\AxiomGR), we may assume $p = \mbb p_i$ and $q = \mbb p_j$. This way, $\mbb p_i \wedge \mbb p_j = \mbb p_{i \wedge j} = 0$, which by~\zcref{rem:empdecidable}, $i \wedge j = -1$, equivalently $i = -1$ or $j = -1$. Thus, the map $\mbb p_n \to 2$ factors through some $1 \inj 2$, thus $2 \simeq 2^{\mbb p_n}$.
+\end{proof}
+
+In fact, we can show a stronger result:
+
+\begin{lemma}\label{interallyconconnected}
+  For any $n\in\omega$, $\N \cong \N^{\mbb p_n}$.
+\end{lemma}
+\begin{proof}
+  Given $f \colon \mbb p_n \to \N$, again we can define a sequence of propositions $p \colon \N \to \Omega$, where for any $i\in\N$,
+  \[ p(i) \coloneq f\inv(\set{i}). \]
+  By construction, $\bigvee_{i\in\N}p(i) = \mbb p_n$ and $p(i) \wedge p(j) = 0$ for all $i \neq j$. The first condition implies that there exists $i\in\N$ that $p(i) = \mbb p_n$. The second condition implies that $p(j) = 0$ for all $j \neq i$. By~\zcref{rem:empdecidable}, such $i$ is unique, thus $f$ factors through a unique $\set i \hook \N$.
+\end{proof}
+
+\subsection{L\"ob induction in the topos of trees from quasi-coherence}\label{subsec:lobindfortree}
+
+In this section we show that given (\AxiomGR), we can in fact \emph{define} an internal modality on $\Omega$ and prove it satisfies L\"ob induction. In fact, we will present two constructions. 
+
+\begin{construction}[A positive construction of the later modality on propositions]\label{consprop}
+  Let $\theta \colon \ovob \to \ovob$ be any \emph{monotone, inflationary} function: 
+  \begin{itemize}
+    \item for any $n,m\in\ovob$ with $n\le m$, $\theta n \le \theta m$;
+    \item for any $n\in\ovob$, $n \le \theta n$.
+  \end{itemize}
+  Then the modality $\bx_\theta \colon \Omega \to \Omega$ takes $p\in\Omega$ to
+  \[ \bx_\theta p \coloneq \bigvee_{n\in\ovob} \mbb p_{\theta n} \wedge (\mbb p_{n} \to p). \]
+\end{construction}
+
+\begin{proposition}\label{modalityonrepre}
+  $\bx_\theta \colon \Omega \to \Omega$ makes the following diagram commute,
+  \[ 
+  \begin{tikzcd}
+    \ovob \ar[d, two heads, "\mbb p_-"'] \ar[r, "\theta"] & \ovob \ar[d, two heads, "\mbb p_-"] \\
+    \Omega \ar[r, "\bx_\theta"'] & \Omega
+  \end{tikzcd}
+  \]
+\end{proposition}
+\begin{proof}
+  For any $n\in\ovob$, by~\zcref{consprop} we have 
+  \begin{align*}
+    &\bx_\theta\mbb p_{n} \\
+    &\quad= \bigvee_{m\in\ovob} \mbb p_{\theta m} \wedge (\mbb p_{m} \to \mbb p_{n}) \\ 
+    &\quad= \bigvee_{m \le n} \mbb p_{\theta m} \vee \bigvee_{m > n} \mbb p_{\theta m} \wedge \mbb p_{n} \\ 
+    &\quad= \mbb p_{\theta n} \vee \mbb p_{n} \\ 
+    &\quad= \mbb p_{\theta n}
+  \end{align*}
+  The first equality holds by definition; the second holds by~\zcref{lem:elementaryqcforFN}; the third holds by~\zcref{lem:elementaryqcforFN} and the fact that $\theta$ is monotone and inflationary; similarly for the last equality.
+\end{proof}
+
+\begin{remark}\label{usualmodalitypos}
+  For the usual later modality $\bx$ in synthetic guarded domain theory as specified in~\citet{birkedal_first_2012}, it corresponds to the monotone inflation map $n \mapsto n\plo$ on $\ovob$. In particular, it can be internally defined as  
+  \[ \bx p \coloneq \bigvee_{n\in\ovob}\mbb p_{n\plo} \wedge (\mbb p_{n} \to p). \]
+  \zcref{lobprop} will provide an internal proof of L\"ob induction for this operator.
+\end{remark}
+
+As a start, we can show that the modality $\bx_\theta$ will always satisfy some desired property:
+
+\begin{proposition}\label{posproplex}
+  For any monotone and inflationary map $\theta \colon \ovob \to \ovob$, $\bx_\theta$ is pointed and left exact.
+\end{proposition}
+\begin{proof}
+  To show $\fa p{\Omega}p \to \bx_\theta p$, by (\AxiomGR) it suffices to show $\mbb p_{n} \to \bx_\theta\mbb p_{n}$ for all $n\in\ovob$. By~\zcref{modalityonrepre} and~\zcref{lem:elementaryqcforFN}, this holds since $\bx_\theta\mbb p_{n} = \mbb p_{\theta n}$ and $\theta$ is inflationary. 
+  
+  For left exactness, by (\AxiomGR) we may assume $1 = \mbb p_{n}$, thus by~\zcref{modalityonrepre} we have $\bx_\theta 1 = \bx_\theta\mbb p_{n} = \mbb p_{\theta n}$. Since $\theta$ is inflationary, by~\zcref{lem:elementaryqcforFN} this means $\mbb p_{\theta n}$ holds as well, thus $\bx_\theta 1 = 1$. Proving $\bx_\theta$ preserves binary meets is similar.
+\end{proof}
+
+Most importantly, we have a criterion of when $\bx_\theta$ satisfies L\"ob induction:
+
+\begin{theorem}\label{lobprop}
+  If $\theta$ furthermore is strictly inflationary, viz.\ $n < \theta n$ for all $n\in\ovob$, then $\bx_\theta$ satisfies L\"ob induction:
+  \[ \fa p{\Omega} (\bx_\theta p \to p) \to p. \]
+\end{theorem}
+\begin{proof}
+  Take $p\in\Omega$, and by (\AxiomGR) let $p = \mbb p_{n}$. Assume $\bx_\theta p \to p$, viz. $\mbb p_{\theta n} \to \mbb p_{n}$. Since $\theta$ is strictly increasing, by~\zcref{lem:elementaryqcforFN} this implication is equivalent to $\mbb p_{n}$, viz.\ $p$.
+\end{proof}
+
+On the other hand, we can also provide a negative construction of the modality, which in fact corresponds more to the development in~\citet{ESAKIA200097}.
+
+\begin{definition}[Flat map]\label{flat}
+  We say a monotone function $\rho \colon \ovob \to \ovob$ is \emph{flat}, if it is unbounded, i.e.\ for any $n\in\ovob$, there exists $m\in\ovob$ that $n < \rho m$. 
+\end{definition}
+
+\begin{definition}\label{dualmapofflat}
+  Given a flat map $\rho$, by the least number principle we have a dual map $\qsi\rho \colon \ovob \to \ovob$ that for any $n\in\ovob$, $\qsi\rho n$ is the least $m$ that $n < \rho m$. We also define the \emph{normalised} dual map $\pf\rho$ as $\pf\rho(n) \coloneq \max(\qsi\rho(n),n)$.
+\end{definition}
+
+\begin{remark}
+  By definition, $\pf\rho$ is monotone and inflationary.
+\end{remark}
+
+\begin{construction}[A negative construction of the later modality on propositions]\label{consnegprop}
+  Let $\rho \colon \ovob \to \ovob$ be a \emph{flat} map.
+  Then the modality $\bx^\rho \colon \Omega \to \Omega$ takes $p:\Omega$ to
+  \[ \bx^\rho p \coloneq \bigwedge_{n:\ovob} \mbb p_{n} \vee (\mbb p_{\rho n} \to p). \]
+\end{construction}
+
+\begin{remark}
+  The form of the construction of modality in~\zcref{consnegprop} is evidently \emph{dual} to that in~\zcref{consprop}.
+\end{remark}
+
+Again, let us compute the value of $\bx^\rho$ on the generic propositions.
+
+\begin{proposition}\label{neglateronrep}
+  Let $\rho$ be a flat map and $\pf\rho$ its normalised dual map. For any $n\in\ovob$,
+  \[ \bx^\rho\mbb p_{n} = \mbb p_{\pf\rho n}. \]
+\end{proposition}
+\begin{proof}
+  By~\zcref{lem:elementaryqcforFN},~\zcref{consnegprop} and the definition of $\qsi\rho,\pf\rho$ in~\zcref{dualmapofflat},
+  \begin{align*}
+    \bx^\rho\mbb p_{n} 
+    &= \bigwedge_{m\in\ovob} \mbb p_{m} \vee (\mbb p_{\rho m} \to \mbb p_{n}) \\ 
+    &= \bigwedge_{m \ge \qsi\rho n} \mbb p_{m} \vee \mbb p_{n} \\
+    &= \mbb p_{\qsi\rho n} \vee \mbb p_{n}  \\
+    &= \mbb p_{\pf\rho n} \qedhere
+  \end{align*}
+  The first identity holds by definition. The second holds since when $m < \qsi\rho n$, by definition $\rho m \le n$ thus the expression evaluates to 1; and by (QC), when $\rho m > n$, $\mbb p_{\rho m} \to \mbb p_{n}$ is equivalent to $\mbb p_{n}$. The last identity holds by definition of $\pf\rho$.
+\end{proof}
+
+\begin{corollary}\label{negispos}
+  For any flat map $\rho$, $\bx^\rho = \bx_{\pf\rho}$.
+\end{corollary}
+\begin{proof}
+  By function extensionality, it suffices to show $\bx^\rho p = \bx_{\pf\rho}p$ for all $p:\Omega$. Now by (\AxiomGR) it suffices to show this for all $\mbb p_{n}$. The remaining holds by~\zcref{neglateronrep} and~\zcref{modalityonrepre}.
+\end{proof}
+
+\begin{corollary}
+  For any flat map $\rho$, $\bx^\rho$ is pointed and left exact.
+\end{corollary}
+
+\begin{theorem}\label{canonicallob}
+  If $\rho$ is deflationary, i.e. $\rho n \le n$ for all $n:\ovob$, then $\bx^\rho$ satisfies L\"ob induction.
+\end{theorem}
+\begin{proof}
+  If $\rho$ is deflationary, then by monotonicity $\pf\rho$ must be strictly inflationary. Thus the claim holds by~\zcref{lobprop} and~\zcref{negispos}.
+\end{proof}
+
+\begin{remark}\label{canonicalneg}
+  By~\zcref{usualmodalitypos} and~\zcref{negispos}, we have an alternative construction of the usual later modality $\bx$. Notice that the identity map $\id \colon \ovob\to\ovob$ is flat, and its normalised dual map is exactly given by $n \mapsto n\plo$. This way, we have an alternative characterisation of $\bx$ as below,
+  \[ \bx p \coloneq \bigwedge_{n\in\ovob} \mbb p_{n} \vee (\mbb p_{n} \to p). \]
+  This nice thing about this formula is that, by (\AxiomGR), we can avoid mentioning the generic propositions at all,
+  \[ \bx p = \bigwedge_{q\in\Omega} q \vee (q \to p). \]
+  This is indeed the formula obtained in~\cite{ESAKIA200097}.
+\end{remark}
+
+\begin{corollary}
+  $\psh(\N)$ is a scattered topos.
+\end{corollary}
+\begin{proof}
+  This follows from~\citet[Thm.~2]{ESAKIA200097} the fact that the modality $\bx p = \bigwedge_{q\in\Omega} q \vee (q \to p)$ satisfies L\"ob induction from~\zcref{canonicallob} as mentioned in~\zcref{canonicalneg}.
+\end{proof}
+
+\begin{remark}[Modality on sets]
+  It is also possible to construct the later modality on all \emph{sets} and show it admits the usual guarded fixed point construction purely from the internal logic with (\AxiomGR). Roughly speaking, we may define the modality on sets by an end or 
+\end{remark}
+
+\section{Application II: quantifier elimination and Boolean classifying topoi}
+
+\begin{definition}[Geometric theories admiting ]
+  
+\end{definition}
+
+\section{Outlooks}
+
+How should we imagine a quasi-coherence principle for the \emph{set universe}?

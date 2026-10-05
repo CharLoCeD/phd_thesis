@@ -1,1 +1,138 @@
-\chapter{Decidable, atomless Boolean algebra and synthetic probability}\label{ch:BAandprobability}
+\NewDocumentCommand\AxiomSQCB{}{SQCB}
+\NewDocumentCommand\PrintAxiomSQCB{}{
+  \begin{axiom}[\AxiomSQCB]
+    The evaluation functor $\ass- \colon \mb C[\BPB] \to \mb S$ is \emph{fully faithful}. We say a set is \emph{definable} when it belongs to the essential image of this embedding.
+  \end{axiom}
+}
+
+\NewDocumentCommand\AxiomBL{}{BL}
+\NewDocumentCommand\PrintAxiomBL{}{
+  \begin{axiom}[\AxiomBL]
+    Every set in $\mb S$ is projective. This in particular implies $\mb S$ is Boolean, viz.\ $\Omega = 2$.
+  \end{axiom}
+}
+
+\chapter{Decidable atomless Boolean algebra and synthetic probability}\label{ch:BAandprobability}
+
+In this section we develop a version of synthetic \emph{probability}, or better stated, synthetic \emph{independence relation}, in the style of~\citet{SimpsonAlex2024EaCI} using a coherent theory of Boolean algebras. Mention that a preliminary observation has already been made in~\citet{hyttinen2016reduction}. 
+
+\section{The theory of decidable atomless Boolean algebras}\label{sec:decatomlessBA}
+
+In this section we introduce the coherent theory of \emph{decidable atomless Boolean algebras}, following~\citet[D3.4.12]{johnstone2002sketches}. To distinguish the Boolean operators with actual logical connectives, we write the signature of the theory $\mbb B$ of Boolean algebras as $(0,1,\cdot,+,\vneg)$. We assume the usual order of operations for these symbols, where the priorities are $\vneg > \cdot > +$.
+
+\begin{definition}[The coherent theory of decidable atomless Boolean algebras]\label{def:atomlessBooleanalgebra}
+  The theory $\PB$ extends the theory $\mbb B$ of Boolean algebras with the following syntax and axioms:
+  \begin{itemize}
+    \item a binary \emph{apartness relation} $\neq$, with axioms stating that it is the complement of the equality relation $=$;
+    \item another axiom stating that the Boolean algebra is \emph{atomless},
+    \[ 0 \neq \ms x \vdash_{\ms x} \exists\ms y.\, \ms y \le \ms x \wedge 0 \neq \ms y \wedge \ms y \neq \ms x. \]
+  \end{itemize}
+  Here $\ms y \le \ms x$ is defined by $\ms y \cdot \ms x = \ms y$ (or equivalently $\ms y + \ms x = \ms x$). 
+\end{definition}
+
+From a semantic perspective, it is shown in~\citet[D3.4.12]{johnstone2002sketches} that the classifying topos $\Set[\PB]$ is \emph{connected atomic}, and an explicit atomic site to present it is $\sh(\Fin_{\mr{surj}},J_{\mr{at}})$, where $\Fin_{\mr{surj}}$ is the category of finite sets with surjections, and $J_{\mr{at}}$ is the corresponding atomic topology. In particular, $\Set[\PB]$ is a \emph{Boolean} topos (cf.~\zcref{rem:Booleanclassifyingtopos}).
+
+From a syntactic perspective, this in particular implies formulas in $\PB$ has \emph{complement}, hence it is equivalently a classical theory. In fact, this can be seen from the much stronger fact that $\PB$ admits \emph{quantifier elimination}, which is well-known in model theory (cf.~\citet{alma991003819279703606}). However, since most treatment applies to the \emph{classical} theory of atomless Boolean algebras, here we present a direct proof for the coherent theory $\PB$, and our algorithm essentially follows that of~\citet{MARRIOTT1996365}.
+
+
+\begin{theorem}[Quantifier elimination of $\PB$]\label{thm:quantifierelimination}
+  $\PB$ admits quantifier elimination, in the sense that any coherent formula in $\PB$ is equivalent to a quantifier free formula, and any quantifier free formula will be of the form 
+  \[ \bigvee_{i\in n} \prth{s_i = 0 \wedge \bigwedge_{j\in n_i} t_{ij} \neq 0}, \]
+  for some terms $s_i,t_{ij}$ in the language of Boolean algebras.
+\end{theorem}
+\begin{proof}
+  First notice that for any terms $s,t$ in the theory of Boolean algebras $\mbb B$, indeed we have
+  \[ s = t \dashv\vdash s \cdot \vneg t + \vneg s \cdot t = 0, \]
+  thus any equation is equivalent to an equality with $0$, and similarly for inequalities. Furthermore, the conjunction of two equalities with $0$ can be combined,
+  \[ s = 0 \wedge s' = 0 \dashv\vdash s + s' = 0. \]
+  Thus, if we take the disjunctive normal form of quantifier free formulas, we get the desired normal form as stated above.
+
+  To describe the quantifier elimination process, it suffices to show quantifier elimination for the formula of the form below, since existential quantifiers commutes with disjunctions,
+  \[ \exists\ms y.\, s(\ov{\ms x},\ms y) = 0 \wedge \bigwedge_{i\in n} t_i(\ov{\ms x},\ms y) \neq 0. \]
+  We claim that this formula is equivalent to the following quantifier free formula in $\PB$,
+  \[ s(\ov{\ms x},0) \cdot s(\ov{\ms x},1) = 0 \wedge \bigwedge_{i\in n} \vneg s(\ov{\ms x},0) \cdot t_i(\ov{\ms x},0) + \vneg s(\ov{\ms x},1) \cdot t_i(\ov{\ms x},1) \neq 0 \]
+  This is~\citet[Thm.~6.2]{MARRIOTT1996365}. 
+\end{proof}
+
+\begin{corollary}\label{cor:complementofPB}
+  Every coherent formula in $\PB$ has a coherent complement.
+\end{corollary}
+\begin{proof}
+  By~\zcref{thm:quantifierelimination}, every coherent formula in $\PB$ is equivalent to one of the form $\bigvee_{i\in n} \prth{s_i = 0 \wedge \bigwedge_{j\in n_i} t_{ij} \neq 0}$, whose complement is given by $\bigwedge_{i\in n} \prth{s_i \neq 0 \vee \bigvee_{j\in n_i} t_{ij} = 0}$, which is again coherent. 
+\end{proof}
+
+
+\section{Axiomatising the classifying topos of decidable atomless Boolean algebras}
+
+Now we work in the classifying topos $\Set[\PB]$, and again we write the internal category of sets as $\mb S$. It has a generic atomless Boolean algebra $\mb B$. It should be decidable, but in fact a much stronger condition hold: we have mentioned in~\zcref{sec:decatomlessBA} that $\Set[\PB]$ is \emph{Boolean}. In fact, it is a Boolean \emph{\'etendue}, thus in this section we can in fact work in \emph{full classical logic}:
+
+\PrintAxiomBL
+
+The other axiom we have is again the \gls{QC} for $\PB$, which as we will see, together with the quantifier elimination process described in~\zcref{thm:quantifierelimination}, has many striking consequences:
+
+\PrintAxiomSQCB
+
+\section{Random variables as Boolean valued measures}
+
+Let $n$ be any finite set in $\mb S$. Let $\mc Pn \coloneq 2^n$ be its power set. A \emph{random variable} on $n$ is simply a \emph{$\mb B$-measure}. Let us write $\BA_{\mb S}$ as the category of Boolean algebras internally in $\Set[\PB]$.
+
+\begin{definition}[Random variables on finite sets]\label{def:randomvariable}
+  A \emph{random variable} $X$ on a finite set $n$ is a Boolean algebra homomorphism 
+  \[ X \colon \mc Pn \to \mb B. \]
+  The set of random variables $\BA_{\mb S}(\mc Pn,\mb B)$ on $n$ will be denoted as $\mc R_n$. 
+\end{definition}
+
+\begin{remark}[Expectations of random variables]\label{rem:expectation}
+  Let $X$ be a random variable on $n$. For any $i \in n$, we define the \emph{expectation} of $X$ being $i$, denoted as $[X = i]$, as follows,
+  \[ [X = i] \coloneq X(\set{i}). \]
+  More generally, for any subset $A \subseteq n$, we define the \emph{expectation} that $X$ is contained in $A$, denoted as $[X \in A]$, as follows,
+  \[ [X \in A] \coloneq X(A). \]
+\end{remark}
+
+From~\zcref{def:randomvariable}, we can give another characterisation of random variables on $n$ as \emph{partitions} of $\mb B$ into $n$ parts:
+
+\begin{proposition}[Random variables as partitions]\label{prop:randomvariablesaspartition}
+  For $n$ finite, there is an isomorphism 
+  \[ \mc R_n \cong \scomp{x \in \mb B^n}{\sum_{i\in n}x_i = 1 \wedge \bigwedge_{i \neq j} x_i \cdot x_j = 0}. \]
+  In particular, $\mc R_n$ is a \emph{definable} subset of $\mb B^n$.
+\end{proposition}
+\begin{proof}
+  Note that $\mc Pn$ is an atomic Boolean algebra, with atoms the singleton subsets $\set{i}$ for $i\in n$. Hence, a Boolean algebra morphism $\mu \colon \mc Pn \to \mb B$ is completely determined by where the atoms are sent to, which should be a family of pairwise disjoint elements $x \in \mb B^n$ whose union is $1$. Since this is defined by a finite conjunction of equations, this makes $\mc R_n$ a definable subset of $\mb B^n$.
+\end{proof}
+
+Let us write $\mb S_\omega$ as the internal category of finite sets. By construction, $\mc R$ is in fact a \emph{functor}, defined as the following composite,
+\[ 
+\begin{tikzcd}
+  \mb S_\omega \ar[dr, "\mc R"{description}] \ar[d, dashed] \ar[r, "\mc P"] & \BA_{\mb S}\op \ar[d, "{\BA_{\mb S}(-,\mb B)}"] \\ 
+  {\mb C[\BPB]} \ar[r, hook] & \mb S
+\end{tikzcd}
+\]
+which by~\zcref{prop:randomvariablesaspartition} factors through the full subcategory $\mb C[\BPB]$ of $\mb S$. Explicitly, for any map $f \colon n \to m$ and random variable $X\in\mc R_n$, its \emph{pushforward} $f_*X\in\mc R_m$ takes any $A\subseteq m$ to the value
+\[ f_*X(A) \coloneq X(f\inv(A)). \]
+
+\begin{corollary}\label{cor:randomfinitelimits}
+  $\mc R \colon \mb S_\omega \to \mb S$ preserves finite limits.
+\end{corollary}
+\begin{proof}
+  This follows from the fact that $\mc P \colon \mb S_\omega \to \BA_{\mb S}\op$ takes finite limits to finite colimits, and the representable functor $\BA_{\mb S}(-,\mb B)$ takes colimits to limits.
+\end{proof}
+
+\begin{remark}[Expectations of a pair of random variables]
+  By~\zcref{cor:randomfinitelimits}, we have an isomorphism $\mc R_n \times \mc R_m \cong \mc R_{n \times m}$, such that for any random variables $X\in\mc R_n$ and $Y\in\mc R_m$ and $i\in n,j\in m$, we have 
+  \[ [\pair{X,Y} = \pair{i,j}] = [X = i] \wedge [Y = j]. \]
+  More generally, for any subsets $A\subseteq n$ and $B \subseteq m$ we have similar a similar decomposition,
+  \[ [\pair{X,Y} \in A \times B] = [X \in A] \wedge [Y \in B]. \]
+\end{remark}
+
+\section{Support and independence}\label{sec:supportandindependence}
+
+For any $a\in\mb B$, we write $\geo a$ as the statement that $a \neq 0$. Using this we can define the \emph{support} of list of random variables:
+
+\begin{definition}[Support]\label{def:support}
+  For a list of random variables $\ov{X} = (X_i\in\mc R_{n_i})_{i\in m}$ and elements $\ov a = (a_i \in n_i)_{i\in m}$, we define
+  \[ p_{\ov X}(\ov a) = \geo{\bigwedge_{i\in n}[X_i = a_i]}. \]
+  Intuitively, $p_{\ov X}(\ov a)$ states that it is possible for each $X_i$ to take the value $a_i$. We then define the \emph{support} of $\ov X$ as follows,
+  \[ \supp(\ov X) \coloneq \scomp{\ov{a}}{p_{\ov X}(\ov a)}. \]
+\end{definition}
+
+For any tuple of random variables $(X_i\in\mc R_{n_i})_{i\in m}$, we define their

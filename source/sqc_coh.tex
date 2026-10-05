@@ -1,4 +1,4 @@
-\chapter{The internal logic of classifying topoi for coherent theories}\label{ch:sqccoh}
+\chapter{Quasi-coherence for coherent theories}\label{ch:sqccoh}
 
 Now moving towards a different direction of generalisation of \gls{QC} in~\zcref{ch:sqchorn}, in this chapter we state and prove a version of \gls{QC} for \emph{coherent theories}. Unlike an algebraic or a Horn theory, whose signature only contains function symbols and whose axioms only allow (sequents between) equations, a coherent theory allows arbitrary relation and function symbols in the signature, and can have sequents between arbitrary \emph{coherent formulas}, which are built from $\top,\wedge,\bot,\vee,\exists,=$, instead of just equalities.
 
@@ -171,7 +171,7 @@ In particular, there are two natural geometric morphisms $\partial_0,\partial_1 
 
 
 
-\section{Synthetic quasi-coherence for coherent theories}\label{sec:qcforcoh}
+\section{Quasi-coherence for coherent theories}\label{sec:qcforcoh}
 
 Under the equivalence given in~\zcref{thm:diagtheoryispath}, in this section we can now give a short and geometric proof of \gls{QC} for coherent theories. 
 
@@ -222,7 +222,7 @@ Let $\T$ be a coherent theory, and we now work internally in its classifying top
 Let us now complete our promise in~\zcref{sec:testcasesierpinski}, showing that the denseness of the generic proposition is a direct consequence of the \gls{QC} for the coherent theory of a generic proposition:
 
 \begin{example}[\gls{QC} in the Sierpi\'nski topos]\label{exa:qcinsierpinskitopos}
-  Let $\mbb S$ be the coherent theory of a proposition $\ms p$. Its classifying topos is the Sierpi\'nski topos $\mc I$, and we let $\mbb p$ be the generic proposition (cf.~\zcref{sec:testcasesierpinski}). Internally in $\mc I$, since there are no sorts in $\mbb S$, the theory $\mbb p \ltimes \mbb S$ coincides with $\mbb S$, and by construction $\ass{\ms p} = \mbb p$. Similarly, $\ass{\bot} = 0$. By \gls{QC}, the function space $\mbb p \to 0$ then coincides with $\mb P[\mbb S](\ms p,\bot)$, which is equivalent to the proposition $\mbb S \vdash (\mbb p \vdash \bot)$, and is clearly false. This shows that $\neg(\mbb p \to 0)$, or equivalently, $\neg\neg\mbb p$. Hence,~\zcref{prop:genericpropnegneg} is a consequence of \gls{QC} for the coherent theory $\mbb S$.
+  Let $\mbb S$ be the coherent theory of a proposition $\ms p$. Its classifying topos is the Sierpi\'nski topos $\mc I$, and we let $\mbb p$ be the generic proposition (cf.~\zcref{sec:testcasesierpinski}). Internally in $\mc I$, the theory $\mbb p \ltimes \mbb S$ is $\mbb S$ extended with a single constant. By construction, $\ass{\ms p} = \mbb p$ and $\ass{\bot} = 0$. By \gls{QC}, the function space $\mbb p \to 0$ then coincides with $\mb C[\mbb S](\ms p,\bot)$, which is equivalent to $\mbb p \ltimes \mbb S \vdash (\mbb p \vdash \bot)$, and is clearly false, because we can find a model of $\mbb p \ltimes \mbb S$ that interprets $\ms p$ to $1$. This shows that $\neg(\mbb p \to 0)$, or equivalently, $\neg\neg\mbb p$. Hence,~\zcref{prop:genericpropnegneg} is a consequence of \gls{QC} for the coherent theory $\mbb S$.
 \end{example}
 
 For the remaining of this section, we show how \gls{QC} for coherent theories \emph{implies} \gls{QC} for (finitary) Horn theories, and in fact is stronger than the latter. For this, let $\T$ be a Horn theory. By definition, it is automatically a coherent theory as well; from another perspective, the presheaf topos $\Set[\T] \simeq [\mmod{\T}_\omega,\Set]$ is indeed a coherent topos (cf.~\citet[D3.3.1]{johnstone2002sketches}). The following observation is immediate:
